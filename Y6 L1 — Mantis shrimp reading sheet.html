@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y6 L1 — Mantis shrimp reading sheet</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #ffffff;
+  color: #1a1916;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 36px 28px 60px;
+}
+
+/* ── Header ─────────────────────── */
+.sr-header {
+  border-bottom: 1.5px solid #1a1916;
+  padding-bottom: 14px;
+  margin-bottom: 22px;
+}
+.sr-meta {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: #9c9a93; margin-bottom: 5px;
+}
+.sr-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 4px; }
+.sr-instruction { font-size: 13.5px; color: #57554e; margin-top: 6px; line-height: 1.5; }
+
+/* ── Section labels ──────────────── */
+.section-label {
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.09em; color: #9c9a93; margin: 20px 0 8px;
+}
+
+/* ── Write lines ─────────────────── */
+.write-line {
+  border-bottom: 1px solid rgba(0,0,0,0.16);
+  height: 22px; margin-bottom: 8px;
+}
+
+/* ── Generic card ────────────────── */
+.card {
+  border: 1px solid rgba(0,0,0,0.14);
+  border-radius: 10px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  break-inside: avoid;
+}
+.card-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px;
+  background: #f7f6f2;
+  border-bottom: 0.5px solid rgba(0,0,0,0.10);
+}
+.card-num { font-size: 11px; font-weight: 700; color: #9c9a93; min-width: 20px; }
+.card-label { font-size: 13.5px; font-weight: 600; color: #1a1916; }
+.card-sub { font-size: 12px; color: #9c9a93; margin-left: auto; }
+.card-body { padding: 12px 14px; }
+.card-body p { font-size: 13.5px; color: #1a1916; margin-bottom: 6px; line-height: 1.5; }
+.card-body p:last-child { margin-bottom: 0; }
+
+/* ── Role cards ──────────────────── */
+.role-card {
+  border: 1.5px solid rgba(0,0,0,0.18);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.role-card-head {
+  padding: 12px 18px 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.role-tag { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.09em; color: #9c9a93; margin-bottom: 4px; }
+.role-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.role-brief { font-size: 13px; color: #57554e; line-height: 1.5; }
+.role-card-body { padding: 14px 18px; }
+.role-card-body h4 { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #9c9a93; margin: 12px 0 6px; }
+.role-card-body h4:first-child { margin-top: 0; }
+.role-card-body ul { margin-left: 16px; }
+.role-card-body li { font-size: 13px; color: #1a1916; margin-bottom: 4px; line-height: 1.5; }
+.role-oneliner { margin-top: 12px; padding: 10px 14px; background: #f7f6f2; border-radius: 8px; border: 0.5px solid rgba(0,0,0,0.14); font-size: 13.5px; font-style: italic; color: #1a1916; }
+
+/* ── Grid layouts ────────────────── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 10px 0; }
+.col-box {
+  border: 1px solid rgba(0,0,0,0.14); border-radius: 8px; padding: 10px 12px;
+}
+.col-box-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #9c9a93; margin-bottom: 8px; }
+
+/* ── Verdict row ─────────────────── */
+.verdict-row { display: flex; gap: 12px; align-items: center; margin: 8px 0; }
+.verdict-btn {
+  border: 1.5px solid rgba(0,0,0,0.16); border-radius: 6px;
+  padding: 4px 12px; font-size: 12px; font-weight: 600; color: #57554e;
+  background: #f7f6f2; white-space: nowrap;
+}
+.verdict-evidence { flex: 1; border-bottom: 1px solid rgba(0,0,0,0.16); height: 22px; }
+
+/* ── Prompt sort zone header ─────── */
+.zone-header {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 8px;
+}
+.zone-label {
+  text-align: center; padding: 6px 8px; border-radius: 6px;
+  font-size: 11px; font-weight: 700; line-height: 1.4;
+}
+.zone-safe { background: #d1fae5; color: #065f46; }
+.zone-maybe { background: #fef3c7; color: #92400e; }
+.zone-avoid { background: #fee2e2; color: #991b1b; }
+
+/* ── Prompt sort cards ───────────── */
+.prompt-sort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+.sort-card {
+  border: 1px solid rgba(0,0,0,0.14); border-radius: 8px; padding: 10px 12px;
+  break-inside: avoid;
+}
+.sort-card p { font-size: 13px; color: #1a1916; line-height: 1.5; font-style: italic; margin-bottom: 4px; }
+.sort-card-cat { font-size: 10.5px; color: #9c9a93; font-style: normal; }
+.sort-verdict { margin-top: 8px; display: flex; gap: 6px; }
+.sort-verdict span {
+  font-size: 10px; padding: 2px 8px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.14);
+  color: #57554e; cursor: default;
+}
+
+/* ── Exit strip ──────────────────── */
+.exit-strip {
+  border: 1.5px solid rgba(0,0,0,0.16); border-radius: 10px;
+  padding: 14px 18px; margin-top: 18px; background: #f7f6f2;
+  break-inside: avoid;
+}
+.exit-strip p { font-size: 14px; color: #1a1916; margin-bottom: 4px; }
+.exit-strip .fill-blank {
+  display: inline-block; min-width: 140px;
+  border-bottom: 1.5px solid #1a1916; height: 18px; vertical-align: bottom; margin: 0 4px;
+}
+
+/* ── Reading passage ─────────────── */
+.reading-passage {
+  background: #f7f6f2; border-radius: 10px; padding: 16px 18px;
+  margin-bottom: 18px; border: 0.5px solid rgba(0,0,0,0.14);
+  font-size: 14px; line-height: 1.7; color: #1a1916;
+}
+.reading-passage p { margin-bottom: 10px; }
+.reading-passage p:last-child { margin-bottom: 0; }
+.reading-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+
+/* ── Work samples ────────────────── */
+.sample { border: 1px solid rgba(0,0,0,0.14); border-radius: 10px; margin-bottom: 14px; overflow: hidden; break-inside: avoid; }
+.sample-head { padding: 8px 14px; background: #f7f6f2; border-bottom: 0.5px solid rgba(0,0,0,0.10); display: flex; justify-content: space-between; align-items: center; }
+.sample-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #9c9a93; }
+.sample-rank { font-size: 11px; color: #9c9a93; }
+.sample-body { padding: 13px 16px; font-size: 13.5px; line-height: 1.65; color: #1a1916; }
+.rank-row { display: flex; gap: 8px; margin-top: 8px; }
+.rank-box { border: 1px solid rgba(0,0,0,0.16); border-radius: 6px; padding: 4px 10px; font-size: 12px; color: #57554e; }
+
+/* ── Human advantage poster columns ─ */
+.advantage-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+.advantage-table th { font-size: 12px; font-weight: 700; text-align: left; padding: 8px 12px; border-bottom: 1.5px solid rgba(0,0,0,0.16); }
+.advantage-table td { vertical-align: top; padding: 8px 12px; border-bottom: 0.5px solid rgba(0,0,0,0.08); font-size: 13px; line-height: 1.5; }
+.advantage-table tr:last-child td { border-bottom: none; }
+
+/* ── Print ───────────────────────── */
+@media print {
+  @page { size: A4; margin: 14mm 16mm; }
+  body { max-width: 100%; padding: 0; font-size: 11pt; }
+  .card, .role-card, .sample, .sort-card, .exit-strip, .reading-passage {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .role-card { page-break-inside: avoid; }
+  .sort-card { break-inside: avoid; }
+  .section-label { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+<header class="sr-header">
+  <div class="sr-meta">Year 6 · Lesson 1 · Student resource</div>
+  <div class="sr-title">The Mantis Shrimp</div>
+  <p class="sr-instruction">Read the passage carefully. When your teacher says, turn this sheet face-down. Answer the questions entirely from memory.</p>
+</header>
+
+<div class="reading-passage">
+  <div class="reading-title">The Mantis Shrimp</div>
+  <p>The mantis shrimp is one of the most extraordinary creatures on Earth — and one of the least famous. It lives in shallow tropical waters, hiding in burrows and crevices on the seafloor, and it rarely grows longer than 30 centimetres. For something so small, it is almost unbelievably powerful.</p>
+  <p>The mantis shrimp's most famous feature is its punch. It strikes prey using two club-like appendages that accelerate faster than a bullet fired from a gun. The impact is powerful enough to shatter glass, and the movement happens so quickly — in around 1/1000th of a second — that it creates a flash of light and a shockwave in the water. This shockwave can stun or kill nearby prey even if the punch itself misses.</p>
+  <p>But the punch is not even the strangest thing about it. The mantis shrimp has 16 types of colour receptor in its eyes, compared to just 3 in human eyes. You might expect this to mean it sees the world in extraordinary colour — but scientists discovered that it actually processes colour very differently from us. Rather than blending colours together the way humans do, it identifies them almost like a barcode scanner, making incredibly fast decisions about what it is looking at. Its eyes also move independently from each other, meaning each eye can look in a completely different direction at the same time.</p>
+  <p>The mantis shrimp can also see ultraviolet light and polarised light — types of light that are completely invisible to humans. Scientists believe it uses polarised light to communicate secretly with other mantis shrimps, in a kind of private visual language that predators cannot intercept.</p>
+  <p>Despite being such a beautiful and interesting creature, the mantis shrimp is rarely kept in aquariums.</p>
+</div>
+
+<div style="background:#fff1f2;border-left:3px solid #fca5a5;border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:18px;font-size:13px;color:#57554e;">
+  <strong>Turn the sheet face-down now.</strong> Answer from memory only — no re-reading.
+</div>
+
+<div class="section-label" style="page-break-before: always; break-before: page; margin-top: 0;">Questions — answer from memory</div>
+<div class="card">
+  <div class="card-head">
+    <span class="card-num">1</span>
+    <span class="card-label" style="font-weight:500;font-size:13.5px;">How long can a mantis shrimp grow?</span>
+  </div>
+  <div class="card-body"><div class="write-line"></div><div class="write-line"></div></div>
+</div><div class="card">
+  <div class="card-head">
+    <span class="card-num">2</span>
+    <span class="card-label" style="font-weight:500;font-size:13.5px;">Where does the mantis shrimp live?</span>
+  </div>
+  <div class="card-body"><div class="write-line"></div><div class="write-line"></div></div>
+</div><div class="card">
+  <div class="card-head">
+    <span class="card-num">3</span>
+    <span class="card-label" style="font-weight:500;font-size:13.5px;">Humans have 3 types of colour receptor in their eyes. How many does the mantis shrimp have?</span>
+  </div>
+  <div class="card-body"><div class="write-line"></div><div class="write-line"></div></div>
+</div><div class="card">
+  <div class="card-head">
+    <span class="card-num">4</span>
+    <span class="card-label" style="font-weight:500;font-size:13.5px;">How quickly does the mantis shrimp's punch happen?</span>
+  </div>
+  <div class="card-body"><div class="write-line"></div><div class="write-line"></div></div>
+</div><div class="card">
+  <div class="card-head">
+    <span class="card-num">5</span>
+    <span class="card-label" style="font-weight:500;font-size:13.5px;">Despite being such a fascinating creature, the mantis shrimp is rarely kept in aquariums. Based on the text, why do you think this is?</span>
+  </div>
+  <div class="card-body"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+</div>
+
+</body>
+</html>

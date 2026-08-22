@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y8 · L1 — The machine that acts alone</title>
+<style>
+
+
+/* ── Reset ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Design tokens — light only ─────────── */
+:root {
+  --bg:            #ffffff;
+  --bg-subtle:     #f7f6f2;
+  --bg-muted:      #edecea;
+  --text:          #1a1916;
+  --text-2:        #57554e;
+  --text-3:        #9c9a93;
+  --border:        rgba(0,0,0,0.08);
+  --border-med:    rgba(0,0,0,0.16);
+
+  --c-hook:        #b45309;
+  --bg-hook:       #fffbeb;
+  --bd-hook:       #fde68a;
+
+  --c-teach:       #4338ca;
+  --bg-teach:      #eef2ff;
+  --bd-teach:      #c7d2fe;
+
+  --c-demo:        #0369a1;
+  --bg-demo:       #f0f9ff;
+  --bd-demo:       #bae6fd;
+
+  --c-activity:    #047857;
+  --bg-activity:   #ecfdf5;
+  --bd-activity:   #a7f3d0;
+
+  --c-plenary:     #6d28d9;
+  --bg-plenary:    #f5f3ff;
+  --bd-plenary:    #ddd6fe;
+
+  --c-note:        #92400e;
+  --bg-note:       #fffbeb;
+  --bd-note:       #f59e0b;
+
+  --c-warn:        #991b1b;
+  --bg-warn:       #fff1f2;
+  --bd-warn:       #fca5a5;
+
+  --c-link:        #1e40af;
+  --bg-link:       #eff6ff;
+  --bd-link:       #93c5fd;
+
+  --c-disc:        #374151;
+  --bg-disc:       #f9fafb;
+  --bd-disc:       #d1d5db;
+
+  --tag-tools:     #534AB7;
+  --tag-tools-bg:  #EEEDFE;
+}
+
+/* ── Base ───────────────────────────────── */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+/* ── Banner header ──────────────────────── */
+.lp-banner {
+  background: var(--tag-tools);
+  border-radius: 14px;
+  padding: 22px 28px 24px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle decorative circle — depth without clutter */
+.lp-banner::after {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  pointer-events: none;
+}
+
+.banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.banner-chip {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.88);
+}
+
+.banner-chip-theme {
+  background: rgba(255,255,255,0.28);
+  color: #ffffff;
+}
+
+.banner-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.banner-objective {
+  font-size: 14px;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+/* Header wrapper for objectives + resources below banner */
+.lp-header {
+  margin-bottom: 24px;
+  padding-bottom: 28px;
+  border-bottom: 1.5px solid var(--border-med);
+}
+
+/* Kept for compatibility — unused now */
+.chip { display: none; }
+.lp-title { display: none; }
+.lp-objective { display: none; }
+.lp-meta { display: none; }
+
+.block-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+  margin-bottom: 10px;
+}
+
+.header-objectives {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 0.5px solid var(--border-med);
+  margin-bottom: 14px;
+}
+
+.obj-row {
+  display: flex;
+  gap: 14px;
+  padding: 7px 0;
+  border-bottom: 0.5px solid var(--border);
+  align-items: flex-start;
+}
+
+.obj-row:last-child { border-bottom: none; }
+
+.obj-code {
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-size: 11px;
+  color: var(--text-3);
+  flex-shrink: 0;
+  min-width: 54px;
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+
+.obj-text {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.resources-block {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 0.5px solid var(--border-med);
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 24px;
+  list-style: none;
+}
+
+.resources-grid li {
+  font-size: 13.5px;
+  color: var(--text-2);
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  line-height: 1.45;
+}
+
+.resources-grid li::before {
+  content: '';
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid var(--border-med);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.resources-grid li.filename {
+  color: var(--text-3);
+  font-size: 12.5px;
+  font-family: ui-monospace, 'SF Mono', monospace;
+  letter-spacing: 0.01em;
+}
+
+/* ── Rationale ──────────────────────────── */
+.rationale-wrap {
+  margin-bottom: 28px;
+}
+
+.rationale-wrap .block-label {
+  margin-bottom: 8px;
+}
+
+.rationale {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 15px 20px;
+  font-size: 14.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+  border: 0.5px solid var(--border-med);
+}
+
+/* ── Phase cards ────────────────────────── */
+.phase {
+  border-radius: 12px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-med);
+}
+
+.phase-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.phase-tag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.phase-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+
+.phase-dur {
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.phase-body {
+  padding: 18px 20px;
+  background: var(--bg);
+}
+
+.phase-body > p {
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.phase-body > p:last-child { margin-bottom: 0; }
+
+.ph-hook     { border-color: var(--bd-hook); }
+.ph-hook     .phase-head { background: var(--bg-hook); border-color: var(--bd-hook); }
+.ph-hook     .phase-tag  { color: var(--c-hook); }
+
+.ph-teach    { border-color: var(--bd-teach); }
+.ph-teach    .phase-head { background: var(--bg-teach); border-color: var(--bd-teach); }
+.ph-teach    .phase-tag  { color: var(--c-teach); }
+
+.ph-demo     { border-color: var(--bd-demo); }
+.ph-demo     .phase-head { background: var(--bg-demo); border-color: var(--bd-demo); }
+.ph-demo     .phase-tag  { color: var(--c-demo); }
+
+.ph-activity { border-color: var(--bd-activity); }
+.ph-activity .phase-head { background: var(--bg-activity); border-color: var(--bd-activity); }
+.ph-activity .phase-tag  { color: var(--c-activity); }
+
+.ph-plenary  { border-color: var(--bd-plenary); }
+.ph-plenary  .phase-head { background: var(--bg-plenary); border-color: var(--bd-plenary); }
+.ph-plenary  .phase-tag  { color: var(--c-plenary); }
+
+.ph-disc     { border-color: var(--bd-disc); }
+.ph-disc     .phase-head { background: var(--bg-disc); border-color: var(--bd-disc); }
+.ph-disc     .phase-tag  { color: var(--c-disc); }
+
+/* Framework grid */
+.framework {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.fw-cell {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px 12px;
+  text-align: center;
+  border: 0.5px solid var(--border-med);
+}
+
+.fw-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+.fw-desc {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+/* Verbatim script */
+.script {
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--border-med);
+  border-radius: 0 8px 8px 0;
+  padding: 13px 16px;
+  margin: 12px 0;
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* Prompt comparison */
+.prompt-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+
+.prompt-box {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px;
+  border: 0.5px solid var(--border-med);
+}
+
+.prompt-box-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 8px;
+}
+
+.prompt-box.bad  .prompt-box-label { color: var(--c-warn); }
+.prompt-box.good .prompt-box-label { color: var(--c-activity); }
+
+.prompt-text {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.prompt-note {
+  font-size: 12.5px;
+  color: var(--text-3);
+  line-height: 1.4;
+}
+
+/* Student prompts — teacher reference (hints visible) */
+.prompt-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 14px;
+}
+
+.prompt-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  padding: 0 12px 8px 0;
+  border-bottom: 1px solid var(--border-med);
+}
+
+.prompt-table td {
+  padding: 9px 12px 9px 0;
+  vertical-align: top;
+  border-bottom: 0.5px solid var(--border);
+  line-height: 1.5;
+}
+
+.prompt-table tr:last-child td { border-bottom: none; }
+
+.prompt-table td:first-child {
+  font-weight: 600;
+  color: var(--text-3);
+  font-size: 12px;
+  white-space: nowrap;
+  padding-right: 14px;
+}
+
+.prompt-table td:nth-child(2) {
+  color: var(--text);
+  font-style: italic;
+}
+
+.prompt-table td:nth-child(3) {
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+/* Classroom pathways */
+.pathways {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.pathway {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px;
+  border: 0.5px solid var(--border-med);
+}
+
+.pathway-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+  margin-bottom: 7px;
+}
+
+.pathway p {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* Callout boxes */
+.callout {
+  border-left: 3px solid;
+  border-radius: 0 8px 8px 0;
+  padding: 11px 15px;
+  margin: 13px 0;
+}
+
+.callout-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 5px;
+}
+
+.callout p {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+
+.callout p:last-child { margin-bottom: 0; }
+
+.c-note { background: var(--bg-note); border-color: var(--bd-note); }
+.c-note .callout-label { color: var(--c-note); }
+
+.c-warn { background: var(--bg-warn); border-color: var(--bd-warn); }
+.c-warn .callout-label { color: var(--c-warn); }
+
+.c-link { background: var(--bg-link); border-color: var(--bd-link); }
+.c-link .callout-label { color: var(--c-link); }
+
+/* ── Print ──────────────────────────────── */
+@media print {
+  @page { size: A4; margin: 16mm 18mm; }
+
+  body {
+    font-size: 11pt;
+    max-width: 100%;
+    padding: 0;
+    color: #000;
+    background: #fff;
+  }
+
+  .lp-title { font-size: 21pt; }
+  .lp-header { border-bottom-color: #000; }
+
+  .lp-banner,
+  .phase, .resources-block, .header-objectives,
+  .rationale, .callout, .prompt-box,
+  .pathway, .fw-cell {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .banner-title { font-size: 18pt; }
+  .lp-banner { border-radius: 8px; }
+
+  .phase          { break-inside: avoid; margin-bottom: 10pt; }
+  .prompt-compare { break-inside: avoid; }
+  .pathways       { break-inside: avoid; }
+  .framework      { break-inside: avoid; }
+  .callout        { break-inside: avoid; }
+  .prompt-table   { break-inside: avoid; }
+}
+
+
+/* Banner colour for this lesson (overrides base) */
+.lp-banner { background: #854F0B; }
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════════════════════════════════════ -->
+<header class="lp-header">
+
+  <div class="lp-banner">
+    <div class="banner-meta">
+      <span class="banner-chip">Year 8</span>
+      <span class="banner-chip">Lesson 1</span>
+      <span class="banner-chip">50 min</span>
+      <span class="banner-chip banner-chip-theme">AI &amp; the world</span>
+    </div>
+    <h1 class="banner-title">The machine that acts alone</h1>
+    <p class="banner-objective">Students examine agentic AI — what it is, what it can already do, and where human oversight stops being optional — through physical debate and a realistic group scenario.</p>
+  </div>
+
+  <div class="header-objectives">
+    <div class="block-label">Cambridge Digital Literacy objectives</div>
+    <div class="obj-row"><span class="obj-code">8DW.03</span><span class="obj-text">Explore how AI algorithms can influence human thinking and decision making, including how decisions might be improved through AI-supported data analysis.</span></div>
+    <div class="obj-row"><span class="obj-code">8DW.09</span><span class="obj-text">Explore the concept of Agentic AI, and its implications for interactions between humans and machines.</span></div>
+  </div>
+
+  <div class="resources-block">
+    <div class="block-label">Resources</div>
+    <ul class="resources-grid">
+      <li>Open floor space for the spectrum activity</li>
+      <li>Projector + Microsoft Copilot (teacher device)</li>
+      <li>Y8 L1 — Student resource to print.html — scenario cards + group discussion sheet, 1 per student</li>
+      <li class="filename">Y8 L1 — Student resource to print.html</li>
+      <li>Year 8 AI Literacy lesson 1 — Example of bad prompt 1 - Photosynthesis.pdf (for closing context)</li>
+    </ul>
+  </div>
+
+</header>
+
+<!-- ═══════ TEACHER BACKGROUND ═══════════════════════════ -->
+<div class="rationale-wrap">
+  <div class="block-label">Before you teach this: what is agentic AI?</div>
+  <div class="rationale">Agentic AI is an AI system that <em>acts</em> in the world, rather than just producing text for a person to read and then act on themselves. A chatbot that drafts an email for you is not agentic — you still choose to send it. An AI that has access to your inbox, decides who needs an email, writes it, and sends it without you checking first is agentic. The shift is from "AI as a tool a human directs, step by step" to "AI as an agent that makes and carries out decisions with limited human involvement." You don't need deep technical knowledge to teach this — one clear example, given to you in the Live AI Demo phase below, is enough.</div>
+</div>
+
+<!-- ═══════ RATIONALE ════════════════════════════════════ -->
+<div class="rationale-wrap">
+  <div class="block-label">Rationale</div>
+  <div class="rationale">Intreoduces the idea of agentic AI and gets students thinking about the possible benefits and consequences of agentic AI.</div>
+</div>
+
+<!-- ═══════ LESSON BODY ══════════════════════════════════ -->
+<div class="phase ph-hook"><div class="phase-head"><span class="phase-tag">Hook</span><span class="phase-title">Human oversight — where's the line?</span><span class="phase-dur">0–10 min</span></div><div class="phase-body"><p>Students stand in the middle of the room. Tell them that one end of the room represents the opinion "Humans should have oversight" and the other end of the room represents the opinion "AI can handle this completely alone". Explain this is a continuum, they could place themselves anywhere along the imaginary line. Read each of the 5 statements. After each one, they physically move to show their opinion. </p><ul style="margin:10px 0 10px 18px"><li style="margin-bottom:5px">An AI automatically sends apology emails when a flight is cancelled.</li><li style="margin-bottom:5px">An AI analyses medical scans and flags possible tumours — without telling the radiologist first.</li><li style="margin-bottom:5px">An AI adjusts a bridge's structural supports based on sensor data during a storm.</li><li style="margin-bottom:5px">An AI books a holiday for you based on your preferences — including your passport and payment details.</li><li style="margin-bottom:5px">An AI grades student essays and enters marks in the school system without teacher review.</li></ul><p>After each move, ask 2–3 students to justify their position. </p><div class="script">"You've just made five decisions about where humans need to stay in control. You didn't all agree. Let's look at why and what kind of AI we're actually talking about."</div></div></div>
+<div class="phase ph-demo"><div class="phase-head"><span class="phase-tag">Live AI Demo</span><span class="phase-title">Agentic AI in action</span><span class="phase-dur">10–17 min</span></div><div class="phase-body"><p>Open Copilot. Type: <em>"Plan the end-of-year school event. Make it good."</em></p><p>Let the response generate. Then ask: <em>"What did the AI decide? What assumptions did it make? What did it not ask us?"</em></p><p>Now explain the upgrade: <em>"Imagine that same AI had access to the school calendar, the budget system, the venue booking system, and your email. It doesn't just plan — it acts. It books the venue, orders the catering, invites the guests, pays for everything. By the time you check your phone, the event is organised."</em></p><p>Introduce <strong>agentic AI</strong>: AI that doesn't just generate text — it takes actions in the world on your behalf, often in a sequence of steps, with access to real systems.</p><div class="callout c-note"><div class="callout-label">Teacher note</div><p>Current examples students may know: AI scheduling assistants, AI coding agents, AI shopping tools. The category is expanding rapidly. You don't need to be exhaustive — one concrete example is enough.</p></div></div></div>
+<div class="phase ph-activity"><div class="phase-head"><span class="phase-tag">Activity</span><span class="phase-title">Written follow-up, then group scenario</span><span class="phase-dur">17–42 min</span></div><div class="phase-body"><p>Distribute the student resource sheet. Ask students to complete <strong>Part 1</strong> individually (5–7 min): five new scenarios — different from the opening ones — each with a scale to mark their position and space to write a sentence explaining their reasoning. </p><p>Then move to <strong>Part 2</strong>. Groups of 4–5 read the scenario: a school AI system has access to every student's essay folder. It flags any student whose writing has declined compared to their previous work, and automatically emails their parents when a student is flagged. Teachers only see the flagged students' work — unflagged work is never reviewed.</p><p>Groups discuss four questions (printed on the sheet):</p><ul style="margin:10px 0 10px 18px"><li style="margin-bottom:5px">What could go wrong — even if the AI is technically accurate?</li><li style="margin-bottom:5px">At what point should a human have been involved?</li><li style="margin-bottom:5px">Who is responsible if the AI's assessment is wrong?</li><li style="margin-bottom:5px">Would you want this system operating on your work?</li></ul><p>Groups share their most important finding (90 seconds each). Teacher tracks on the board: what changes when AI acts, not just advises?</p><div class="callout c-note"><div class="callout-label">Teacher note</div><p>Push students beyond 'privacy is bad'. The more interesting question is accountability. If AI makes a decision and it's wrong, who apologises? Who fixes it? AI systems cannot currently be held responsible in the way humans can.</p></div></div></div>
+<div class="phase ph-plenary"><div class="phase-head"><span class="phase-tag">Plenary</span><span class="phase-title">What changes the stakes?</span><span class="phase-dur">42–50 min</span></div><div class="phase-body"><p>Tell students directly: here are four factors that make agentic AI higher stakes. Display them on the board with their one-line definitions:</p><ul style="margin:10px 0 10px 18px"><li style="margin-bottom:5px"><strong>Reversibility</strong> — can the action be undone?</li><li style="margin-bottom:5px"><strong>Accountability</strong> — is a human clearly responsible for the outcome?</li><li style="margin-bottom:5px"><strong>Transparency</strong> — does anyone know what the AI decided and why?</li><li style="margin-bottom:5px"><strong>Consent</strong> — did the people affected agree to AI involvement?</li></ul><p>Then lead a discussion applying them. Return to the Part 2 scenario first — for each factor, ask which one is missing or weak in the parent-emailing AI, and why that matters. Then return to the opening spectrum: <em>"Would you move for any of the five scenarios now? Which factor changed your mind?"</em></p><div class="script">"Agentic AI isn't better or worse than AI you just talk to. It's different — because it acts. And when something acts in the world, the question of who's responsible becomes important."</div><div class="callout c-link"><div class="callout-label">Links forward</div><p>Year 8 Lesson 2 shifts from what AI can do to what it might do to your future — exploring how automation is reshaping the job market, and what human skills become more valuable as a result.</p></div><div class="callout c-note"><div class="callout-label">Key idea</div><p><em>AI can already act by itself, and when it gets things wrong, working out who’s responsible is harder than it looks.</em></p></div></div></div>
+
+</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y4 · L1 — Is a machine ever as clever as a person?</title>
+<style>
+
+
+/* ── Reset ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Design tokens — light only ─────────── */
+:root {
+  --bg:            #ffffff;
+  --bg-subtle:     #f7f6f2;
+  --bg-muted:      #edecea;
+  --text:          #1a1916;
+  --text-2:        #57554e;
+  --text-3:        #9c9a93;
+  --border:        rgba(0,0,0,0.08);
+  --border-med:    rgba(0,0,0,0.16);
+
+  --c-hook:        #b45309;
+  --bg-hook:       #fffbeb;
+  --bd-hook:       #fde68a;
+
+  --c-teach:       #4338ca;
+  --bg-teach:      #eef2ff;
+  --bd-teach:      #c7d2fe;
+
+  --c-demo:        #0369a1;
+  --bg-demo:       #f0f9ff;
+  --bd-demo:       #bae6fd;
+
+  --c-activity:    #047857;
+  --bg-activity:   #ecfdf5;
+  --bd-activity:   #a7f3d0;
+
+  --c-plenary:     #6d28d9;
+  --bg-plenary:    #f5f3ff;
+  --bd-plenary:    #ddd6fe;
+
+  --c-note:        #92400e;
+  --bg-note:       #fffbeb;
+  --bd-note:       #f59e0b;
+
+  --c-warn:        #991b1b;
+  --bg-warn:       #fff1f2;
+  --bd-warn:       #fca5a5;
+
+  --c-link:        #1e40af;
+  --bg-link:       #eff6ff;
+  --bd-link:       #93c5fd;
+
+  --c-explore:     #0f766e;
+  --bg-explore:    #f0fdfa;
+  --bd-explore:    #99f6e4;
+
+  --c-disc:        #374151;
+  --bg-disc:       #f9fafb;
+  --bd-disc:       #d1d5db;
+
+  --tag-tools:     #534AB7;
+  --tag-tools-bg:  #EEEDFE;
+}
+
+/* ── Base ───────────────────────────────── */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+/* ── Banner header ──────────────────────── */
+.lp-banner {
+  background: var(--tag-tools);
+  border-radius: 14px;
+  padding: 22px 28px 24px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle decorative circle — depth without clutter */
+.lp-banner::after {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  pointer-events: none;
+}
+
+.banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.banner-chip {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.88);
+}
+
+.banner-chip-theme {
+  background: rgba(255,255,255,0.28);
+  color: #ffffff;
+}
+
+.banner-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.banner-objective {
+  font-size: 14px;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+/* Header wrapper for objectives + resources below banner */
+.lp-header {
+  margin-bottom: 24px;
+  padding-bottom: 28px;
+  border-bottom: 1.5px solid var(--border-med);
+}
+
+/* Kept for compatibility — unused now */
+.chip { display: none; }
+.lp-title { display: none; }
+.lp-objective { display: none; }
+.lp-meta { display: none; }
+
+.block-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+  margin-bottom: 10px;
+}
+
+.header-objectives {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 0.5px solid var(--border-med);
+  margin-bottom: 14px;
+}
+
+.obj-row {
+  display: flex;
+  gap: 14px;
+  padding: 7px 0;
+  border-bottom: 0.5px solid var(--border);
+  align-items: flex-start;
+}
+
+.obj-row:last-child { border-bottom: none; }
+
+.obj-code {
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-size: 11px;
+  color: var(--text-3);
+  flex-shrink: 0;
+  min-width: 54px;
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+
+.obj-text {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.resources-block {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 0.5px solid var(--border-med);
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 24px;
+  list-style: none;
+}
+
+.resources-grid li {
+  font-size: 13.5px;
+  color: var(--text-2);
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  line-height: 1.45;
+}
+
+.resources-grid li::before {
+  content: '';
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid var(--border-med);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.resources-grid li.filename {
+  color: var(--text-3);
+  font-size: 12.5px;
+  font-family: ui-monospace, 'SF Mono', monospace;
+  letter-spacing: 0.01em;
+}
+
+/* ── Rationale ──────────────────────────── */
+.rationale-wrap {
+  margin-bottom: 28px;
+}
+
+.rationale-wrap .block-label {
+  margin-bottom: 8px;
+}
+
+.rationale {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 15px 20px;
+  font-size: 14.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+  border: 0.5px solid var(--border-med);
+}
+
+/* ── Phase cards ────────────────────────── */
+.phase {
+  border-radius: 12px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-med);
+}
+
+.phase-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.phase-tag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.phase-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+
+.phase-dur {
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.phase-body {
+  padding: 18px 20px;
+  background: var(--bg);
+}
+
+.phase-body > p {
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.phase-body > p:last-child { margin-bottom: 0; }
+
+.ph-hook     { border-color: var(--bd-hook); }
+.ph-hook     .phase-head { background: var(--bg-hook); border-color: var(--bd-hook); }
+.ph-hook     .phase-tag  { color: var(--c-hook); }
+
+.ph-teach    { border-color: var(--bd-teach); }
+.ph-teach    .phase-head { background: var(--bg-teach); border-color: var(--bd-teach); }
+.ph-teach    .phase-tag  { color: var(--c-teach); }
+
+.ph-demo     { border-color: var(--bd-demo); }
+.ph-demo     .phase-head { background: var(--bg-demo); border-color: var(--bd-demo); }
+.ph-demo     .phase-tag  { color: var(--c-demo); }
+
+.ph-activity { border-color: var(--bd-activity); }
+.ph-activity .phase-head { background: var(--bg-activity); border-color: var(--bd-activity); }
+.ph-activity .phase-tag  { color: var(--c-activity); }
+
+.ph-plenary  { border-color: var(--bd-plenary); }
+.ph-plenary  .phase-head { background: var(--bg-plenary); border-color: var(--bd-plenary); }
+.ph-plenary  .phase-tag  { color: var(--c-plenary); }
+
+.ph-disc     { border-color: var(--bd-disc); }
+.ph-disc     .phase-head { background: var(--bg-disc); border-color: var(--bd-disc); }
+.ph-disc     .phase-tag  { color: var(--c-disc); }
+
+/* Framework grid */
+.framework {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.fw-cell {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px 12px;
+  text-align: center;
+  border: 0.5px solid var(--border-med);
+}
+
+.fw-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+.fw-desc {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+/* Verbatim script */
+.script {
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--border-med);
+  border-radius: 0 8px 8px 0;
+  padding: 13px 16px;
+  margin: 12px 0;
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* Prompt comparison */
+.prompt-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+
+.prompt-box {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px;
+  border: 0.5px solid var(--border-med);
+}
+
+.prompt-box-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 8px;
+}
+
+.prompt-box.bad  .prompt-box-label { color: var(--c-warn); }
+.prompt-box.good .prompt-box-label { color: var(--c-activity); }
+
+.prompt-text {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.prompt-note {
+  font-size: 12.5px;
+  color: var(--text-3);
+  line-height: 1.4;
+}
+
+/* Student prompts — teacher reference (hints visible) */
+.prompt-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 14px;
+}
+
+.prompt-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  padding: 0 12px 8px 0;
+  border-bottom: 1px solid var(--border-med);
+}
+
+.prompt-table td {
+  padding: 9px 12px 9px 0;
+  vertical-align: top;
+  border-bottom: 0.5px solid var(--border);
+  line-height: 1.5;
+}
+
+.prompt-table tr:last-child td { border-bottom: none; }
+
+.prompt-table td:first-child {
+  font-weight: 600;
+  color: var(--text-3);
+  font-size: 12px;
+  white-space: nowrap;
+  padding-right: 14px;
+}
+
+.prompt-table td:nth-child(2) {
+  color: var(--text);
+  font-style: italic;
+}
+
+.prompt-table td:nth-child(3) {
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+/* Classroom pathways */
+.pathways {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.pathway {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px;
+  border: 0.5px solid var(--border-med);
+}
+
+.pathway-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+  margin-bottom: 7px;
+}
+
+.pathway p {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* Callout boxes */
+.callout {
+  border-left: 3px solid;
+  border-radius: 0 8px 8px 0;
+  padding: 11px 15px;
+  margin: 13px 0;
+}
+
+.callout-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 5px;
+}
+
+.callout p {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+
+.callout p:last-child { margin-bottom: 0; }
+
+.c-note { background: var(--bg-note); border-color: var(--bd-note); }
+.c-note .callout-label { color: var(--c-note); }
+
+.c-warn { background: var(--bg-warn); border-color: var(--bd-warn); }
+.c-warn .callout-label { color: var(--c-warn); }
+
+.c-link { background: var(--bg-link); border-color: var(--bd-link); }
+.c-link .callout-label { color: var(--c-link); }
+
+
+.c-explore { background: var(--bg-explore); border-color: var(--bd-explore); }
+.c-explore .callout-label { color: var(--c-explore); }
+
+/* ── Print ──────────────────────────────── */
+@media print {
+  @page { size: A4; margin: 16mm 18mm; }
+
+  body {
+    font-size: 11pt;
+    max-width: 100%;
+    padding: 0;
+    color: #000;
+    background: #fff;
+  }
+
+  .lp-title { font-size: 21pt; }
+  .lp-header { border-bottom-color: #000; }
+
+  .lp-banner,
+  .phase, .resources-block, .header-objectives,
+  .rationale, .callout, .prompt-box,
+  .pathway, .fw-cell {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .banner-title { font-size: 18pt; }
+  .lp-banner { border-radius: 8px; }
+
+  .phase          { break-inside: avoid; margin-bottom: 10pt; }
+  .prompt-compare { break-inside: avoid; }
+  .pathways       { break-inside: avoid; }
+  .framework      { break-inside: avoid; }
+  .callout        { break-inside: avoid; }
+  .prompt-table   { break-inside: avoid; }
+}
+
+
+/* Banner colour for this lesson (overrides base) */
+.lp-banner { background: #854F0B; }
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════════════════════════════════════ -->
+<header class="lp-header">
+
+  <div class="lp-banner">
+    <div class="banner-meta">
+      <span class="banner-chip">Year 4</span>
+      <span class="banner-chip">Lesson 1</span>
+      <span class="banner-chip">50 min</span>
+      <span class="banner-chip banner-chip-theme">AI &amp; the world</span>
+    </div>
+    <h1 class="banner-title">Is a machine ever as clever as a person?</h1>
+    <p class="banner-objective">Students explore the difference between human intelligence and AI pattern-matching — leaving with three durable ideas: AI is fast, AI is pattern-based, and AI has never experienced anything.</p>
+  </div>
+
+  <div class="header-objectives">
+    <div class="block-label">Cambridge Digital Literacy objectives</div>
+    <div class="obj-row"><span class="obj-code">4DW.06</span><span class="obj-text">Understand that AI tools are all machine-based systems and do not have emotions and self-regulation skills in the same way as humans.</span></div>
+    <div class="obj-row"><span class="obj-code">4DW.10</span><span class="obj-text">Compare and contrast AI with human intelligence to differentiate machine and human forms of intelligence.</span></div>
+  </div>
+
+  <div class="resources-block">
+    <div class="block-label">Resources</div>
+    <ul class="resources-grid">
+      <li>Teacher device + projector, logged in to Microsoft Copilot (or Bing Image Creator for live generation)</li>
+      <li>Y4 L1 - Van Gogh Space Cat.png — display full-screen in Phase 3, or generate live with prompt: <em>"a cat in a spacesuit underwater eating chocolate cake in the style of Van Gogh"</em></li>
+      <li class="filename"><a href="Y4 L1 - Van Gogh Space Cat.png" target="_blank">Y4 L1 - Van Gogh Space Cat</a></li>
+      <li>Year 4 AI Literacy lesson 1 — How AI works image.png — display full-screen in Phase 4</li>
+      <li class="filename"><a href="Y4 L1 — How AI works image.png" target="_blank">Y4 L1 — How AI works image</a></li>
+    </ul>
+  </div>
+
+</header>
+
+<!-- ═══════ RATIONALE ════════════════════════════════════ -->
+<div class="rationale-wrap">
+  <div class="block-label">Rationale</div>
+  <div class="rationale"> Students should understand that AI is fast, that it works by matching patterns from what it's been trained on, and that it has never actually experienced anything it talks about.</div>
+</div>
+
+<!-- ═══════ LESSON BODY ══════════════════════════════════ -->
+<div class="phase ph-hook"><div class="phase-head"><span class="phase-tag">Hook</span><span class="phase-title">The Super-Fast Librarian</span><span class="phase-dur">0–8 min</span></div><div class="phase-body"><p>Open by saying:</p><div class="script">"Imagine a librarian who has read every book ever written. Every website. Every article. Every conversation anyone has ever posted online. And they read all of it before you were born — and then stopped. They remember everything perfectly. They can answer any question in under a second. But here's the thing — they have never left the library. They've never tasted food. Never felt cold. Never laughed at a joke because something was actually funny. They just know what jokes are supposed to look like. That's what we're talking about today."</div><p>Open the floor for 2–3 student questions or reactions.</p></div></div>
+<div class="phase ph-demo"><div class="phase-head"><span class="phase-tag">Live AI Demo</span><span class="phase-title">Speed and pattern-matching</span><span class="phase-dur">8–18 min</span></div><div class="phase-body"><p>Run this prompt in Copilot: 'write a three-sentence story about a penguin who runs a pizza shop'. Point out the speed that the AI is able to provide the output, then read it aloud.</p><p>Ask three questions:</p><ul style="margin:10px 0 10px 18px"><li style="margin-bottom:5px">Was that fast?</li><li style="margin-bottom:5px">Did the machine know what a penguin actually is? Has it ever seen one in a zoo?</li><li style="margin-bottom:5px">So how did it write about one so well?</li></ul><p>Now type a second prompt live: <em>"What does chocolate cake taste like?"</em> Read the response aloud. Ask: "Has it ever eaten chocolate cake? So what is it actually doing?"</p></div></div>
+<div class="phase ph-demo"><div class="phase-head"><span class="phase-tag">Live AI Demo</span><span class="phase-title">The Van Gogh space-cat</span><span class="phase-dur">18–28 min</span></div><div class="phase-body"><p>Display the premade AI-generated image full-screen, or run this prompt live in Copilot: <em>Draw a cat in a spacesuit underwater eating chocolate cake in the style of Van Gogh</em>. Give 10–15 seconds of silence before saying anything.</p><p>Then explain:</p><div class="script">"I typed a description into an AI image tool and it made this. But here's the thing — the AI has never seen a cat in a spacesuit underwater eating chocolate cake. Nobody has. So how did it make this? It has seen millions of pictures of cats. Millions of spacesuits. Lots of underwater photographs. And hundreds of Van Gogh paintings, with those swirling wavy brushstrokes everywhere. The AI didn't imagine this picture. It wove together patterns from everything it had seen."</div><p>Point to specific details: brushstrokes on the spacesuit, the cat's face, the cake. Then ask: <em>"Did the AI enjoy making this? Was it proud of it? Did it think it looked good?"</em></p><p>Display the <b>'How AI works' infographic</b> full-screen. Walk through it by pointing back to what they've just seen — not by reading boxes aloud. Connect: Training → Pattern-matching → Output.</p></div></div>
+<div class="phase ph-activity"><div class="phase-head"><span class="phase-tag">Activity</span><span class="phase-title">Three races</span><span class="phase-dur">28–38 min</span></div><div class="phase-body"><p>Three short, fast races. Keep energy high. For each, run the AI at the same moment as the students.</p><p><strong>Race 1 — Fruits:</strong> On your count, students write as many different fruits as they can. Simultaneously type <em>'List 20 different fruits'</em>. Call out when the AI finishes — before most students have reached five. Ask: <em>"Did it matter to the AI that it won?"</em></p><p><strong>Race 2 — Portrait:</strong> Students have 2 minutes to draw the person next to them from observation. Meanwhile type <em>'draw a portrait of the person sitting next to me'</em> — the AI cannot do this. Ask: <em>"The AI has never seen your friend. It doesn't know the way they're sitting right now. It can't see. It can't notice. You can. <b>(NB: when I tried this, Copilot drew me an amazing portrait of an imagined person...)"</b></em></p><p><strong>Race 3 — Joke:</strong> Ask 2–3 students to tell their favourite school-appropriate joke. Then ask the AI for <em>'a funny joke for a Year 4 student'</em>. Ask: <em>"Which jokes were funnier, the ones told by students or the one told by AI? Was there a difference?"</em></p><div class="script">"Right, let's think about what just happened there. The AI won the fruit race easily, but it didn't feel proud about it, it doesn't care whether it wins or loses anything. Then with the portrait, it couldn't do it at all, because it's never actually seen your partner sitting there, it can only work with patterns it's already seen before, not what's really in front of it. And the jokes, well, you decide, were the AI's jokes actually funnier, or did the ones from your friends land better because they knew you'd get them? Fast, yes. Clever with patterns, yes. But not one bit of that was real experience."</div></div></div>
+<div class="phase ph-plenary"><div class="phase-head"><span class="phase-tag">Plenary</span><span class="phase-title">Data vs. Experience</span><span class="phase-dur">38–50 min</span></div><div class="phase-body"><p>Set the scene: <em>"I'm going to read you three real responses an AI gave when I asked it about things everyone in this room has actually experienced. Listen for what's missing."</em></p><p>Read each in a flat, neutral, unhurried voice — no character, no prop, just genuinely deadpan. Include the chocolate cake question from earlier:</p><ul style="margin:10px 0 10px 18px"><li style="margin-bottom:5px"><em>'What does chocolate cake taste like?'</em> → "Chocolate cake is typically described as sweet, rich, and moist, often containing cocoa solids and fats that trigger pleasure responses in the brain."</li><li style="margin-bottom:5px"><em>'How does it feel to win a race?'</em> → "Winning a race is associated with a release of dopamine, an elevated heart rate, and behaviours such as smiling and celebrating."</li><li style="margin-bottom:5px"><em>'Are you happy today?'</em> → "I do not have moods or feelings. I am currently functioning as intended."</li></ul><p>Ask the class:</p><ul style="margin:10px 0 10px 18px"><li style="margin-bottom:5px">"That's thousands of data points. But did any of it sound like someone who's actually tasted cake, or won a race?"</li><li style="margin-bottom:5px">"What's missing from those answers?" (steer toward: <em>feeling, memory, a body, a real moment</em>)</li></ul><div class="script">"The AI can describe cake perfectly without ever tasting it, because it's not describing a memory — it's describing a pattern in millions of other people's descriptions. That's the whole difference. It has the data. You have the life. And that's why, however fast or fluent it gets, you're always the one who decides whether what it says actually rings true."</div><p>Move straight into a quick show of hands or a couple of student reactions — no held pause, just keep momentum into the close.</p><div class="callout c-link"><div class="callout-label">Links forward</div><p>Year 5 Lesson 1 builds on this directly — students will start crafting their own prompts with a structured framework. The groundwork laid here (AI is fast, AI is pattern-based, AI has no experience) makes that lesson land.</p></div><div class="callout c-explore"><div class="callout-label">Keep exploring</div><p>During the rest of the term, invite students to suggest further prompts for silly stories, images etc. and run them live on the board. Keep revisiting the core idea: that AI is using patterns from all of the data it has been given to create these novel outputs.</p></div><div class="callout c-note"><div class="callout-label">Key idea</div><p><em>AI has learned from everything ever written — but it has never tasted food, felt embarrassed, or made a real friend, and that gap is exactly what makes you different from it.</em></p></div></div></div>
+</body>
+</html>

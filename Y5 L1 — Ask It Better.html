@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y5 · L1 — Ask It Better</title>
+<style>
+
+/* ── Reset ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Design tokens — light only ─────────── */
+:root {
+  --bg:            #ffffff;
+  --bg-subtle:     #f7f6f2;
+  --bg-muted:      #edecea;
+  --text:          #1a1916;
+  --text-2:        #57554e;
+  --text-3:        #9c9a93;
+  --border:        rgba(0,0,0,0.08);
+  --border-med:    rgba(0,0,0,0.16);
+
+  --c-hook:        #b45309;
+  --bg-hook:       #fffbeb;
+  --bd-hook:       #fde68a;
+
+  --c-teach:       #4338ca;
+  --bg-teach:      #eef2ff;
+  --bd-teach:      #c7d2fe;
+
+  --c-demo:        #0369a1;
+  --bg-demo:       #f0f9ff;
+  --bd-demo:       #bae6fd;
+
+  --c-activity:    #047857;
+  --bg-activity:   #ecfdf5;
+  --bd-activity:   #a7f3d0;
+
+  --c-plenary:     #6d28d9;
+  --bg-plenary:    #f5f3ff;
+  --bd-plenary:    #ddd6fe;
+
+  --c-note:        #92400e;
+  --bg-note:       #fffbeb;
+  --bd-note:       #f59e0b;
+
+  --c-warn:        #991b1b;
+  --bg-warn:       #fff1f2;
+  --bd-warn:       #fca5a5;
+
+  --c-link:        #1e40af;
+  --bg-link:       #eff6ff;
+  --bd-link:       #93c5fd;
+
+  --c-explore:     #0f766e;
+  --bg-explore:    #f0fdfa;
+  --bd-explore:    #99f6e4;
+
+  --tag-tools:     #534AB7;
+  --tag-tools-bg:  #EEEDFE;
+}
+
+/* ── Base ───────────────────────────────── */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+/* ── Banner header ──────────────────────── */
+.lp-banner {
+  background: var(--tag-tools);
+  border-radius: 14px;
+  padding: 22px 28px 24px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle decorative circle — depth without clutter */
+.lp-banner::after {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  pointer-events: none;
+}
+
+.banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.banner-chip {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.88);
+}
+
+.banner-chip-theme {
+  background: rgba(255,255,255,0.28);
+  color: #ffffff;
+}
+
+.banner-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.banner-objective {
+  font-size: 14px;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+/* Header wrapper for objectives + resources below banner */
+.lp-header {
+  margin-bottom: 24px;
+  padding-bottom: 28px;
+  border-bottom: 1.5px solid var(--border-med);
+}
+
+/* Kept for compatibility — unused now */
+.chip { display: none; }
+.lp-title { display: none; }
+.lp-objective { display: none; }
+.lp-meta { display: none; }
+
+.block-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+  margin-bottom: 10px;
+}
+
+.header-objectives {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 0.5px solid var(--border-med);
+  margin-bottom: 14px;
+}
+
+.obj-row {
+  display: flex;
+  gap: 14px;
+  padding: 7px 0;
+  border-bottom: 0.5px solid var(--border);
+  align-items: flex-start;
+}
+
+.obj-row:last-child { border-bottom: none; }
+
+.obj-code {
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-size: 11px;
+  color: var(--text-3);
+  flex-shrink: 0;
+  min-width: 54px;
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+
+.obj-text {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.resources-block {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 0.5px solid var(--border-med);
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 24px;
+  list-style: none;
+}
+
+.resources-grid li {
+  font-size: 13.5px;
+  color: var(--text-2);
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  line-height: 1.45;
+}
+
+.resources-grid li::before {
+  content: '';
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid var(--border-med);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.resources-grid li.filename {
+  color: var(--text-3);
+  font-size: 12.5px;
+  font-family: ui-monospace, 'SF Mono', monospace;
+  letter-spacing: 0.01em;
+}
+
+/* ── Rationale ──────────────────────────── */
+.rationale-wrap {
+  margin-bottom: 28px;
+}
+
+.rationale-wrap .block-label {
+  margin-bottom: 8px;
+}
+
+.rationale {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 15px 20px;
+  font-size: 14.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+  border: 0.5px solid var(--border-med);
+}
+
+/* ── Phase cards ────────────────────────── */
+.phase {
+  border-radius: 12px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-med);
+}
+
+.phase-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.phase-tag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.phase-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+
+.phase-dur {
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.phase-body {
+  padding: 18px 20px;
+  background: var(--bg);
+}
+
+.phase-body > p {
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.phase-body > p:last-child { margin-bottom: 0; }
+
+.ph-hook     { border-color: var(--bd-hook); }
+.ph-hook     .phase-head { background: var(--bg-hook); border-color: var(--bd-hook); }
+.ph-hook     .phase-tag  { color: var(--c-hook); }
+
+.ph-teach    { border-color: var(--bd-teach); }
+.ph-teach    .phase-head { background: var(--bg-teach); border-color: var(--bd-teach); }
+.ph-teach    .phase-tag  { color: var(--c-teach); }
+
+.ph-demo     { border-color: var(--bd-demo); }
+.ph-demo     .phase-head { background: var(--bg-demo); border-color: var(--bd-demo); }
+.ph-demo     .phase-tag  { color: var(--c-demo); }
+
+.ph-activity { border-color: var(--bd-activity); }
+.ph-activity .phase-head { background: var(--bg-activity); border-color: var(--bd-activity); }
+.ph-activity .phase-tag  { color: var(--c-activity); }
+
+.ph-plenary  { border-color: var(--bd-plenary); }
+.ph-plenary  .phase-head { background: var(--bg-plenary); border-color: var(--bd-plenary); }
+.ph-plenary  .phase-tag  { color: var(--c-plenary); }
+
+/* Framework grid */
+.framework {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.fw-cell {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px 12px;
+  text-align: center;
+  border: 0.5px solid var(--border-med);
+}
+
+.fw-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+.fw-desc {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+/* Verbatim script */
+.script {
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--border-med);
+  border-radius: 0 8px 8px 0;
+  padding: 13px 16px;
+  margin: 12px 0;
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* Prompt comparison */
+.prompt-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+
+.prompt-box {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px;
+  border: 0.5px solid var(--border-med);
+}
+
+.prompt-box-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 8px;
+}
+
+.prompt-box.bad  .prompt-box-label { color: var(--c-warn); }
+.prompt-box.good .prompt-box-label { color: var(--c-activity); }
+
+.prompt-text {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.prompt-note {
+  font-size: 12.5px;
+  color: var(--text-3);
+  line-height: 1.4;
+}
+
+/* Student prompts — teacher reference (hints visible) */
+.prompt-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 14px;
+}
+
+.prompt-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  padding: 0 12px 8px 0;
+  border-bottom: 1px solid var(--border-med);
+}
+
+.prompt-table td {
+  padding: 9px 12px 9px 0;
+  vertical-align: top;
+  border-bottom: 0.5px solid var(--border);
+  line-height: 1.5;
+}
+
+.prompt-table tr:last-child td { border-bottom: none; }
+
+.prompt-table td:first-child {
+  font-weight: 600;
+  color: var(--text-3);
+  font-size: 12px;
+  white-space: nowrap;
+  padding-right: 14px;
+}
+
+.prompt-table td:nth-child(2) {
+  color: var(--text);
+  font-style: italic;
+}
+
+.prompt-table td:nth-child(3) {
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+/* Classroom pathways */
+.pathways {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.pathway {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px;
+  border: 0.5px solid var(--border-med);
+}
+
+.pathway-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+  margin-bottom: 7px;
+}
+
+.pathway p {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* Callout boxes */
+.callout {
+  border-left: 3px solid;
+  border-radius: 0 8px 8px 0;
+  padding: 11px 15px;
+  margin: 13px 0;
+}
+
+.callout-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 5px;
+}
+
+.callout p {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+
+.callout p:last-child { margin-bottom: 0; }
+
+.c-note { background: var(--bg-note); border-color: var(--bd-note); }
+.c-note .callout-label { color: var(--c-note); }
+
+.c-warn { background: var(--bg-warn); border-color: var(--bd-warn); }
+.c-warn .callout-label { color: var(--c-warn); }
+
+.c-link { background: var(--bg-link); border-color: var(--bd-link); }
+.c-link .callout-label { color: var(--c-link); }
+
+.c-explore { background: var(--bg-explore); border-color: var(--bd-explore); }
+.c-explore .callout-label { color: var(--c-explore); }
+
+/* ── Print ──────────────────────────────── */
+@media print {
+  @page { size: A4; margin: 16mm 18mm; }
+
+  body {
+    font-size: 11pt;
+    max-width: 100%;
+    padding: 0;
+    color: #000;
+    background: #fff;
+  }
+
+  .lp-title { font-size: 21pt; }
+  .lp-header { border-bottom-color: #000; }
+
+  .lp-banner,
+  .phase, .resources-block, .header-objectives,
+  .rationale, .callout, .prompt-box,
+  .pathway, .fw-cell {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .banner-title { font-size: 18pt; }
+  .lp-banner { border-radius: 8px; }
+
+  .phase          { break-inside: avoid; margin-bottom: 10pt; }
+  .prompt-compare { break-inside: avoid; }
+  .pathways       { break-inside: avoid; }
+  .framework      { break-inside: avoid; }
+  .callout        { break-inside: avoid; }
+  .prompt-table   { break-inside: avoid; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════════════════════════════════════ -->
+<header class="lp-header">
+
+  <div class="lp-banner">
+    <div class="banner-meta">
+      <span class="banner-chip">Year 5</span>
+      <span class="banner-chip">Lesson 1</span>
+      <span class="banner-chip">45 min</span>
+      <span class="banner-chip banner-chip-theme">Prompting &amp; tools</span>
+    </div>
+    <h1 class="banner-title">Ask It Better</h1>
+    <p class="banner-objective">Students understand that prompt quality determines output quality, and leave with a practical three-part framework — Role, Task, Detail — they can apply immediately.</p>
+  </div>
+
+  <div class="header-objectives">
+    <div class="block-label">Cambridge Digital Literacy objectives</div>
+    <div class="obj-row">
+      <span class="obj-code">5TC.06</span>
+      <span class="obj-text">Explore how prompting frameworks can be used when interacting with AI tools.</span>
+    </div>
+    <div class="obj-row">
+      <span class="obj-code">5TC.08</span>
+      <span class="obj-text">Explore how refining initial text and verbal prompts can impact the accuracy and relevance of GenAI results.</span>
+    </div>
+  </div>
+
+  <div class="resources-block">
+    <div class="block-label">Resources needed</div>
+    <ul class="resources-grid">
+      <li>Teacher laptop + projector</li>
+      <li>Copilot (or school AI tool) — 2 windows side-by-side, set up before class</li>
+      <li>No student devices required</li>
+      <li class="filename">Y5 L1 — Student resource to print.pdf — one per pair</li>
+    </ul>
+  </div>
+
+</header>
+
+
+<!-- ═══════ RATIONALE ════════════════════════════════════ -->
+<div class="rationale-wrap">
+  <div class="block-label">Rationale</div>
+  <div class="rationale">
+    Students have been aware of AI since Year 4 but have never been taught to communicate with it deliberately. This lesson surfaces that gap in the first minute — without any technology — then fills it with a practical framework that underpins every lesson in the suite from here on.
+  </div>
+</div>
+
+
+<!-- ═══════ HOOK ══════════════════════════════════════════ -->
+<div class="phase ph-hook">
+  <div class="phase-head">
+    <span class="phase-tag">Hook</span>
+    <span class="phase-title">Plan me a party</span>
+    <span class="phase-dur">0 – 5 min</span>
+  </div>
+  <div class="phase-body">
+    <p>Start by saying this — no build-up, no explanation:</p>
+    <div class="script">"Plan me a party."</div>
+    <p>Wait. Students will hopefully fire back clarifying questions: <em>How many people? What's the budget? Where is it?</em> Write them on the board as fast as they come. Do not answer them.</p>
+    <p>Once the board is full, explain: <em>"Every question you just asked represents information that was missing from my instruction. AI has exactly the same problem when we talk to it vaguely."</em></p>
+  </div>
+</div>
+
+
+<!-- ═══════ TEACH ══════════════════════════════════════════ -->
+<div class="phase ph-teach">
+  <div class="phase-head">
+    <span class="phase-tag">Teach</span>
+    <span class="phase-title">The three ingredients</span>
+    <span class="phase-dur">5 – 12 min</span>
+  </div>
+  <div class="phase-body">
+    <p>Write these three words on the board. Keep them visible for the rest of the lesson.</p>
+
+    <div class="framework">
+      <div class="fw-cell">
+        <div class="fw-label">Role</div>
+        <div class="fw-desc">Who should the AI pretend to be?</div>
+      </div>
+      <div class="fw-cell">
+        <div class="fw-label">Task</div>
+        <div class="fw-desc">What exact action do you want it to take?</div>
+      </div>
+      <div class="fw-cell">
+        <div class="fw-label">Detail</div>
+        <div class="fw-desc">What specific constraints or facts must it know?</div>
+      </div>
+    </div>
+
+    <div class="callout c-note">
+      <div class="callout-label">Teacher note</div>
+      <p>Frame these as questions to ask yourself <em>before</em> typing — not a rigid rulebook to memorise. The goal is a habit, not a formula. Keep pointing back to the three words on the board when they come up during the lesson.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════ LIVE AI DEMO ═══════════════════════════════════ -->
+<div class="phase ph-demo">
+  <div class="phase-head">
+    <span class="phase-tag">Live AI Demo</span>
+    <span class="phase-title">Bad vs. good — side-by-side comparison</span>
+    <span class="phase-dur">12 – 22 min</span>
+  </div>
+  <div class="phase-body">
+    <p>Open Copilot in two side-by-side windows on the projector. Paste these prompts into them	.</p>
+
+    <div class="prompt-compare">
+      <div class="prompt-box bad">
+        <div class="prompt-box-label">Bad prompt — paste first</div>
+        <div class="prompt-text">"Tell me about animals."</div>
+        <div class="prompt-note">Expected: dense, dry, textbook-style. <b>Ask: "Would you actually sit and read this? Is it useful to you right now?"</b></div>
+      </div>
+      <div class="prompt-box good">
+        <div class="prompt-box-label">Good prompt — paste second</div>
+        <div class="prompt-text">"You are a nature expert explaining things to a 10-year-old. Give me five surprising facts about deep sea creatures that most people don't know. Write each fact in one or two sentences."</div>
+        <div class="prompt-note">Expected: engaging, crisp, age-appropriate. <b>Ask: "What specific changes made the difference?"</b></div>
+      </div>
+    </div>
+
+    <div class="callout c-warn">
+      <div class="callout-label">Setup safeguard</div>
+      <p>Log in and arrange both windows <em>before students arrive</em>. If Copilot adds automated conversational follow-ups, point it out: "The AI is guessing what you want next — the choice to click always belongs to you."</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════ ACTIVITY ═══════════════════════════════════════ -->
+<div class="phase ph-activity">
+  <div class="phase-head">
+    <span class="phase-tag">Activity</span>
+    <span class="phase-title">Pair prompt engineering</span>
+    <span class="phase-dur">22 – 35 min</span>
+  </div>
+  <div class="phase-body">
+    <p>Hand out <strong>Y5 L1 — Student resource to print</strong>. Each pair selects one of the five prompts and rewrites it using the Role / Task / Detail framework. The prompts are printed without hints — pairs must identify what is missing themselves.</p>
+
+    <p>Teacher reference — what each prompt is missing (do not share with students):</p>
+
+    <table class="prompt-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Prompt</th>
+          <th>What's missing</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>"Help me with my homework."</td>
+          <td><b>Subject, specific question, age, target format, length</b></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>"Tell me something interesting."</td>
+          <td><b>Domain/topic, target age, focus area, format</b></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>"Make me a quiz."</td>
+          <td><b>Topic, audience, number of questions, style, answer key inclusion</b></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>"What should I do for my history project."</td>
+          <td><b>Topic focus, scope, age, prior knowledge — high risk of outsourcing core thinking</b></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>"Tell me about space."</td>
+          <td><b>Specific celestial body or phenomenon, depth, layout</b></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout c-note">
+      <div class="callout-label">Teacher note — Prompt 4</div>
+      <p>Watch whether pairs ask the AI for <em>answers</em> or for good <em>investigation questions</em>. If they ask for answers, prompt them: <em>"But then whose thinking is it?"</em> </p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════ LIVE AI DEMO (2) ═══════════════════════════════ -->
+<div class="phase ph-demo">
+  <div class="phase-head">
+    <span class="phase-tag">Live AI Demo</span>
+    <span class="phase-title">Student prompts — closing the loop</span>
+    <span class="phase-dur">35 – 42 min</span>
+  </div>
+  <div class="phase-body">
+    <p>Select 2–3 standout student-written prompts and run them live in Copilot via the projector. Evaluate each output together:</p>
+    <div class="script">"Did our ingredients work? Did the AI give exactly what we designed for? Is there still anything missing?"</div>
+    <p>Keep this tight. The goal is to show the direct connection between precise input and quality output — not to test every pair's prompt.</p>
+
+    <div class="callout c-note">
+      <div class="callout-label">Safety net</div>
+      <p>If a student prompt produces an odd or messy result, frame it as a win: <em>"Look — the AI still got confused. What specific detail did we forget to protect against?"</em></p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════ PLENARY ════════════════════════════════════════ -->
+<div class="phase ph-plenary">
+  <div class="phase-head">
+    <span class="phase-tag">Plenary</span>
+    <span class="phase-title">Landing the idea</span>
+    <span class="phase-dur">42 – 45 min</span>
+  </div>
+  <div class="phase-body">
+    <div class="script">"Precision is a superpower. A vague question gets a vague answer — whether you're asking a person, a search engine, or an AI. The people who master tools are always the ones who learn to be exceptionally clear about what they want."</div>
+    <p>Ask: <em>"Where else in life does being precise with your words matter?"</em> Take 2–3 responses.</p>
+
+    <div class="callout c-link">
+      <div class="callout-label">Links forward</div>
+      <p>Role / Task / Detail reappears in Y6 L3 <em>(Sharpen it)</em> and is formalised as full prompt engineering in Y8 L3 <em>(Engineer the prompt)</em>.</p>
+    </div>
+    <div class="callout c-explore">
+      <div class="callout-label">Keep exploring</div>
+      <p>Consider using future tutor time to practise this skill further - little and often! Or, you might share examples from your own AI use where you either got a poor result from not being specific enough, or a good result form being specific.</p>
+    </div>
+    <div class="callout c-note"><div class="callout-label">Key idea</div><p><em>The quality of what you get from AI depends entirely on the quality of what you ask — and asking well is a learnable skill.</em></p></div>
+  </div>
+</div>
+
+
+</body>
+</html>

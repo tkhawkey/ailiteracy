@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y7 · L3 — The cost of clever</title>
+<style>
+
+/* ── Reset ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Design tokens — light only ─────────── */
+:root {
+  --bg:            #ffffff;
+  --bg-subtle:     #f7f6f2;
+  --bg-muted:      #edecea;
+  --text:          #1a1916;
+  --text-2:        #57554e;
+  --text-3:        #9c9a93;
+  --border:        rgba(0,0,0,0.08);
+  --border-med:    rgba(0,0,0,0.16);
+
+  --c-hook:        #b45309;
+  --bg-hook:       #fffbeb;
+  --bd-hook:       #fde68a;
+
+  --c-teach:       #4338ca;
+  --bg-teach:      #eef2ff;
+  --bd-teach:      #c7d2fe;
+
+  --c-demo:        #0369a1;
+  --bg-demo:       #f0f9ff;
+  --bd-demo:       #bae6fd;
+
+  --c-activity:    #047857;
+  --bg-activity:   #ecfdf5;
+  --bd-activity:   #a7f3d0;
+
+  --c-plenary:     #6d28d9;
+  --bg-plenary:    #f5f3ff;
+  --bd-plenary:    #ddd6fe;
+
+  --c-note:        #92400e;
+  --bg-note:       #fffbeb;
+  --bd-note:       #f59e0b;
+
+  --c-warn:        #991b1b;
+  --bg-warn:       #fff1f2;
+  --bd-warn:       #fca5a5;
+
+  --c-link:        #1e40af;
+  --bg-link:       #eff6ff;
+  --bd-link:       #93c5fd;
+
+  --tag-tools:     #534AB7;
+  --tag-tools-bg:  #EEEDFE;
+}
+
+/* ── Base ───────────────────────────────── */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+/* ── Banner header ──────────────────────── */
+.lp-banner {
+  background: var(--tag-tools);
+  border-radius: 14px;
+  padding: 22px 28px 24px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle decorative circle — depth without clutter */
+.lp-banner::after {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  pointer-events: none;
+}
+
+.banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.banner-chip {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.88);
+}
+
+.banner-chip-theme {
+  background: rgba(255,255,255,0.28);
+  color: #ffffff;
+}
+
+.banner-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.banner-objective {
+  font-size: 14px;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+/* Header wrapper for objectives + resources below banner */
+.lp-header {
+  margin-bottom: 24px;
+  padding-bottom: 28px;
+  border-bottom: 1.5px solid var(--border-med);
+}
+
+/* Kept for compatibility — unused now */
+.chip { display: none; }
+.lp-title { display: none; }
+.lp-objective { display: none; }
+.lp-meta { display: none; }
+
+.block-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+  margin-bottom: 10px;
+}
+
+.header-objectives {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 0.5px solid var(--border-med);
+  margin-bottom: 14px;
+}
+
+.obj-row {
+  display: flex;
+  gap: 14px;
+  padding: 7px 0;
+  border-bottom: 0.5px solid var(--border);
+  align-items: flex-start;
+}
+
+.obj-row:last-child { border-bottom: none; }
+
+.obj-code {
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-size: 11px;
+  color: var(--text-3);
+  flex-shrink: 0;
+  min-width: 54px;
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+
+.obj-text {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.resources-block {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 0.5px solid var(--border-med);
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 24px;
+  list-style: none;
+}
+
+.resources-grid li {
+  font-size: 13.5px;
+  color: var(--text-2);
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  line-height: 1.45;
+}
+
+.resources-grid li::before {
+  content: '';
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid var(--border-med);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.resources-grid li.filename {
+  color: var(--text-3);
+  font-size: 12.5px;
+  font-family: ui-monospace, 'SF Mono', monospace;
+  letter-spacing: 0.01em;
+}
+
+/* ── Rationale ──────────────────────────── */
+.rationale-wrap {
+  margin-bottom: 28px;
+}
+
+.rationale-wrap .block-label {
+  margin-bottom: 8px;
+}
+
+.rationale {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 15px 20px;
+  font-size: 14.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+  border: 0.5px solid var(--border-med);
+}
+
+/* ── Phase cards ────────────────────────── */
+.phase {
+  border-radius: 12px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-med);
+}
+
+.phase-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.phase-tag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.phase-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+
+.phase-dur {
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.phase-body {
+  padding: 18px 20px;
+  background: var(--bg);
+}
+
+.phase-body > p {
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.phase-body > p:last-child { margin-bottom: 0; }
+
+.ph-hook     { border-color: var(--bd-hook); }
+.ph-hook     .phase-head { background: var(--bg-hook); border-color: var(--bd-hook); }
+.ph-hook     .phase-tag  { color: var(--c-hook); }
+
+.ph-teach    { border-color: var(--bd-teach); }
+.ph-teach    .phase-head { background: var(--bg-teach); border-color: var(--bd-teach); }
+.ph-teach    .phase-tag  { color: var(--c-teach); }
+
+.ph-demo     { border-color: var(--bd-demo); }
+.ph-demo     .phase-head { background: var(--bg-demo); border-color: var(--bd-demo); }
+.ph-demo     .phase-tag  { color: var(--c-demo); }
+
+.ph-activity { border-color: var(--bd-activity); }
+.ph-activity .phase-head { background: var(--bg-activity); border-color: var(--bd-activity); }
+.ph-activity .phase-tag  { color: var(--c-activity); }
+
+.ph-plenary  { border-color: var(--bd-plenary); }
+.ph-plenary  .phase-head { background: var(--bg-plenary); border-color: var(--bd-plenary); }
+.ph-plenary  .phase-tag  { color: var(--c-plenary); }
+
+/* Framework grid */
+.framework {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.fw-cell {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px 12px;
+  text-align: center;
+  border: 0.5px solid var(--border-med);
+}
+
+.fw-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+.fw-desc {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+/* Verbatim script */
+.script {
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--border-med);
+  border-radius: 0 8px 8px 0;
+  padding: 13px 16px;
+  margin: 12px 0;
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* Prompt comparison */
+.prompt-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+
+.prompt-box {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px;
+  border: 0.5px solid var(--border-med);
+}
+
+.prompt-box-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 8px;
+}
+
+.prompt-box.bad  .prompt-box-label { color: var(--c-warn); }
+.prompt-box.good .prompt-box-label { color: var(--c-activity); }
+
+.prompt-text {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.prompt-note {
+  font-size: 12.5px;
+  color: var(--text-3);
+  line-height: 1.4;
+}
+
+/* Student prompts — teacher reference (hints visible) */
+.prompt-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 14px;
+}
+
+.prompt-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  padding: 0 12px 8px 0;
+  border-bottom: 1px solid var(--border-med);
+}
+
+.prompt-table td {
+  padding: 9px 12px 9px 0;
+  vertical-align: top;
+  border-bottom: 0.5px solid var(--border);
+  line-height: 1.5;
+}
+
+.prompt-table tr:last-child td { border-bottom: none; }
+
+.prompt-table td:first-child {
+  font-weight: 600;
+  color: var(--text-3);
+  font-size: 12px;
+  white-space: nowrap;
+  padding-right: 14px;
+}
+
+.prompt-table td:nth-child(2) {
+  color: var(--text);
+  font-style: italic;
+}
+
+.prompt-table td:nth-child(3) {
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+/* Classroom pathways */
+.pathways {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.pathway {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px;
+  border: 0.5px solid var(--border-med);
+}
+
+.pathway-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+  margin-bottom: 7px;
+}
+
+.pathway p {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* Callout boxes */
+.callout {
+  border-left: 3px solid;
+  border-radius: 0 8px 8px 0;
+  padding: 11px 15px;
+  margin: 13px 0;
+}
+
+.callout-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 5px;
+}
+
+.callout p {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+
+.callout p:last-child { margin-bottom: 0; }
+
+.c-note { background: var(--bg-note); border-color: var(--bd-note); }
+.c-note .callout-label { color: var(--c-note); }
+
+.c-warn { background: var(--bg-warn); border-color: var(--bd-warn); }
+.c-warn .callout-label { color: var(--c-warn); }
+
+.c-link { background: var(--bg-link); border-color: var(--bd-link); }
+.c-link .callout-label { color: var(--c-link); }
+
+/* ── Print ──────────────────────────────── */
+@media print {
+  @page { size: A4; margin: 16mm 18mm; }
+
+  body {
+    font-size: 11pt;
+    max-width: 100%;
+    padding: 0;
+    color: #000;
+    background: #fff;
+  }
+
+  .lp-title { font-size: 21pt; }
+  .lp-header { border-bottom-color: #000; }
+
+  .lp-banner,
+  .phase, .resources-block, .header-objectives,
+  .rationale, .callout, .prompt-box,
+  .pathway, .fw-cell {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .banner-title { font-size: 18pt; }
+  .lp-banner { border-radius: 8px; }
+
+  .phase          { break-inside: avoid; margin-bottom: 10pt; }
+  .prompt-compare { break-inside: avoid; }
+  .pathways       { break-inside: avoid; }
+  .framework      { break-inside: avoid; }
+  .callout        { break-inside: avoid; }
+  .prompt-table   { break-inside: avoid; }
+}
+
+
+.lp-banner { background: #854F0B; }
+</style>
+</head>
+<body>
+
+<header class="lp-header">
+
+  <div class="lp-banner">
+    <div class="banner-meta">
+      <span class="banner-chip">Year 7</span>
+      <span class="banner-chip">Lesson 3</span>
+      <span class="banner-chip">50 min</span>
+      <span class="banner-chip banner-chip-theme">AI &amp; the world</span>
+    </div>
+    <h1 class="banner-title">The cost of clever</h1>
+    <p class="banner-objective">Students investigate the hidden energy and environmental costs of AI — leaving with a felt understanding that using a powerful tool responsibly starts with knowing what it actually costs.</p>
+  </div>
+
+  <div class="header-objectives">
+    <div class="block-label">Cambridge Digital Literacy objectives</div>
+    <div class="obj-row"><span class="obj-code">7DW.02</span><span class="obj-text">Understand the environmental impact of digital systems, including the energy and water consumption of data centres and AI infrastructure.</span></div>
+    <div class="obj-row"><span class="obj-code">7SW.04</span><span class="obj-text">Consider the ethical responsibility of individuals and organisations when using AI tools at scale.</span></div>
+  </div>
+
+  <div class="resources-block">
+    <div class="block-label">Resources</div>
+    <ul class="resources-grid"><li>Teacher device + projector, connected to internet</li><li>Copilot or ChatGPT — for the AI self-reflection demo</li><li>Y7 L3 — Student resource to print.html — carbon comparison cards, print one set per group of 4–5</li><li class="filename">Y7 L3 — Student resource to print.html</li><li>Optional: large paper or mini whiteboards for the 2×2 matrix activity</li></ul>
+  </div>
+
+</header>
+
+<div class="phase ph-hook"><div class="phase-head"><span class="phase-tag">Hook</span><span class="phase-title">Which costs more?</span><span class="phase-dur">0–8 min</span></div><div class="phase-body"><p>No context given. Just say: <em>"I'm going to give you three pairs. For each pair, vote: which one is worse for the environment?"</em> Students stand for A, sit for B, or stay where they are if unsure.</p><p><strong>Pair 1:</strong> (A) Boiling a kettle once <strong>OR</strong> (B) One second of a global data centre running at capacity?</p><p><strong>Pair 2:</strong> (A) A ten-minute shower <strong>OR</strong> (B) Asking an AI to generate ten images?</p><p><strong>Pair 3:</strong> (A) A return flight from London to New York <strong>OR</strong> (B) Training a large language model like GPT-4 once — which cost <strong>more</strong>?</p><p>Reveal: the data centre wins Pair 1 (thousands of kettles, running constantly). GPT image generation is surprisingly energy-hungry — Pair 2 is debatable but closer than most expect. Pair 3: GPT-4's training has been estimated at carbon equivalent to <strong>over 500 transatlantic return flights.</strong></p><div class="script">"You've used AI tools this year. Let's find out what that actually cost — and I don't mean money."</div></div></div>
+<div class="phase ph-teach"><div class="phase-head"><span class="phase-tag">Teach</span><span class="phase-title">Where does the power go?</span><span class="phase-dur">8–20 min</span></div><div class="phase-body"><p><strong>What is a data centre?</strong> A building — or a campus of buildings — filled with servers: computers that never switch off, answering millions of requests per second, 24 hours a day, 365 days a year. There are thousands of these globally. They don't look dramatic. They look like warehouses. But they consume more electricity than many countries.</p><p><strong>Two kinds of AI energy cost:</strong></p><ul style="margin:10px 0 10px 18px"><li style="margin-bottom:5px"><strong>Training</strong> — building the model from scratch. Done once (or a few times for major versions). Extremely expensive. Training GPT-3 emitted an estimated 552 tonnes of CO₂ — roughly equivalent to 60 London–New York return flights. More capable models cost proportionally more.</li><li style="margin-bottom:5px"><strong>Inference</strong> — actually answering your questions. Done billions of times per day. Each individual query costs less than training, but the scale means it adds up. A ChatGPT query uses roughly 10× more energy than a standard Google search.</li></ul><p><strong>Water:</strong> Servers run hot. Cooling them requires enormous volumes of water — either through evaporative cooling towers or liquid cooling systems. Microsoft's Iowa data centre reportedly used around 6 million litres of water per day during summer months. In drought-prone regions, this creates direct competition with agriculture and drinking water.</p><p><strong>Where does the power come from?</strong> Tech companies increasingly invest in renewable energy — but demand is growing faster than clean supply in most regions. When a data centre draws from the grid at peak times, it's often pulling fossil-fuel-generated power. The <em>"carbon-neutral"</em> claims of major AI companies are contested by researchers.</p><div class="callout c-note"><div class="callout-label">Teacher note</div><p>The numbers here are order-of-magnitude estimates, not precise figures. They vary significantly by model, hardware generation, and energy source. What matters is the scale — AI infrastructure is a major and growing consumer of energy and water, and this is rarely discussed when AI is promoted in schools or in the media.</p></div></div></div>
+<div class="phase ph-demo"><div class="phase-head"><span class="phase-tag">Live AI Demo</span><span class="phase-title">Ask the AI about itself</span><span class="phase-dur">20–27 min</span></div><div class="phase-body"><p>Open Copilot. Ask it two questions in sequence:</p><p><em>Question 1: "How much energy and water does it take to train a large language model like yourself, and what's the environmental impact?"</em></p><p>Let it answer. It should give a reasonably honest account — AI companies have improved their disclosure, though gaps remain.</p><p><em>Question 2: "Is it your responsibility — or the company that built you — to tell users about this environmental cost? Or is it the user's responsibility to find out?"</em></p><p>This second question doesn't have a right answer. The point is the shape of the argument. Take 3–4 student responses before moving on.</p><p><em>"Who should be responsible for telling people this? The AI? The company? Governments? Nobody?"</em></p><div class="callout c-note"><div class="callout-label">Teacher note</div><p>AI tools are generally willing to discuss their own environmental footprint when asked. This can be a useful moment: the tool you're using to ask the question is itself part of the issue. That reflexivity is worth naming.</p></div></div></div>
+<div class="phase ph-activity"><div class="phase-head"><span class="phase-tag">Activity</span><span class="phase-title">Worth the cost?</span><span class="phase-dur">27–42 min</span></div><div class="phase-body"><p>Distribute the carbon comparison cards (one per group). Each card lists six AI use cases with an approximate energy-cost band: Low / Medium / High / Very high.</p><p><strong>The six scenarios:</strong></p><ul style="margin:10px 0 10px 18px"><li style="margin-bottom:5px">Asking an AI a factual question (one query) — <strong>Low</strong></li><li style="margin-bottom:5px">Generating a set of ten AI images — <strong>Medium</strong></li><li style="margin-bottom:5px">Using AI to translate a 10-page document — <strong>Low–Medium</strong></li><li style="margin-bottom:5px">Training a custom AI model on a company's internal data — <strong>Very high</strong></li><li style="margin-bottom:5px">Running a personalised AI tutor for one student, daily, for a full school year — <strong>Medium–High</strong></li><li style="margin-bottom:5px">An AI system monitoring and optimising a city's traffic lights, 24/7 — <strong>Very high</strong></li></ul><p>Groups plot each scenario on a <strong>2×2 matrix</strong>:</p><ul style="margin:10px 0 10px 18px"><li style="margin-bottom:5px">X-axis: Environmental cost (Low → High)</li><li style="margin-bottom:5px">Y-axis: Social or educational value (Low → High)</li></ul><p>The interesting quadrant is <strong>top-right: high cost, high value</strong>. These are the genuinely hard decisions. Groups discuss: <em>"Is this worth it? Who should decide? And what would 'worth it' even mean?"</em></p><p>Each group shares their most contested placement. Aim for the traffic-monitoring and AI-tutor scenarios — these generate the most interesting disagreement.</p><div class="callout c-note"><div class="callout-label">Teacher note</div><p>There are no correct placements. The value of different AI uses is genuinely contested. Encourage groups to explain their reasoning rather than defend a position — the goal is to notice that these decisions have a cost that is usually invisible.</p></div></div></div>
+<div class="phase ph-disc"><div class="phase-head"><span class="phase-tag">Discussion</span><span class="phase-title">Who should decide?</span><span class="phase-dur">42–48 min</span></div><div class="phase-body"><p>Quick whole-class discussion — three questions, 2 minutes each:</p><ul style="margin:10px 0 10px 18px"><li style="margin-bottom:5px"><em>"Should AI products carry a carbon label, the way food carries calorie information? Why or why not?"</em></li><li style="margin-bottom:5px"><em>"Is it the user's responsibility to use AI less? The company's to make it more efficient? The government's to regulate it? All three?"</em></li><li style="margin-bottom:5px"><em>"Does knowing this change anything about how you personally will use AI?"</em></li></ul><p>Final vote: <em>"Put your hand up if knowing this changes — even slightly — how you think about using AI tools."</em> Don't ask anyone to justify. Just count, and acknowledge the number.</p></div></div>
+<div class="phase ph-plenary"><div class="phase-head"><span class="phase-tag">Plenary</span><span class="phase-title">The bill</span><span class="phase-dur">48–50 min</span></div><div class="phase-body"><p>Return to the opening hook. Reveal or remind students of the energy costs. Then ask: <em>"In the time this lesson has run, how many AI queries do you think were processed globally?"</em></p><p>(Rough estimate: millions per minute across all major providers.) <em>"Each one used energy. Each one required cooling. Each one was somewhere in someone's data centre."</em></p><p>This isn't an argument against AI. It's an argument for knowing what you're using — and for the industry, policymakers, and individuals to treat that knowledge seriously.</p><div class="script">"A tool isn't clean just because you can't see where the power comes from."</div><div class="callout c-link"><div class="callout-label">Links forward</div><p>Connects to Y8 L4 <em>(Your name on it)</em> — if you choose to use a tool with an environmental cost, that choice is part of using it responsibly.</p></div><div class="callout c-note"><div class="callout-label">Key idea</div><p><em>Every time you use AI, a server runs hot somewhere — and knowing that is the beginning of using it responsibly.</em></p></div></div></div>
+
+</body>
+</html>

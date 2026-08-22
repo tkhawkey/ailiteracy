@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y6 · L2 — Who made this — and who owns it?</title>
+<style>
+
+
+/* ── Reset ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Design tokens — light only ─────────── */
+:root {
+  --bg:            #ffffff;
+  --bg-subtle:     #f7f6f2;
+  --bg-muted:      #edecea;
+  --text:          #1a1916;
+  --text-2:        #57554e;
+  --text-3:        #9c9a93;
+  --border:        rgba(0,0,0,0.08);
+  --border-med:    rgba(0,0,0,0.16);
+
+  --c-hook:        #b45309;
+  --bg-hook:       #fffbeb;
+  --bd-hook:       #fde68a;
+
+  --c-teach:       #4338ca;
+  --bg-teach:      #eef2ff;
+  --bd-teach:      #c7d2fe;
+
+  --c-demo:        #0369a1;
+  --bg-demo:       #f0f9ff;
+  --bd-demo:       #bae6fd;
+
+  --c-activity:    #047857;
+  --bg-activity:   #ecfdf5;
+  --bd-activity:   #a7f3d0;
+
+  --c-plenary:     #6d28d9;
+  --bg-plenary:    #f5f3ff;
+  --bd-plenary:    #ddd6fe;
+
+  --c-note:        #92400e;
+  --bg-note:       #fffbeb;
+  --bd-note:       #f59e0b;
+
+  --c-warn:        #991b1b;
+  --bg-warn:       #fff1f2;
+  --bd-warn:       #fca5a5;
+
+  --c-link:        #1e40af;
+  --bg-link:       #eff6ff;
+  --bd-link:       #93c5fd;
+
+  --c-disc:        #374151;
+  --bg-disc:       #f9fafb;
+  --bd-disc:       #d1d5db;
+
+  --tag-tools:     #534AB7;
+  --tag-tools-bg:  #EEEDFE;
+}
+
+/* ── Base ───────────────────────────────── */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+/* ── Banner header ──────────────────────── */
+.lp-banner {
+  background: var(--tag-tools);
+  border-radius: 14px;
+  padding: 22px 28px 24px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle decorative circle — depth without clutter */
+.lp-banner::after {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  pointer-events: none;
+}
+
+.banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.banner-chip {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.88);
+}
+
+.banner-chip-theme {
+  background: rgba(255,255,255,0.28);
+  color: #ffffff;
+}
+
+.banner-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.banner-objective {
+  font-size: 14px;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+/* Header wrapper for objectives + resources below banner */
+.lp-header {
+  margin-bottom: 24px;
+  padding-bottom: 28px;
+  border-bottom: 1.5px solid var(--border-med);
+}
+
+/* Kept for compatibility — unused now */
+.chip { display: none; }
+.lp-title { display: none; }
+.lp-objective { display: none; }
+.lp-meta { display: none; }
+
+.block-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+  margin-bottom: 10px;
+}
+
+.header-objectives {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 0.5px solid var(--border-med);
+  margin-bottom: 14px;
+}
+
+.obj-row {
+  display: flex;
+  gap: 14px;
+  padding: 7px 0;
+  border-bottom: 0.5px solid var(--border);
+  align-items: flex-start;
+}
+
+.obj-row:last-child { border-bottom: none; }
+
+.obj-code {
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-size: 11px;
+  color: var(--text-3);
+  flex-shrink: 0;
+  min-width: 54px;
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+
+.obj-text {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.resources-block {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 0.5px solid var(--border-med);
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 24px;
+  list-style: none;
+}
+
+.resources-grid li {
+  font-size: 13.5px;
+  color: var(--text-2);
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  line-height: 1.45;
+}
+
+.resources-grid li::before {
+  content: '';
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid var(--border-med);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.resources-grid li.filename {
+  color: var(--text-3);
+  font-size: 12.5px;
+  font-family: ui-monospace, 'SF Mono', monospace;
+  letter-spacing: 0.01em;
+}
+
+/* ── Rationale ──────────────────────────── */
+.rationale-wrap {
+  margin-bottom: 28px;
+}
+
+.rationale-wrap .block-label {
+  margin-bottom: 8px;
+}
+
+.rationale {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 15px 20px;
+  font-size: 14.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+  border: 0.5px solid var(--border-med);
+}
+
+/* ── Phase cards ────────────────────────── */
+.phase {
+  border-radius: 12px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-med);
+}
+
+.phase-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.phase-tag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.phase-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+
+.phase-dur {
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.phase-body {
+  padding: 18px 20px;
+  background: var(--bg);
+}
+
+.phase-body > p {
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.phase-body > p:last-child { margin-bottom: 0; }
+
+.ph-hook     { border-color: var(--bd-hook); }
+.ph-hook     .phase-head { background: var(--bg-hook); border-color: var(--bd-hook); }
+.ph-hook     .phase-tag  { color: var(--c-hook); }
+
+.ph-teach    { border-color: var(--bd-teach); }
+.ph-teach    .phase-head { background: var(--bg-teach); border-color: var(--bd-teach); }
+.ph-teach    .phase-tag  { color: var(--c-teach); }
+
+.ph-demo     { border-color: var(--bd-demo); }
+.ph-demo     .phase-head { background: var(--bg-demo); border-color: var(--bd-demo); }
+.ph-demo     .phase-tag  { color: var(--c-demo); }
+
+.ph-activity { border-color: var(--bd-activity); }
+.ph-activity .phase-head { background: var(--bg-activity); border-color: var(--bd-activity); }
+.ph-activity .phase-tag  { color: var(--c-activity); }
+
+.ph-plenary  { border-color: var(--bd-plenary); }
+.ph-plenary  .phase-head { background: var(--bg-plenary); border-color: var(--bd-plenary); }
+.ph-plenary  .phase-tag  { color: var(--c-plenary); }
+
+.ph-disc     { border-color: var(--bd-disc); }
+.ph-disc     .phase-head { background: var(--bg-disc); border-color: var(--bd-disc); }
+.ph-disc     .phase-tag  { color: var(--c-disc); }
+
+/* Framework grid */
+.framework {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.fw-cell {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px 12px;
+  text-align: center;
+  border: 0.5px solid var(--border-med);
+}
+
+.fw-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+.fw-desc {
+  font-size: 12.5px;
+  color: var(--text-2);
+  line-height: 1.45;
+}
+
+/* Verbatim script */
+.script {
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--border-med);
+  border-radius: 0 8px 8px 0;
+  padding: 13px 16px;
+  margin: 12px 0;
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* Prompt comparison */
+.prompt-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+
+.prompt-box {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px;
+  border: 0.5px solid var(--border-med);
+}
+
+.prompt-box-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 8px;
+}
+
+.prompt-box.bad  .prompt-box-label { color: var(--c-warn); }
+.prompt-box.good .prompt-box-label { color: var(--c-activity); }
+
+.prompt-text {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.prompt-note {
+  font-size: 12.5px;
+  color: var(--text-3);
+  line-height: 1.4;
+}
+
+/* Student prompts — teacher reference (hints visible) */
+.prompt-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 14px;
+}
+
+.prompt-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  padding: 0 12px 8px 0;
+  border-bottom: 1px solid var(--border-med);
+}
+
+.prompt-table td {
+  padding: 9px 12px 9px 0;
+  vertical-align: top;
+  border-bottom: 0.5px solid var(--border);
+  line-height: 1.5;
+}
+
+.prompt-table tr:last-child td { border-bottom: none; }
+
+.prompt-table td:first-child {
+  font-weight: 600;
+  color: var(--text-3);
+  font-size: 12px;
+  white-space: nowrap;
+  padding-right: 14px;
+}
+
+.prompt-table td:nth-child(2) {
+  color: var(--text);
+  font-style: italic;
+}
+
+.prompt-table td:nth-child(3) {
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+/* Classroom pathways */
+.pathways {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.pathway {
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  padding: 14px;
+  border: 0.5px solid var(--border-med);
+}
+
+.pathway-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+  margin-bottom: 7px;
+}
+
+.pathway p {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* Callout boxes */
+.callout {
+  border-left: 3px solid;
+  border-radius: 0 8px 8px 0;
+  padding: 11px 15px;
+  margin: 13px 0;
+}
+
+.callout-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 5px;
+}
+
+.callout p {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+
+.callout p:last-child { margin-bottom: 0; }
+
+.c-note { background: var(--bg-note); border-color: var(--bd-note); }
+.c-note .callout-label { color: var(--c-note); }
+
+.c-warn { background: var(--bg-warn); border-color: var(--bd-warn); }
+.c-warn .callout-label { color: var(--c-warn); }
+
+.c-link { background: var(--bg-link); border-color: var(--bd-link); }
+.c-link .callout-label { color: var(--c-link); }
+
+/* ── Print ──────────────────────────────── */
+@media print {
+  @page { size: A4; margin: 16mm 18mm; }
+
+  body {
+    font-size: 11pt;
+    max-width: 100%;
+    padding: 0;
+    color: #000;
+    background: #fff;
+  }
+
+  .lp-title { font-size: 21pt; }
+  .lp-header { border-bottom-color: #000; }
+
+  .lp-banner,
+  .phase, .resources-block, .header-objectives,
+  .rationale, .callout, .prompt-box,
+  .pathway, .fw-cell {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .banner-title { font-size: 18pt; }
+  .lp-banner { border-radius: 8px; }
+
+  .phase          { break-inside: avoid; margin-bottom: 10pt; }
+  .prompt-compare { break-inside: avoid; }
+  .pathways       { break-inside: avoid; }
+  .framework      { break-inside: avoid; }
+  .callout        { break-inside: avoid; }
+  .prompt-table   { break-inside: avoid; }
+}
+
+
+/* Banner colour for this lesson (overrides base) */
+.lp-banner { background: #854F0B; }
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════════════════════════════════════ -->
+<header class="lp-header">
+
+  <div class="lp-banner">
+    <div class="banner-meta">
+      <span class="banner-chip">Year 6</span>
+      <span class="banner-chip">Lesson 2</span>
+      <span class="banner-chip">50 min</span>
+      <span class="banner-chip banner-chip-theme">AI &amp; the world</span>
+    </div>
+    <h1 class="banner-title">Who made this &#8212; and who owns it?</h1>
+    <p class="banner-objective">Students interrogate the ethics of AI-generated creative work — who it benefits, who it harms, and what 'ownership' even means when a machine learned from millions of human creators.</p>
+  </div>
+
+  <div class="header-objectives">
+    <div class="block-label">Cambridge Digital Literacy objectives</div>
+    <div class="obj-row"><span class="obj-code">5DW.04</span><span class="obj-text">Understand that when AI generates new content, it is based on training data and this data use has ethical impacts on creative professionals, such as authors and scientists.</span></div>
+    <div class="obj-row"><span class="obj-code">6DW.01</span><span class="obj-text">Understand how digital technology, including AI, can be disruptive and that there are benefits and risks associated with this disruption.</span></div>
+    <div class="obj-row"><span class="obj-code">6DW.06</span><span class="obj-text">Know that AI-generated content may breach copyright or integrity rules.</span></div>
+  </div>
+
+  <div class="resources-block">
+    <div class="block-label">Resources</div>
+    <ul class="resources-grid">
+      <li>Projector + teacher device with Copilot Image Creator or Bing Image Creator open</li>
+      <li>Five AI artworks already in folder — open and display from there, or generate one live (see prompts in Phase 1)</li>
+      <li class="filename"><a href="Year 6 AI Literacy lesson 2 — Example AI art - Dali Bratislava Castle.png" target="_blank">Year 6 AI Literacy lesson 2 — Example AI art - Dali Bratislava Castle.png</a></li>
+      <li class="filename"><a href="Year 6 AI Literacy lesson 2 — Example AI art - Frida Kahlo Slovakia.png" target="_blank">Year 6 AI Literacy lesson 2 — Example AI art - Frida Kahlo Slovakia.png</a></li>
+      <li class="filename"><a href="Year 6 AI Literacy lesson 2 — Example AI art - Kindinsky Orchestra.png" target="_blank">Year 6 AI Literacy lesson 2 — Example AI art - Kindinsky Orchestra.png</a></li>
+      <li class="filename"><a href="Year 6 AI Literacy lesson 2 — Example AI art - Basquiat Head.png" target="_blank">Year 6 AI Literacy lesson 2 — Example AI art - Basquiat Head.png</a></li>
+      <li class="filename"><a href="Year 6 AI Literacy lesson 2 — Example AI art - Hokusai Danube.png" target="_blank">Year 6 AI Literacy lesson 2 — Example AI art - Hokusai Danube.png</a></li>
+      <li>Y6 L2 — Role cards.html — print 1 set per group, cut into cards</li>
+      <li class="filename">Y6 L2 — Role cards.html</li>
+    </ul>
+  </div>
+
+</header>
+
+<!-- ═══════ RATIONALE ════════════════════════════════════ -->
+<div class="rationale-wrap">
+  <div class="block-label">Rationale</div>
+  <div class="rationale">Positions copyright and training data as a values question, not a legal one. The structured debate ensures every student has to articulate and defend a position — not just observe one.</div>
+</div>
+
+<!-- ═══════ LESSON BODY ══════════════════════════════════ -->
+<div class="phase ph-demo"><div class="phase-head"><span class="phase-tag">Live AI Demo</span><span class="phase-title">Beautiful — but who made it?</span><span class="phase-dur">0–8 min</span></div><div class="phase-body"><p>Five AI-generated artworks are in the lesson folder. Open and display them one at a time — or generate one live if you prefer the immediacy. Either works; the reveal lands the same way.</p>
+<p><strong>If displaying from folder:</strong> open the PNGs in order — Dalí, Frida Kahlo, Kandinsky, Basquiat, Hokusai. Before each one, show a quick Google Image search of the real artist's work so students can see the style being mimicked.</p>
+<p><strong>If generating live</strong> (stronger opening — students watch it appear): choose one prompt below, show the real artwork first, then type the prompt and let the image generate without commentary.</p>
+<table class="prompt-table" style="margin:14px 0;">
+  <thead>
+    <tr>
+      <th>Artist</th>
+      <th>Show first</th>
+      <th>Copilot prompt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Dalí</td>
+      <td>The Persistence of Memory (1931) — search "Dalí melting clocks"</td>
+      <td style="font-style:italic;">"Make me an image in the style of Salvador Dalí showing Bratislava Castle slowly melting into a vast surreal desert, with stretched clocks draped over the battlements and a blood-red sky behind."</td>
+    </tr>
+    <tr>
+      <td>Frida Kahlo</td>
+      <td>Self-Portrait with Thorn Necklace (1940) — search "Frida Kahlo self portrait flowers"</td>
+      <td style="font-style:italic;">"Make me an image in the style of Frida Kahlo showing a formal self-portrait of a young girl with dark braided hair, surrounded by Slovak wildflowers and folk embroidery patterns, with a direct unflinching gaze."</td>
+    </tr>
+    <tr>
+      <td>Kandinsky</td>
+      <td>Composition VIII (1923) — search "Kandinsky Composition VIII Guggenheim"</td>
+      <td style="font-style:italic;">"Make me an image in the style of Wassily Kandinsky showing the sound of a full school orchestra visualised as exploding abstract shapes, bold primary colours and sharp geometric lines radiating outward from the centre."</td>
+    </tr>
+    <tr>
+      <td>Basquiat</td>
+      <td>Untitled (Skull) (1981) — search "Basquiat skull 1981 painting"</td>
+      <td style="font-style:italic;">"Make me an image in the style of Jean-Michel Basquiat showing a large human head covered entirely in layered graffiti tags, scrawled words, crude anatomical diagrams and bold black outlines on a raw textured background."</td>
+    </tr>
+    <tr>
+      <td>Hokusai</td>
+      <td>The Great Wave off Kanagawa (1831) — search "Hokusai great wave"</td>
+      <td style="font-style:italic;">"Make me an image in the style of Hokusai's woodblock prints showing a towering foamy wave crashing over the Danube river, with the jagged peaks of the Slovak mountains visible in the background and tiny boats struggling in the surge."</td>
+    </tr>
+  </tbody>
+</table>
+<p>After students have seen 2–3 images: reveal they were all made by AI in seconds from a text prompt. Watch the room shift. Ask: <em>"Does knowing that change how you feel about them?"</em> Take a few responses — don't adjudicate. Note the disagreement.</p></div></div>
+<div class="phase ph-teach"><div class="phase-head"><span class="phase-tag">Teach</span><span class="phase-title">How AI learned to make art</span><span class="phase-dur">8–20 min</span></div><div class="phase-body"><p>Explain training data with a simple analogy: <em>"Imagine you studied every painting ever made — millions of them — and got so good at patterns that you could produce something that looked like any style, any combination. That's what AI image models do. Except the 'studying' involved copying millions of images without asking the artists."</em></p><p>Introduce three connected ideas:</p><ul style="margin:10px 0 10px 18px"><li style="margin-bottom:5px"><strong>Training data</strong> — the human-made content AI learned from.</li><li style="margin-bottom:5px"><strong>Copyright</strong> — the legal right artists have over their work.</li><li style="margin-bottom:5px"><strong>The question</strong> — if AI learns from your work and then competes with you, is that fair?</li></ul><p>Show a brief contrast: a real artist's portfolio vs. an AI tool generating their exact style on demand. No need to resolve — just make the tension visible.</p><div class="callout c-note"><div class="callout-label">Teacher note</div><p>Students often ask 'is this illegal?' The honest answer is: it depends on the country and the case — courts are still deciding. Redirect to the ethics question: even if it's legal, is it right?</p></div></div></div>
+<div class="phase ph-activity"><div class="phase-head"><span class="phase-tag">Activity — Group Prep</span><span class="phase-title">Prepare your position</span><span class="phase-dur">20–28 min</span></div><div class="phase-body"><p>Assign groups a role card: <strong>Artist</strong>, <strong>AI Company</strong>, <strong>Everyday User</strong>, <strong>Young Creator</strong>, or <strong>Jury</strong>. Groups of 3–4. Read the card together and prepare a 60-second opening statement.</p><p>The Jury group prepares three questions to ask the other groups.</p><div class="callout c-note"><div class="callout-label">Teacher note</div><p>Circulate during prep. Groups often struggle to argue a position they personally disagree with — that's the point. Prompt: 'Your character believes this. What's the strongest argument they can make?'</p></div></div></div>
+<div class="phase ph-activity"><div class="phase-head"><span class="phase-tag">Activity — The Debate</span><span class="phase-title">Opening statements + open debate</span><span class="phase-dur">28–45 min</span></div><div class="phase-body"><p><strong>Round 1 (15 min):</strong> Each non-Jury group delivers their 60-second opening statement. Jury listens and takes notes. No interruptions during opening statements.</p><p><strong>Round 2 (7 min):</strong> Open debate. Jury poses their prepared questions. Groups respond. Teacher moderates — ensure all voices are heard, not just the loudest.</p><p>Key moderator moves:</p><ul style="margin:10px 0 10px 18px"><li style="margin-bottom:5px">Direct quiet groups: 'I haven't heard from the Everyday User yet.'</li><li style="margin-bottom:5px">Push unsupported claims: 'That's an interesting position — can you say why?'</li><li style="margin-bottom:5px">Surface tension: 'Does the Artist group want to respond to that?'</li></ul></div></div>
+<div class="phase ph-plenary"><div class="phase-head"><span class="phase-tag">Plenary</span><span class="phase-title">The Jury verdict</span><span class="phase-dur">45–50 min</span></div><div class="phase-body"><p>Jury group delivers a 60-second verdict: which argument was most convincing, and why? They don't have to agree with the argument — just assess its strength.</p><p>Teacher closes:</p><div class="script">"There is no right answer here yet — not legally, not ethically. What you've done today is think carefully about a question that adults, courts, and governments are still arguing about. The question isn't going away. And you're the first generation who will have to answer it — as creators, as users, and as citizens."</div><div class="callout c-link"><div class="callout-label">Links forward</div><p>Year 6 Lesson 3 shifts from what AI does to other people's creative work to what it can do for your own — introducing the CIS principle for responsible co-use.</p></div><div class="callout c-note"><div class="callout-label">Key idea</div><p><em>AI art was trained on millions of human artworks, and nobody asked — the world is still deciding if that was fair.</em></p></div></div></div>
+
+</body>
+</html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y6 · L1 — What does AI do to your brain?</title>
+<style>
+
+
+/* ── Reset ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Design tokens — light only ─────────── */
+:root {
+  --bg:            #ffffff;
+  --bg-subtle:     #f7f6f2;
+  --bg-muted:      #edecea;
+  --text:          #1a1916;
+  --text-2:        #57554e;
+  --text-3:        #9c9a93;
+  --border:        rgba(0,0,0,0.08);
+  --border-med:    rgba(0,0,0,0.16);
+
+  --c-hook:        #b45309;
+  --bg-hook:       #fffbeb;
+  --bd-hook:       #fde68a;
+
+  --c-teach:       #4338ca;
+  --bg-teach:      #eef2ff;
+  --bd-teach:      #c7d2fe;
+
+  --c-demo:        #0369a1;
+  --bg-demo:       #f0f9ff;
+  --bd-demo:       #bae6fd;
+
+  --c-activity:    #047857;
+  --bg-activity:   #ecfdf5;
+  --bd-activity:   #a7f3d0;
+
+  --c-plenary:     #6d28d9;
+  --bg-plenary:    #f5f3ff;
+  --bd-plenary:    #ddd6fe;
+
+  --c-note:        #92400e;
+  --bg-note:       #fffbeb;
+  --bd-note:       #f59e0b;
+
+  --c-warn:        #991b1b;
+  --bg-warn:       #fff1f2;
+  --bd-warn:       #fca5a5;
+
+  --c-link:        #1e40af;
+  --bg-link:       #eff6ff;
+  --bd-link:       #93c5fd;
+
+  --c-explore:     #0f766e;
+  --bg-explore:    #f0fdfa;
+  --bd-explore:    #99f6e4;
+
+  --c-disc:        #374151;
+  --bg-disc:       #f9fafb;
+  --bd-disc:       #d1d5db;
+
+  --tag-tools:     #534AB7;
+  --tag-tools-bg:  #EEEDFE;
+}
+
+/* ── Base ───────────────────────────────── */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.65;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+/* ── Banner header ──────────────────────── */
+.lp-banner {
+  background: var(--tag-tools);
+  border-radius: 14px;
+  padding: 22px 28px 24px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.lp-banner::after {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  pointer-events: none;
+}
+
+.banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.banner-chip {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.88);
+}
+
+.banner-chip-theme {
+  background: rgba(255,255,255,0.28);
+  color: #ffffff;
+}
+
+.banner-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.banner-objective {
+  font-size: 14px;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+.lp-header {
+  margin-bottom: 24px;
+  padding-bottom: 28px;
+  border-bottom: 1.5px solid var(--border-med);
+}
+
+.chip { display: none; }
+.lp-title { display: none; }
+.lp-objective { display: none; }
+.lp-meta { display: none; }
+
+.block-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+  margin-bottom: 10px;
+}
+
+.header-objectives {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 0.5px solid var(--border-med);
+  margin-bottom: 14px;
+}
+
+.obj-row {
+  display: flex;
+  gap: 14px;
+  padding: 7px 0;
+  border-bottom: 0.5px solid var(--border);
+  align-items: flex-start;
+}
+
+.obj-row:last-child { border-bottom: none; }
+
+.obj-code {
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-size: 11px;
+  color: var(--text-3);
+  flex-shrink: 0;
+  min-width: 54px;
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+
+.obj-text {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.resources-block {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 0.5px solid var(--border-med);
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 24px;
+  list-style: none;
+}
+
+.resources-grid li {
+  font-size: 13.5px;
+  color: var(--text-2);
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  line-height: 1.45;
+}
+
+.resources-grid li::before {
+  content: '';
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid var(--border-med);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.resources-grid li.filename {
+  color: var(--text-3);
+  font-size: 12.5px;
+  font-family: ui-monospace, 'SF Mono', monospace;
+  letter-spacing: 0.01em;
+}
+
+/* ── Rationale ──────────────────────────── */
+.rationale-wrap {
+  margin-bottom: 28px;
+}
+
+.rationale-wrap .block-label {
+  margin-bottom: 8px;
+}
+
+.rationale {
+  background: var(--bg-subtle);
+  border-radius: 12px;
+  padding: 15px 20px;
+  font-size: 14.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+  border: 0.5px solid var(--border-med);
+}
+
+/* ── Phase cards ────────────────────────── */
+.phase {
+  border-radius: 12px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-med);
+}
+
+.phase-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.phase-tag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.phase-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+
+.phase-dur {
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 500;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.phase-body {
+  padding: 18px 20px;
+  background: var(--bg);
+}
+
+.phase-body > p {
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.phase-body > p:last-child { margin-bottom: 0; }
+
+.ph-hook     { border-color: var(--bd-hook); }
+.ph-hook     .phase-head { background: var(--bg-hook); border-color: var(--bd-hook); }
+.ph-hook     .phase-tag  { color: var(--c-hook); }
+
+.ph-teach    { border-color: var(--bd-teach); }
+.ph-teach    .phase-head { background: var(--bg-teach); border-color: var(--bd-teach); }
+.ph-teach    .phase-tag  { color: var(--c-teach); }
+
+.ph-demo     { border-color: var(--bd-demo); }
+.ph-demo     .phase-head { background: var(--bg-demo); border-color: var(--bd-demo); }
+.ph-demo     .phase-tag  { color: var(--c-demo); }
+
+.ph-activity { border-color: var(--bd-activity); }
+.ph-activity .phase-head { background: var(--bg-activity); border-color: var(--bd-activity); }
+.ph-activity .phase-tag  { color: var(--c-activity); }
+
+.ph-plenary  { border-color: var(--bd-plenary); }
+.ph-plenary  .phase-head { background: var(--bg-plenary); border-color: var(--bd-plenary); }
+.ph-plenary  .phase-tag  { color: var(--c-plenary); }
+
+.ph-disc     { border-color: var(--bd-disc); }
+.ph-disc     .phase-head { background: var(--bg-disc); border-color: var(--bd-disc); }
+.ph-disc     .phase-tag  { color: var(--c-disc); }
+
+/* Script blocks */
+.script {
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--border-med);
+  border-radius: 0 8px 8px 0;
+  padding: 13px 16px;
+  margin: 12px 0;
+  font-size: 15px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* Callout boxes */
+.callout {
+  border-left: 3px solid;
+  border-radius: 0 8px 8px 0;
+  padding: 11px 15px;
+  margin: 13px 0;
+}
+
+.callout-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 5px;
+}
+
+.callout p {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+
+.callout p:last-child { margin-bottom: 0; }
+
+.c-note { background: var(--bg-note); border-color: var(--bd-note); }
+.c-note .callout-label { color: var(--c-note); }
+
+.c-warn { background: var(--bg-warn); border-color: var(--bd-warn); }
+.c-warn .callout-label { color: var(--c-warn); }
+
+.c-link { background: var(--bg-link); border-color: var(--bd-link); }
+.c-link .callout-label { color: var(--c-link); }
+
+.c-explore { background: var(--bg-explore); border-color: var(--bd-explore); }
+.c-explore .callout-label { color: var(--c-explore); }
+
+/* ── Print ──────────────────────────────── */
+@media print {
+  @page { size: A4; margin: 16mm 18mm; }
+
+  body {
+    font-size: 11pt;
+    max-width: 100%;
+    padding: 0;
+    color: #000;
+    background: #fff;
+  }
+
+  .lp-banner,
+  .phase, .resources-block, .header-objectives,
+  .rationale, .callout {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .banner-title { font-size: 18pt; }
+  .lp-banner { border-radius: 8px; }
+
+  .phase          { break-inside: avoid; margin-bottom: 10pt; }
+  .callout        { break-inside: avoid; }
+}
+
+
+/* Banner colour for this lesson (overrides base) */
+.lp-banner { background: #993556; }
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════════════════════════════════════ -->
+<header class="lp-header">
+
+  <div class="lp-banner">
+    <div class="banner-meta">
+      <span class="banner-chip">Year 6</span>
+      <span class="banner-chip">Lesson 1</span>
+      <span class="banner-chip">50 min</span>
+      <span class="banner-chip banner-chip-theme">Integrity &amp; learning</span>
+    </div>
+    <h1 class="banner-title">What does AI do to your brain?</h1>
+    <p class="banner-objective">Students experience the difference between learning with effort and outsourcing to AI — leaving with a felt understanding that the shortcut that saves time costs something real.</p>
+  </div>
+
+  <div class="header-objectives">
+    <div class="block-label">Cambridge Digital Literacy objectives</div>
+    <div class="obj-row"><span class="obj-code">6SW.07</span><span class="obj-text">Understand that all learners have a personal responsibility for fully understanding the academic outputs that they produce.</span></div>
+    <div class="obj-row"><span class="obj-code">6SW.08</span><span class="obj-text">Understand that digital and AI tools do not provide a shortcut to sustained learning.</span></div>
+    <div class="obj-row"><span class="obj-code">6DW.10</span><span class="obj-text">Explore how AI algorithms can influence human thinking, including the risk that humans offload thinking and decision-making skills to AI.</span></div>
+  </div>
+
+  <div class="resources-block">
+    <div class="block-label">Resources</div>
+    <ul class="resources-grid">
+      <li>Whiteboard or display</li>
+      <li>Scissors — cut strips before the lesson</li>
+      <li class="filename">Y6 L1 — Pi digit strips.html — print 2 sheets (16 strips). Cut and place one strip on each Group B desk before students arrive. No need to hide them — strips are distributed openly.</li>
+      <li>Y6 L1 — Memory video — local copy in folder; also at <a href="https://youtube.com/watch?v=X1knaL7uqMI" target="_blank">youtube.com/watch?v=X1knaL7uqMI</a> — covers the Major System (digits → consonants → words)</li>
+      <li class="filename">Y6 L1 - Memory video</li>
+      <li class="filename"><a href="Y6 L1 - Major method table.png" target="_blank">Y6 L1 - Major method table.png</a> — click to open full-screen; display during Teach phase and again in Plenary</li>
+      <li>Y6 L1 — Mantis shrimp reading sheet.html — print 1 per student</li>
+      <li>Teacher device with Copilot — teacher-controlled only, not student devices</li>
+    </ul>
+  </div>
+
+</header>
+
+<!-- ═══════ RATIONALE ════════════════════════════════════ -->
+<div class="rationale-wrap">
+  <div class="block-label">Rationale</div>
+  <div class="rationale">This lesson demonstrates that delegating core thinking to AI hinders genuine learning and skill retention. Through direct comparison, students discover that using AI effectively requires active participation, critical questioning, and intentional engagement—ensuring technology supports their thinking rather than replacing it.</div>
+</div>
+
+<!-- ═══════ LESSON BODY ══════════════════════════════════ -->
+
+<div class="phase ph-hook">
+  <div class="phase-head">
+    <span class="phase-tag">Hook</span>
+    <span class="phase-title">The Pi experiment — Round 1</span>
+    <span class="phase-dur">0–10 min</span>
+  </div>
+  <div class="phase-body">
+    <p><strong>Before students arrive:</strong> divide the room into Group A and Group B. Place one Pi digit strip on each Group B desk — face-up is fine.</p>
+    <p>Write the first 20 digits of Pi on the board: <strong>3.14159265358979323846</strong>. Address each group out loud before starting the timer:</p>
+    <div class="script">"Group A — your job is to look at the digits on the board and memorise as many as you can. In 90 seconds, I'm covering the board. You'll write what you remember on your mini whiteboard. No strips, no phones — just your brain."</div>
+    <div class="script">"Group B — you have the number written on your strip. You don't need to memorise anything. In 90 seconds you'll write the digits on your mini whiteboard, and you can use the strip when you do. You can relax - but don't let any of the A group see your strip!"</div>
+    <p>Start the 90 seconds. Group A will work hard; Group B will sit back. Hopefully, group A will be beavering away to try and memorise the number whilst group B sit back smugly.</p>
+    <div class="callout c-note">
+      <div class="callout-label">Teacher note</div>
+      <p>If Group A complain it's unfair, acknowledge it rather than reassuring them: <em>"Yes. Remember that feeling."</em> That frustration is part of the payoff — it lands in Round 2.</p>
+    </div>
+    <p>After 90 seconds, cover the board. Group A writes from memory; Group B copies from their strip. Count up each group's scores and announce them — Group B will of course win.</p>
+    <p><strong>Collect all strips. Wipe all mini whiteboards.</strong> Tell the class: <em>"We'll come back to this."</em></p>
+  </div>
+</div>
+
+<div class="phase ph-teach">
+  <div class="phase-head">
+    <span class="phase-tag">Teach</span>
+    <span class="phase-title">How memory actually works — Round 2</span>
+    <span class="phase-dur">10–22 min</span>
+  </div>
+  <div class="phase-body">
+    <p>Play the memory video (approx. 5–7 min). This is to break up the first memory round and the second memory round! Pause once, roughly halfway, to ask: <em>"Does this change your thinking about what Group A and Group B actually did?"</em></p>
+    <p>After the video, display <strong>Y6 L1 - Major method table.png</strong> on screen. Walk through it briefly: each digit 0–9 maps to a consonant sound, and those sounds become words, which become images in a story — a technique that turns abstract numbers into something the brain can hook onto.</p>
+    <p><strong>Round 2.</strong> Ask everyone — including Group B — to write as many Pi digits as they can remember, from memory only. No strips, no notes.</p>
+    <p>Count up. Group B will typically score far lower than Round 1, often lower than Group A, because they never originally tried to memorise the digits — they just copied them from their strip.</p>
+    <div class="callout c-note">
+      <div class="callout-label">Teacher note — name this to the class</div>
+      <p><strong>This is the moment to make the analogy explicit.</strong> Group B's strip was the AI. When a student pastes a question into AI and copies the response, they are doing exactly what Group B did in Round 1: producing a correct answer quickly, with no effort, and with no learning. When the AI isn't there — in a test, in any moment that requires real thinking — they have nothing to show for it.</p>
+      <p>Say it to the class: <em>"Group B had the answer written down. Group A had only their brain. Round 1 looks like Group B won. Round 2 tells you who actually learned something. That strip was the AI."</em></p>
+    </div>
+    <p>Key message: <em>"Memory forms through retrieval — the effort of trying to recall. If your brain never had to work, nothing stuck. AI can produce your work for you. It cannot do your learning for you. Those are two different things."</em></p>
+  </div>
+</div>
+
+<div class="phase ph-activity">
+  <div class="phase-head">
+    <span class="phase-tag">Activity</span>
+    <span class="phase-title">The mantis shrimp challenge</span>
+    <span class="phase-dur">22–30 min</span>
+  </div>
+  <div class="phase-body">
+    <p>Distribute the mantis shrimp reading sheet. Students read silently for 3 minutes. Then sheets are turned face-down.</p>
+    <p>Students answer the questions on the sheet entirely from memory — no re-reading. 4–5 minutes.</p>
+    <p>Don't collect sheets yet. Ask: <em>"How did that feel? Was it harder than you expected?"</em></p>
+  </div>
+</div>
+
+<div class="phase ph-demo">
+  <div class="phase-head">
+    <span class="phase-tag">Live AI Demo</span>
+    <span class="phase-title">AI reads the mantis shrimp</span>
+    <span class="phase-dur">30–35 min</span>
+  </div>
+  <div class="phase-body">
+    <p>Paste the mantis shrimp text into Copilot on the projected screen. Type: <em>"Answer the following questions about this text:"</em> then paste the questions.</p>
+    <p>Watch the output appear. Ask the class: <em>"How long did that take? Did the AI have to try?"</em></p>
+    <div class="script">Answering the questions using your own memory was like learning the digits of pi. You might not get it all right, but something from what you read has stuck in your brain. Asking the AI to just give you the answer shortcuts that process; you get the right answers, but nothing changes in your brain. You have learned precisely nothing."</div>
+  </div>
+</div>
+
+<div class="phase ph-disc">
+  <div class="phase-head">
+    <span class="phase-tag">Discussion</span>
+    <span class="phase-title">The shortcut costs something</span>
+    <span class="phase-dur">35–42 min</span>
+  </div>
+  <div class="phase-body">
+    <p>Pose the scenario: <em>Student A spent 10 minutes reading, thinking, and answering imperfectly. Student B spent 2 minutes, copied from AI, got full marks. Who learns more?</em></p>
+    <p>Small group discussion (3 mins), then bring back to the class. Key questions:</p>
+    <ul style="margin:10px 0 10px 18px">
+      <li style="margin-bottom:5px">Does the right answer matter if you can't reproduce it yourself?</li>
+      <li style="margin-bottom:5px">What does your teacher actually want you to get better at?</li>
+      <li style="margin-bottom:5px">If you use AI for everything now, what happens when it's not available?</li>
+    </ul>
+    <p>Push the harder question: <em>"Is there anything wrong with using AI to help? If so, where's the line?"</em></p>
+    <div class="callout c-note">
+      <div class="callout-label">Teacher note</div>
+      <p>Students often split on this. Some argue efficiency matters; some argue the point is learning. Both are valid — the goal is to surface the tension, not resolve it cleanly. The defensibility principle (Year 6 Lesson 3) will formalise this later.</p>
+    </div>
+  </div>
+</div>
+
+<div class="phase ph-plenary">
+  <div class="phase-head">
+    <span class="phase-tag">Plenary</span>
+    <span class="phase-title">The Pi competition</span>
+    <span class="phase-dur">42–50 min</span>
+  </div>
+  <div class="phase-body">
+    <p>Return to Pi. Display the <strong>Major method table</strong> again. Walk through a worked example: the digit 3 maps to the <em>m</em> sound; 1 maps to <em>t</em> or <em>d</em>; 4 maps to <em>r</em>. So 3.14 could become <em>"MaTe"</em> — an image you can picture. Build the first few digits together as a class, turning them into a short story or set of images.</p>
+    <p>Give students 3–4 minutes to practise independently. They are trying to encode as many digits of Pi as they can using whatever memory technique works for them — Major System, a story, a song, pure repetition. Let them choose.</p>
+    <div class="script">"Here's the deal. Over the next few weeks, you're going to have a chance to show how many digits of Pi you've memorised. You could try using the Major Method! We're going to start a Pi Wall: a leaderboard that tracks the record for each person in this class. The only rule is no strips, no phones, no notes. Just your brain."</div>
+    <div class="callout c-note">
+      <div class="callout-label">Teacher note — running the Pi competition</div>
+      <p>The Pi Wall can be as simple as a display strip on the classroom wall with student names and their current digit count. Students can challenge the record at any point — during form time, at the start of a lesson, or whenever they're ready. Hopefully, this will subtly reinforce the message over the course of a term that active use of your brain is important when using AI!</p>
+    </div>
+    <p>Close with the callback: <em>"Group B copied the digits. Group A tried to learn them. The Pi Wall only works if you've actually done the hard thing. That's the lesson and it applies to everything, including AI."</em></p>
+    <div class="callout c-link">
+      <div class="callout-label">Links forward</div>
+      <p>Year 6 Lesson 3 (Sharpen it) gives students the CIS principle — a practical framework for using AI as a sharpener of their thinking rather than a replacement for it.</p>
+    </div>
+    <div class="callout c-note">
+      <div class="callout-label">Key idea</div>
+      <p><em>Letting AI do your thinking saves time, but you only get smarter by doing the hard part yourself.</em></p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

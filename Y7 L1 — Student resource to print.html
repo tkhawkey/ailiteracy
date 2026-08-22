@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y7 L1: Student resource to print</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #ffffff;
+  color: #1a1916;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 36px 28px 60px;
+}
+
+/* ── Header ─────────────────────── */
+.sr-header {
+  border-bottom: 1.5px solid #1a1916;
+  padding-bottom: 14px;
+  margin-bottom: 22px;
+}
+.sr-meta {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: #9c9a93; margin-bottom: 5px;
+}
+.sr-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 4px; }
+
+/* ── Section labels ──────────────── */
+.section-label {
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.09em; color: #9c9a93; margin: 20px 0 8px;
+}
+
+/* ── Write lines ─────────────────── */
+.write-line {
+  border-bottom: 1px solid rgba(0,0,0,0.16);
+  height: 22px; margin-bottom: 8px;
+}
+
+/* ── Generic card ────────────────── */
+.card {
+  border: 1px solid rgba(0,0,0,0.14);
+  border-radius: 10px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  break-inside: avoid;
+}
+.card-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px;
+  background: #f7f6f2;
+  border-bottom: 0.5px solid rgba(0,0,0,0.10);
+}
+.card-num { font-size: 11px; font-weight: 700; color: #9c9a93; min-width: 20px; }
+.card-label { font-size: 13.5px; font-weight: 600; color: #1a1916; }
+.card-body { padding: 12px 14px; }
+.card-body p { font-size: 13.5px; color: #1a1916; margin-bottom: 6px; line-height: 1.5; }
+.card-body p:last-child { margin-bottom: 0; }
+
+/* ── Grid layouts ────────────────── */
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 10px 0; }
+.col-box {
+  border: 1px solid rgba(0,0,0,0.14); border-radius: 8px; padding: 10px 12px;
+}
+.col-box-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #9c9a93; margin-bottom: 8px; }
+
+/* ── Print ───────────────────────── */
+@media print {
+  @page { size: A4; margin: 14mm 16mm; }
+  body { max-width: 100%; padding: 0; font-size: 11pt; }
+  .card {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .section-label { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+<header class="sr-header">
+  <div class="sr-meta">Year 7 · Lesson 1 · Student resource</div>
+  <div class="sr-title">The Algorithm Knows You</div>
+  
+</header>
+
+<div class="section-label">Part 1: Feed Map</div>
+<p style="font-size:13.5px;color:#57554e;margin-bottom:10px;">Fill in 5 things that regularly appear in each of your feeds. Be honest: what does the algorithm actually show you?</p>
+<div class="three-col"><div class="col-box">
+  <div class="col-box-label">YouTube / Video</div>
+  <div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div><div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div><div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div><div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div><div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div>
+</div><div class="col-box">
+  <div class="col-box-label">Music / Spotify</div>
+  <div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div><div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div><div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div><div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div><div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div>
+</div><div class="col-box">
+  <div class="col-box-label">Social media / TikTok / Other</div>
+  <div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div><div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div><div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div><div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div><div style="border-bottom:0.5px solid rgba(0,0,0,0.10);min-height:26px;margin-bottom:4px;font-size:13px;padding-bottom:2px;"></div>
+</div></div>
+
+<div style="border:1px solid rgba(0,0,0,0.14);border-radius:8px;padding:12px 14px;margin:12px 0 24px;">
+  <div style="font-size:12px;font-weight:700;color:#1a1916;margin-bottom:6px;">Would your best friend's map look the same?</div>
+  <div class="write-line"></div><div class="write-line"></div>
+</div>
+
+<div class="section-label" style="margin-top:24px;">Part 2: Bubble Scenario Cards</div>
+<p style="font-size:13.5px;color:#57554e;margin-bottom:12px;">Your group will receive one scenario. Read it, discuss the three questions, and be ready to share your 'missing content' finding with the class.</p>
+<div class="card" style="margin-bottom:16px;">
+  <div class="card-head">
+    <span class="card-num" style="font-weight:700;font-size:12px;min-width:80px;color:#0F6E56;">Scenario A</span>
+    <span class="card-label">Lena, 14</span>
+  </div>
+  <div class="card-body">
+    <p style="margin-bottom:8px;">Six months ago, Lena started watching videos about competitive swimming after joining a club. She now trains hard and follows elite athletes online.</p>
+    <p style="color:#57554e;font-size:13px;font-style:italic;margin-bottom:12px;">Her feed is now almost entirely swimming content: technique videos, race highlights, nutrition for athletes, and commentary about competitions she doesn't even follow yet.</p>
+    <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#9c9a93;margin-bottom:6px;">Discuss with your group</div>
+    <p style="margin-bottom:4px;">1. What does this person's feed probably look like now?</p>
+    <div class="write-line"></div>
+    <p style="margin-bottom:4px;margin-top:6px;">2. What are they not seeing anymore?</p>
+    <div class="write-line"></div>
+    <p style="margin-bottom:4px;margin-top:6px;">3. Is that a problem, and if so, for whom?</p>
+    <div class="write-line"></div><div class="write-line"></div>
+  </div>
+</div><div class="card" style="margin-bottom:16px;">
+  <div class="card-head">
+    <span class="card-num" style="font-weight:700;font-size:12px;min-width:80px;color:#0F6E56;">Scenario B</span>
+    <span class="card-label">Marcus, 15</span>
+  </div>
+  <div class="card-body">
+    <p style="margin-bottom:8px;">Marcus got into political debate content after watching one video arguing that young people don't care about democracy. He found it interesting and kept watching.</p>
+    <p style="color:#57554e;font-size:13px;font-style:italic;margin-bottom:12px;">His feed is now saturated with opinion content, all broadly from the same political perspective. Commentary on the 'other side' is rare, and always framed negatively.</p>
+    <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#9c9a93;margin-bottom:6px;">Discuss with your group</div>
+    <p style="margin-bottom:4px;">1. What does this person's feed probably look like now?</p>
+    <div class="write-line"></div>
+    <p style="margin-bottom:4px;margin-top:6px;">2. What are they not seeing anymore?</p>
+    <div class="write-line"></div>
+    <p style="margin-bottom:4px;margin-top:6px;">3. Is that a problem, and if so, for whom?</p>
+    <div class="write-line"></div><div class="write-line"></div>
+  </div>
+</div><div class="card" style="margin-bottom:16px;">
+  <div class="card-head">
+    <span class="card-num" style="font-weight:700;font-size:12px;min-width:80px;color:#0F6E56;">Scenario C</span>
+    <span class="card-label">Aisha, 13</span>
+  </div>
+  <div class="card-body">
+    <p style="margin-bottom:8px;">Aisha's family moved schools last year. She started watching videos about anxiety and feeling like an outsider. It felt comforting to know others felt the same.</p>
+    <p style="color:#57554e;font-size:13px;font-style:italic;margin-bottom:12px;">Her feed now surfaces almost exclusively mental health content, some helpful, some less so. Upbeat or social content barely appears. The algorithm has decided what 'type' she is.</p>
+    <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#9c9a93;margin-bottom:6px;">Discuss with your group</div>
+    <p style="margin-bottom:4px;">1. What does this person's feed probably look like now?</p>
+    <div class="write-line"></div>
+    <p style="margin-bottom:4px;margin-top:6px;">2. What are they not seeing anymore?</p>
+    <div class="write-line"></div>
+    <p style="margin-bottom:4px;margin-top:6px;">3. Is that a problem, and if so, for whom?</p>
+    <div class="write-line"></div><div class="write-line"></div>
+  </div>
+</div><div class="card" style="margin-bottom:16px;">
+  <div class="card-head">
+    <span class="card-num" style="font-weight:700;font-size:12px;min-width:80px;color:#0F6E56;">Scenario D</span>
+    <span class="card-label">Tom, 16</span>
+  </div>
+  <div class="card-body">
+    <p style="margin-bottom:8px;">Tom loves gaming and started following his favourite streamer's community two years ago. He now watches 3–4 hours of gaming content a day.</p>
+    <p style="color:#57554e;font-size:13px;font-style:italic;margin-bottom:12px;">His feeds across YouTube, TikTok, and Discord are nearly identical: gaming reviews, streamer drama, and gaming news. News, science, or anything 'outside' the space rarely appears.</p>
+    <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#9c9a93;margin-bottom:6px;">Discuss with your group</div>
+    <p style="margin-bottom:4px;">1. What does this person's feed probably look like now?</p>
+    <div class="write-line"></div>
+    <p style="margin-bottom:4px;margin-top:6px;">2. What are they not seeing anymore?</p>
+    <div class="write-line"></div>
+    <p style="margin-bottom:4px;margin-top:6px;">3. Is that a problem, and if so, for whom?</p>
+    <div class="write-line"></div><div class="write-line"></div>
+  </div>
+</div><div class="card" style="margin-bottom:16px;">
+  <div class="card-head">
+    <span class="card-num" style="font-weight:700;font-size:12px;min-width:80px;color:#0F6E56;">Scenario E</span>
+    <span class="card-label">Priya, 14</span>
+  </div>
+  <div class="card-body">
+    <p style="margin-bottom:8px;">Priya is passionate about climate. Six months ago she started following several climate activists and sharing their posts regularly.</p>
+    <p style="color:#57554e;font-size:13px;font-style:italic;margin-bottom:12px;">Her social media feed now shows almost nothing but climate content, mostly alarming, rarely solutions-focused. Moderate or counter-perspectives have all but disappeared.</p>
+    <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#9c9a93;margin-bottom:6px;">Discuss with your group</div>
+    <p style="margin-bottom:4px;">1. What does this person's feed probably look like now?</p>
+    <div class="write-line"></div>
+    <p style="margin-bottom:4px;margin-top:6px;">2. What are they not seeing anymore?</p>
+    <div class="write-line"></div>
+    <p style="margin-bottom:4px;margin-top:6px;">3. Is that a problem, and if so, for whom?</p>
+    <div class="write-line"></div><div class="write-line"></div>
+  </div>
+</div><div class="card" style="margin-bottom:16px;">
+  <div class="card-head">
+    <span class="card-num" style="font-weight:700;font-size:12px;min-width:80px;color:#0F6E56;">Scenario F</span>
+    <span class="card-label">Alex, 13</span>
+  </div>
+  <div class="card-body">
+    <p style="margin-bottom:8px;">Alex clicked on a conspiracy video by accident and was briefly fascinated. They watched three more out of curiosity.</p>
+    <p style="color:#57554e;font-size:13px;font-style:italic;margin-bottom:12px;">Despite not actively seeking it out again, Alex's recommendations now regularly surface conspiracy-adjacent content, 'what they don't want you to know' style videos across multiple platforms.</p>
+    <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#9c9a93;margin-bottom:6px;">Discuss with your group</div>
+    <p style="margin-bottom:4px;">1. What does this person's feed probably look like now?</p>
+    <div class="write-line"></div>
+    <p style="margin-bottom:4px;margin-top:6px;">2. What are they not seeing anymore?</p>
+    <div class="write-line"></div>
+    <p style="margin-bottom:4px;margin-top:6px;">3. Is that a problem, and if so, for whom?</p>
+    <div class="write-line"></div><div class="write-line"></div>
+  </div>
+</div>
+
+</body>
+</html>

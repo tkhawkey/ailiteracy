@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y5 L3 — Student resource to print</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #ffffff;
+  color: #1a1916;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 36px 28px 60px;
+}
+
+/* ── Header ─────────────────────── */
+.sr-header {
+  border-bottom: 1.5px solid #1a1916;
+  padding-bottom: 14px;
+  margin-bottom: 22px;
+}
+.sr-meta {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: #9c9a93; margin-bottom: 5px;
+}
+.sr-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 4px; }
+.sr-instruction { font-size: 13.5px; color: #57554e; margin-top: 6px; line-height: 1.5; }
+
+/* ── Section labels ──────────────── */
+.section-label {
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.09em; color: #9c9a93; margin: 20px 0 8px;
+}
+
+/* ── Write lines ─────────────────── */
+.write-line {
+  border-bottom: 1px solid rgba(0,0,0,0.16);
+  height: 22px; margin-bottom: 8px;
+}
+
+/* ── Generic card ────────────────── */
+.card {
+  border: 1px solid rgba(0,0,0,0.14);
+  border-radius: 10px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  break-inside: avoid;
+}
+.card-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px;
+  background: #f7f6f2;
+  border-bottom: 0.5px solid rgba(0,0,0,0.10);
+}
+.card-num { font-size: 11px; font-weight: 700; color: #9c9a93; min-width: 20px; }
+.card-label { font-size: 13.5px; font-weight: 600; color: #1a1916; }
+.card-sub { font-size: 12px; color: #9c9a93; margin-left: auto; }
+.card-body { padding: 12px 14px; }
+.card-body p { font-size: 13.5px; color: #1a1916; margin-bottom: 6px; line-height: 1.5; }
+.card-body p:last-child { margin-bottom: 0; }
+
+/* ── Role cards ──────────────────── */
+.role-card {
+  border: 1.5px solid rgba(0,0,0,0.18);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.role-card-head {
+  padding: 12px 18px 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.role-tag { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.09em; color: #9c9a93; margin-bottom: 4px; }
+.role-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.role-brief { font-size: 13px; color: #57554e; line-height: 1.5; }
+.role-card-body { padding: 14px 18px; }
+.role-card-body h4 { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #9c9a93; margin: 12px 0 6px; }
+.role-card-body h4:first-child { margin-top: 0; }
+.role-card-body ul { margin-left: 16px; }
+.role-card-body li { font-size: 13px; color: #1a1916; margin-bottom: 4px; line-height: 1.5; }
+.role-oneliner { margin-top: 12px; padding: 10px 14px; background: #f7f6f2; border-radius: 8px; border: 0.5px solid rgba(0,0,0,0.14); font-size: 13.5px; font-style: italic; color: #1a1916; }
+
+/* ── Grid layouts ────────────────── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 10px 0; }
+.col-box {
+  border: 1px solid rgba(0,0,0,0.14); border-radius: 8px; padding: 10px 12px;
+}
+.col-box-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #9c9a93; margin-bottom: 8px; }
+
+/* ── Verdict row ─────────────────── */
+.verdict-row { display: flex; gap: 12px; align-items: center; margin: 8px 0; }
+.verdict-btn {
+  border: 1.5px solid rgba(0,0,0,0.16); border-radius: 6px;
+  padding: 4px 12px; font-size: 12px; font-weight: 600; color: #57554e;
+  background: #f7f6f2; white-space: nowrap;
+}
+.verdict-evidence { flex: 1; border-bottom: 1px solid rgba(0,0,0,0.16); height: 22px; }
+
+/* ── Prompt sort zone header ─────── */
+.zone-header {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 8px;
+}
+.zone-label {
+  text-align: center; padding: 6px 8px; border-radius: 6px;
+  font-size: 11px; font-weight: 700; line-height: 1.4;
+}
+.zone-safe { background: #d1fae5; color: #065f46; }
+.zone-maybe { background: #fef3c7; color: #92400e; }
+.zone-avoid { background: #fee2e2; color: #991b1b; }
+
+/* ── Prompt sort cards ───────────── */
+.prompt-sort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+.sort-card {
+  border: 1px solid rgba(0,0,0,0.14); border-radius: 8px; padding: 10px 12px;
+  break-inside: avoid;
+}
+.sort-card p { font-size: 13px; color: #1a1916; line-height: 1.5; font-style: italic; margin-bottom: 4px; }
+.sort-card-cat { font-size: 10.5px; color: #9c9a93; font-style: normal; }
+.sort-verdict { margin-top: 8px; display: flex; gap: 6px; }
+.sort-verdict span {
+  font-size: 10px; padding: 2px 8px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.14);
+  color: #57554e; cursor: default;
+}
+
+/* ── Exit strip ──────────────────── */
+.exit-strip {
+  border: 1.5px solid rgba(0,0,0,0.16); border-radius: 10px;
+  padding: 14px 18px; margin-top: 18px; background: #f7f6f2;
+  break-inside: avoid;
+}
+.exit-strip p { font-size: 14px; color: #1a1916; margin-bottom: 4px; }
+.exit-strip .fill-blank {
+  display: inline-block; min-width: 140px;
+  border-bottom: 1.5px solid #1a1916; height: 18px; vertical-align: bottom; margin: 0 4px;
+}
+
+/* ── Reading passage ─────────────── */
+.reading-passage {
+  background: #f7f6f2; border-radius: 10px; padding: 16px 18px;
+  margin-bottom: 18px; border: 0.5px solid rgba(0,0,0,0.14);
+  font-size: 14px; line-height: 1.7; color: #1a1916;
+}
+.reading-passage p { margin-bottom: 10px; }
+.reading-passage p:last-child { margin-bottom: 0; }
+.reading-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+
+/* ── Work samples ────────────────── */
+.sample { border: 1px solid rgba(0,0,0,0.14); border-radius: 10px; margin-bottom: 14px; overflow: hidden; break-inside: avoid; }
+.sample-head { padding: 8px 14px; background: #f7f6f2; border-bottom: 0.5px solid rgba(0,0,0,0.10); display: flex; justify-content: space-between; align-items: center; }
+.sample-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #9c9a93; }
+.sample-rank { font-size: 11px; color: #9c9a93; }
+.sample-body { padding: 13px 16px; font-size: 13.5px; line-height: 1.65; color: #1a1916; }
+.rank-row { display: flex; gap: 8px; margin-top: 8px; }
+.rank-box { border: 1px solid rgba(0,0,0,0.16); border-radius: 6px; padding: 4px 10px; font-size: 12px; color: #57554e; }
+
+/* ── Human advantage poster columns ─ */
+.advantage-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+.advantage-table th { font-size: 12px; font-weight: 700; text-align: left; padding: 8px 12px; border-bottom: 1.5px solid rgba(0,0,0,0.16); }
+.advantage-table td { vertical-align: top; padding: 8px 12px; border-bottom: 0.5px solid rgba(0,0,0,0.08); font-size: 13px; line-height: 1.5; }
+.advantage-table tr:last-child td { border-bottom: none; }
+
+/* ── Print ───────────────────────── */
+@media print {
+  @page { size: A4; margin: 14mm 16mm; }
+  body { max-width: 100%; padding: 0; font-size: 11pt; }
+  .card, .role-card, .sample, .sort-card, .exit-strip, .reading-passage {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .role-card { page-break-inside: avoid; }
+  .sort-card { break-inside: avoid; }
+  .section-label { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+<header class="sr-header">
+  <div class="sr-meta">Year 5 · Lesson 3 · Student resource</div>
+  <div class="sr-title">Real, fake, or somewhere in between</div>
+  <p class="sr-instruction">Move between stations. For each image, circle your verdict. Write one detail — something specific you noticed — that influenced your decision.</p>
+</header>
+
+<div class="section-label">Gallery walk — 10 stations</div>
+<div class="card">
+  <div class="card-head">
+    <span class="card-num">1</span>
+    <span class="card-label">Station 1 — Portrait 1</span>
+    <span class="card-sub">Formal photograph</span>
+  </div>
+  <div class="card-body" style="padding:10px 14px;">
+    <div class="verdict-row">
+      <span class="verdict-btn">Real</span>
+      <span class="verdict-btn">AI</span>
+      <span class="verdict-btn">Not sure</span>
+      <div class="verdict-evidence"></div>
+    </div>
+    <div style="font-size:10px;color:#9c9a93;margin-top:4px;">One detail that influenced your decision →</div>
+  </div>
+</div><div class="card">
+  <div class="card-head">
+    <span class="card-num">2</span>
+    <span class="card-label">Station 2 — Landscape 1</span>
+    <span class="card-sub">Countryside scene</span>
+  </div>
+  <div class="card-body" style="padding:10px 14px;">
+    <div class="verdict-row">
+      <span class="verdict-btn">Real</span>
+      <span class="verdict-btn">AI</span>
+      <span class="verdict-btn">Not sure</span>
+      <div class="verdict-evidence"></div>
+    </div>
+    <div style="font-size:10px;color:#9c9a93;margin-top:4px;">One detail that influenced your decision →</div>
+  </div>
+</div><div class="card">
+  <div class="card-head">
+    <span class="card-num">3</span>
+    <span class="card-label">Station 3 — Portrait 2</span>
+    <span class="card-sub">Close-up face</span>
+  </div>
+  <div class="card-body" style="padding:10px 14px;">
+    <div class="verdict-row">
+      <span class="verdict-btn">Real</span>
+      <span class="verdict-btn">AI</span>
+      <span class="verdict-btn">Not sure</span>
+      <div class="verdict-evidence"></div>
+    </div>
+    <div style="font-size:10px;color:#9c9a93;margin-top:4px;">One detail that influenced your decision →</div>
+  </div>
+</div><div class="card">
+  <div class="card-head">
+    <span class="card-num">4</span>
+    <span class="card-label">Station 4 — Still life 1</span>
+    <span class="card-sub">Kitchen objects</span>
+  </div>
+  <div class="card-body" style="padding:10px 14px;">
+    <div class="verdict-row">
+      <span class="verdict-btn">Real</span>
+      <span class="verdict-btn">AI</span>
+      <span class="verdict-btn">Not sure</span>
+      <div class="verdict-evidence"></div>
+    </div>
+    <div style="font-size:10px;color:#9c9a93;margin-top:4px;">One detail that influenced your decision →</div>
+  </div>
+</div><div class="card">
+  <div class="card-head">
+    <span class="card-num">5</span>
+    <span class="card-label">Station 5 — Digital art 1</span>
+    <span class="card-sub">Illustrated scene</span>
+  </div>
+  <div class="card-body" style="padding:10px 14px;">
+    <div class="verdict-row">
+      <span class="verdict-btn">Real</span>
+      <span class="verdict-btn">AI</span>
+      <span class="verdict-btn">Not sure</span>
+      <div class="verdict-evidence"></div>
+    </div>
+    <div style="font-size:10px;color:#9c9a93;margin-top:4px;">One detail that influenced your decision →</div>
+  </div>
+</div><div class="card">
+  <div class="card-head">
+    <span class="card-num">6</span>
+    <span class="card-label">Station 6 — Portrait 3</span>
+    <span class="card-sub">Group of people</span>
+  </div>
+  <div class="card-body" style="padding:10px 14px;">
+    <div class="verdict-row">
+      <span class="verdict-btn">Real</span>
+      <span class="verdict-btn">AI</span>
+      <span class="verdict-btn">Not sure</span>
+      <div class="verdict-evidence"></div>
+    </div>
+    <div style="font-size:10px;color:#9c9a93;margin-top:4px;">One detail that influenced your decision →</div>
+  </div>
+</div><div class="card">
+  <div class="card-head">
+    <span class="card-num">7</span>
+    <span class="card-label">Station 7 — Landscape 2</span>
+    <span class="card-sub">City skyline at night</span>
+  </div>
+  <div class="card-body" style="padding:10px 14px;">
+    <div class="verdict-row">
+      <span class="verdict-btn">Real</span>
+      <span class="verdict-btn">AI</span>
+      <span class="verdict-btn">Not sure</span>
+      <div class="verdict-evidence"></div>
+    </div>
+    <div style="font-size:10px;color:#9c9a93;margin-top:4px;">One detail that influenced your decision →</div>
+  </div>
+</div><div class="card">
+  <div class="card-head">
+    <span class="card-num">8</span>
+    <span class="card-label">Station 8 — Digital art 2</span>
+    <span class="card-sub">Fantasy character</span>
+  </div>
+  <div class="card-body" style="padding:10px 14px;">
+    <div class="verdict-row">
+      <span class="verdict-btn">Real</span>
+      <span class="verdict-btn">AI</span>
+      <span class="verdict-btn">Not sure</span>
+      <div class="verdict-evidence"></div>
+    </div>
+    <div style="font-size:10px;color:#9c9a93;margin-top:4px;">One detail that influenced your decision →</div>
+  </div>
+</div><div class="card">
+  <div class="card-head">
+    <span class="card-num">9</span>
+    <span class="card-label">Station 9 — Still life 2</span>
+    <span class="card-sub">Food photograph</span>
+  </div>
+  <div class="card-body" style="padding:10px 14px;">
+    <div class="verdict-row">
+      <span class="verdict-btn">Real</span>
+      <span class="verdict-btn">AI</span>
+      <span class="verdict-btn">Not sure</span>
+      <div class="verdict-evidence"></div>
+    </div>
+    <div style="font-size:10px;color:#9c9a93;margin-top:4px;">One detail that influenced your decision →</div>
+  </div>
+</div><div class="card">
+  <div class="card-head">
+    <span class="card-num">10</span>
+    <span class="card-label">Station 10 — Portrait 4</span>
+    <span class="card-sub">Hands and detail</span>
+  </div>
+  <div class="card-body" style="padding:10px 14px;">
+    <div class="verdict-row">
+      <span class="verdict-btn">Real</span>
+      <span class="verdict-btn">AI</span>
+      <span class="verdict-btn">Not sure</span>
+      <div class="verdict-evidence"></div>
+    </div>
+    <div style="font-size:10px;color:#9c9a93;margin-top:4px;">One detail that influenced your decision →</div>
+  </div>
+</div>
+
+<div class="exit-strip">
+  <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#9c9a93;margin-bottom:8px;">Take-home</div>
+  <p>One thing I will check before sharing an image or trusting a message online:</p>
+  <div class="write-line"></div><div class="write-line"></div>
+</div>
+
+</body>
+</html>

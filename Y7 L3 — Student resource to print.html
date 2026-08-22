@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y7 L3 — Student resource to print</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #ffffff;
+  color: #1a1916;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 36px 28px 60px;
+}
+
+/* ── Header ─────────────────────── */
+.sr-header {
+  border-bottom: 1.5px solid #1a1916;
+  padding-bottom: 14px;
+  margin-bottom: 22px;
+}
+.sr-meta {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: #9c9a93; margin-bottom: 5px;
+}
+.sr-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 4px; }
+.sr-instruction { font-size: 13.5px; color: #57554e; margin-top: 6px; line-height: 1.5; }
+
+/* ── Section labels ──────────────── */
+.section-label {
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.09em; color: #9c9a93; margin: 20px 0 8px;
+}
+
+/* ── Write lines ─────────────────── */
+.write-line {
+  border-bottom: 1px solid rgba(0,0,0,0.16);
+  height: 22px; margin-bottom: 8px;
+}
+
+/* ── Generic card ────────────────── */
+.card {
+  border: 1px solid rgba(0,0,0,0.14);
+  border-radius: 10px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  break-inside: avoid;
+}
+.card-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px;
+  background: #f7f6f2;
+  border-bottom: 0.5px solid rgba(0,0,0,0.10);
+}
+.card-num { font-size: 11px; font-weight: 700; color: #9c9a93; min-width: 20px; }
+.card-label { font-size: 13.5px; font-weight: 600; color: #1a1916; }
+.card-sub { font-size: 12px; color: #9c9a93; margin-left: auto; }
+.card-body { padding: 12px 14px; }
+.card-body p { font-size: 13.5px; color: #1a1916; margin-bottom: 6px; line-height: 1.5; }
+.card-body p:last-child { margin-bottom: 0; }
+
+/* ── Role cards ──────────────────── */
+.role-card {
+  border: 1.5px solid rgba(0,0,0,0.18);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.role-card-head {
+  padding: 12px 18px 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.role-tag { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.09em; color: #9c9a93; margin-bottom: 4px; }
+.role-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.role-brief { font-size: 13px; color: #57554e; line-height: 1.5; }
+.role-card-body { padding: 14px 18px; }
+.role-card-body h4 { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #9c9a93; margin: 12px 0 6px; }
+.role-card-body h4:first-child { margin-top: 0; }
+.role-card-body ul { margin-left: 16px; }
+.role-card-body li { font-size: 13px; color: #1a1916; margin-bottom: 4px; line-height: 1.5; }
+.role-oneliner { margin-top: 12px; padding: 10px 14px; background: #f7f6f2; border-radius: 8px; border: 0.5px solid rgba(0,0,0,0.14); font-size: 13.5px; font-style: italic; color: #1a1916; }
+
+/* ── Grid layouts ────────────────── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 10px 0; }
+.col-box {
+  border: 1px solid rgba(0,0,0,0.14); border-radius: 8px; padding: 10px 12px;
+}
+.col-box-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #9c9a93; margin-bottom: 8px; }
+
+/* ── Verdict row ─────────────────── */
+.verdict-row { display: flex; gap: 12px; align-items: center; margin: 8px 0; }
+.verdict-btn {
+  border: 1.5px solid rgba(0,0,0,0.16); border-radius: 6px;
+  padding: 4px 12px; font-size: 12px; font-weight: 600; color: #57554e;
+  background: #f7f6f2; white-space: nowrap;
+}
+.verdict-evidence { flex: 1; border-bottom: 1px solid rgba(0,0,0,0.16); height: 22px; }
+
+/* ── Prompt sort zone header ─────── */
+.zone-header {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 8px;
+}
+.zone-label {
+  text-align: center; padding: 6px 8px; border-radius: 6px;
+  font-size: 11px; font-weight: 700; line-height: 1.4;
+}
+.zone-safe { background: #d1fae5; color: #065f46; }
+.zone-maybe { background: #fef3c7; color: #92400e; }
+.zone-avoid { background: #fee2e2; color: #991b1b; }
+
+/* ── Prompt sort cards ───────────── */
+.prompt-sort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+.sort-card {
+  border: 1px solid rgba(0,0,0,0.14); border-radius: 8px; padding: 10px 12px;
+  break-inside: avoid;
+}
+.sort-card p { font-size: 13px; color: #1a1916; line-height: 1.5; font-style: italic; margin-bottom: 4px; }
+.sort-card-cat { font-size: 10.5px; color: #9c9a93; font-style: normal; }
+.sort-verdict { margin-top: 8px; display: flex; gap: 6px; }
+.sort-verdict span {
+  font-size: 10px; padding: 2px 8px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.14);
+  color: #57554e; cursor: default;
+}
+
+/* ── Exit strip ──────────────────── */
+.exit-strip {
+  border: 1.5px solid rgba(0,0,0,0.16); border-radius: 10px;
+  padding: 14px 18px; margin-top: 18px; background: #f7f6f2;
+  break-inside: avoid;
+}
+.exit-strip p { font-size: 14px; color: #1a1916; margin-bottom: 4px; }
+.exit-strip .fill-blank {
+  display: inline-block; min-width: 140px;
+  border-bottom: 1.5px solid #1a1916; height: 18px; vertical-align: bottom; margin: 0 4px;
+}
+
+/* ── Reading passage ─────────────── */
+.reading-passage {
+  background: #f7f6f2; border-radius: 10px; padding: 16px 18px;
+  margin-bottom: 18px; border: 0.5px solid rgba(0,0,0,0.14);
+  font-size: 14px; line-height: 1.7; color: #1a1916;
+}
+.reading-passage p { margin-bottom: 10px; }
+.reading-passage p:last-child { margin-bottom: 0; }
+.reading-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+
+/* ── Work samples ────────────────── */
+.sample { border: 1px solid rgba(0,0,0,0.14); border-radius: 10px; margin-bottom: 14px; overflow: hidden; break-inside: avoid; }
+.sample-head { padding: 8px 14px; background: #f7f6f2; border-bottom: 0.5px solid rgba(0,0,0,0.10); display: flex; justify-content: space-between; align-items: center; }
+.sample-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #9c9a93; }
+.sample-rank { font-size: 11px; color: #9c9a93; }
+.sample-body { padding: 13px 16px; font-size: 13.5px; line-height: 1.65; color: #1a1916; }
+.rank-row { display: flex; gap: 8px; margin-top: 8px; }
+.rank-box { border: 1px solid rgba(0,0,0,0.16); border-radius: 6px; padding: 4px 10px; font-size: 12px; color: #57554e; }
+
+/* ── Human advantage poster columns ─ */
+.advantage-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+.advantage-table th { font-size: 12px; font-weight: 700; text-align: left; padding: 8px 12px; border-bottom: 1.5px solid rgba(0,0,0,0.16); }
+.advantage-table td { vertical-align: top; padding: 8px 12px; border-bottom: 0.5px solid rgba(0,0,0,0.08); font-size: 13px; line-height: 1.5; }
+.advantage-table tr:last-child td { border-bottom: none; }
+
+/* ── Print ───────────────────────── */
+@media print {
+  @page { size: A4; margin: 14mm 16mm; }
+  body { max-width: 100%; padding: 0; font-size: 11pt; }
+  .card, .role-card, .sample, .sort-card, .exit-strip, .reading-passage {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .role-card { page-break-inside: avoid; }
+  .sort-card { break-inside: avoid; }
+  .section-label { page-break-after: avoid; }
+}
+
+
+/* ── Cost bands ── */
+.cost-band {
+  display: inline-block;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em; padding: 2px 8px; border-radius: 20px;
+  margin-top: 4px;
+}
+.cost-low      { background: #d1fae5; color: #065f46; }
+.cost-lowmed   { background: #ecfccb; color: #3f6212; }
+.cost-med      { background: #fef3c7; color: #92400e; }
+.cost-medhi    { background: #fed7aa; color: #9a3412; }
+.cost-hi       { background: #fee2e2; color: #991b1b; }
+.cost-vhi      { background: #fce7f3; color: #9d174d; }
+
+/* ── Scenario cards ── */
+.scenario-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 18px;
+}
+.scenario-card {
+  border: 1px solid rgba(0,0,0,0.14); border-radius: 8px;
+  padding: 10px 12px; break-inside: avoid;
+}
+.scenario-num {
+  font-size: 11px; font-weight: 700; color: #9c9a93;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.scenario-text {
+  font-size: 13px; color: #1a1916; line-height: 1.5; margin: 4px 0 6px;
+}
+
+/* ── 2×2 matrix ── */
+.matrix-wrap {
+  margin: 10px 0 18px;
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  grid-template-rows: 1fr 26px;
+  gap: 4px;
+  height: 280px;
+}
+.matrix-y-label {
+  grid-row: 1; grid-column: 1;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em; color: #9c9a93;
+  display: flex; align-items: center; justify-content: center;
+}
+.matrix-x-label {
+  grid-row: 2; grid-column: 2;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em; color: #9c9a93;
+  display: flex; align-items: center; justify-content: center;
+}
+.matrix-grid {
+  grid-row: 1; grid-column: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  border: 1.5px solid rgba(0,0,0,0.18);
+  border-radius: 8px; overflow: hidden;
+}
+.quadrant {
+  padding: 8px 10px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  min-height: 0;
+}
+.q-tl { background: #f0fdf4; border-right: 0.5px solid rgba(0,0,0,0.12); border-bottom: 0.5px solid rgba(0,0,0,0.12); }
+.q-tr { background: #fefce8; border-bottom: 0.5px solid rgba(0,0,0,0.12); }
+.q-bl { background: #f9fafb; border-right: 0.5px solid rgba(0,0,0,0.12); }
+.q-br { background: #fff1f2; }
+.q-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #9c9a93; }
+.q-sublabel { font-size: 11px; color: #57554e; font-style: italic; margin-top: 2px; }
+.q-numbers { font-size: 20px; font-weight: 700; color: #1a1916; min-height: 32px; }
+
+/* ── Arrow axis hints ── */
+.axis-hint {
+  font-size: 10px; color: #9c9a93; display: flex;
+  justify-content: space-between; margin-top: 2px;
+}
+</style>
+</head>
+<body>
+<header class="sr-header">
+  <div class="sr-meta">Year 7 · Lesson 3 · Student resource</div>
+  <div class="sr-title">The cost of clever</div>
+  <p class="sr-instruction">Write the scenario number (1–6) in the quadrant that best fits. Then discuss which ones were hardest to place — and why.</p>
+</header><div class="section-label">The six scenarios</div><div class="scenario-grid"><div class="scenario-card">
+  <div class="scenario-num">Scenario 1</div>
+  <div class="scenario-text">Asking an AI a factual question (one query)</div>
+  <span class="cost-band cost-low">Energy cost: Low</span>
+</div><div class="scenario-card">
+  <div class="scenario-num">Scenario 2</div>
+  <div class="scenario-text">Generating a set of ten AI images</div>
+  <span class="cost-band cost-med">Energy cost: Medium</span>
+</div><div class="scenario-card">
+  <div class="scenario-num">Scenario 3</div>
+  <div class="scenario-text">Using AI to translate a 10-page document</div>
+  <span class="cost-band cost-lowmed">Energy cost: Low–Medium</span>
+</div><div class="scenario-card">
+  <div class="scenario-num">Scenario 4</div>
+  <div class="scenario-text">Training a custom AI model on a company's internal data</div>
+  <span class="cost-band cost-vhi">Energy cost: Very high</span>
+</div><div class="scenario-card">
+  <div class="scenario-num">Scenario 5</div>
+  <div class="scenario-text">Running a personalised AI tutor for one student, daily, for a full school year</div>
+  <span class="cost-band cost-medhi">Energy cost: Medium–High</span>
+</div><div class="scenario-card">
+  <div class="scenario-num">Scenario 6</div>
+  <div class="scenario-text">An AI system monitoring and optimising a city's traffic lights, 24/7</div>
+  <span class="cost-band cost-vhi">Energy cost: Very high</span>
+</div></div><div class="section-label">Worth the cost? — plot the scenarios</div><p style="font-size:12px;color:#57554e;margin-bottom:6px;">Write each scenario number in the quadrant that best matches its position on both axes.</p><div class="matrix-wrap">
+  <div class="matrix-y-label">Social / educational value ↑ High</div>
+  <div class="matrix-grid">
+    <div class="quadrant q-tl">
+      <div>
+        <div class="q-label">High value · Low cost</div>
+        <div class="q-sublabel">Use freely</div>
+      </div>
+      <div class="q-numbers"></div>
+    </div>
+    <div class="quadrant q-tr">
+      <div>
+        <div class="q-label">High value · High cost</div>
+        <div class="q-sublabel">Hard choices</div>
+      </div>
+      <div class="q-numbers"></div>
+    </div>
+    <div class="quadrant q-bl">
+      <div>
+        <div class="q-label">Low value · Low cost</div>
+        <div class="q-sublabel">Your call</div>
+      </div>
+      <div class="q-numbers"></div>
+    </div>
+    <div class="quadrant q-br">
+      <div>
+        <div class="q-label">Low value · High cost</div>
+        <div class="q-sublabel">Worth questioning</div>
+      </div>
+      <div class="q-numbers"></div>
+    </div>
+  </div>
+  <div class="matrix-x-label">Environmental cost → High</div>
+</div>
+<div class="axis-hint" style="margin-left:30px;">
+  <span>← Low cost</span><span>High cost →</span>
+</div><div class="section-label" style="margin-top:20px;">Group discussion</div>
+<p style="font-size:13.5px;color:#57554e;margin-bottom:10px;">Which scenario caused the most disagreement in your group? Note it here and explain why it was hard to place.</p>
+<div class="write-line"></div><div class="write-line"></div><div class="write-line"></div>
+<p style="font-size:13.5px;color:#57554e;margin:10px 0 6px;">Who do you think should be responsible for reducing AI's environmental impact? Tick all that apply.</p>
+<div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;">
+  <label style="font-size:13px;display:flex;align-items:center;gap:6px;"><input type="checkbox"> Individual users</label>
+  <label style="font-size:13px;display:flex;align-items:center;gap:6px;"><input type="checkbox"> AI companies</label>
+  <label style="font-size:13px;display:flex;align-items:center;gap:6px;"><input type="checkbox"> Governments</label>
+  <label style="font-size:13px;display:flex;align-items:center;gap:6px;"><input type="checkbox"> All three equally</label>
+</div><div class="exit-strip">
+  <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#9c9a93;margin-bottom:8px;">Exit — one honest answer</div>
+  <p style="font-size:13.5px;">Does knowing this change anything about how you'll use AI? If yes, what? If no, why not?</p>
+<div class="write-line"></div><div class="write-line"></div><div class="write-line"></div>
+</div>
+</body>
+</html>

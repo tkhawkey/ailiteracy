@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y8 L1 — Student resource to print</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #ffffff;
+  color: #1a1916;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 36px 28px 60px;
+}
+
+/* ── Header ─────────────────────── */
+.sr-header {
+  border-bottom: 1.5px solid #1a1916;
+  padding-bottom: 14px;
+  margin-bottom: 22px;
+}
+.sr-meta {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: #9c9a93; margin-bottom: 5px;
+}
+.sr-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 4px; }
+.sr-instruction { font-size: 13.5px; color: #57554e; margin-top: 6px; line-height: 1.5; }
+
+/* ── Section labels ──────────────── */
+.section-label {
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.09em; color: #9c9a93; margin: 20px 0 8px;
+}
+
+/* ── Write lines ─────────────────── */
+.write-line {
+  border-bottom: 1px solid rgba(0,0,0,0.16);
+  height: 22px; margin-bottom: 8px;
+}
+
+/* ── Generic card ────────────────── */
+.card {
+  border: 1px solid rgba(0,0,0,0.14);
+  border-radius: 10px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  break-inside: avoid;
+}
+.card-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px;
+  background: #f7f6f2;
+  border-bottom: 0.5px solid rgba(0,0,0,0.10);
+}
+.card-num { font-size: 11px; font-weight: 700; color: #9c9a93; min-width: 20px; }
+.card-label { font-size: 13.5px; font-weight: 600; color: #1a1916; }
+.card-sub { font-size: 12px; color: #9c9a93; margin-left: auto; }
+.card-body { padding: 12px 14px; }
+.card-body p { font-size: 13.5px; color: #1a1916; margin-bottom: 6px; line-height: 1.5; }
+.card-body p:last-child { margin-bottom: 0; }
+
+/* ── Role cards ──────────────────── */
+.role-card {
+  border: 1.5px solid rgba(0,0,0,0.18);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.role-card-head {
+  padding: 12px 18px 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.role-tag { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.09em; color: #9c9a93; margin-bottom: 4px; }
+.role-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.role-brief { font-size: 13px; color: #57554e; line-height: 1.5; }
+.role-card-body { padding: 14px 18px; }
+.role-card-body h4 { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #9c9a93; margin: 12px 0 6px; }
+.role-card-body h4:first-child { margin-top: 0; }
+.role-card-body ul { margin-left: 16px; }
+.role-card-body li { font-size: 13px; color: #1a1916; margin-bottom: 4px; line-height: 1.5; }
+.role-oneliner { margin-top: 12px; padding: 10px 14px; background: #f7f6f2; border-radius: 8px; border: 0.5px solid rgba(0,0,0,0.14); font-size: 13.5px; font-style: italic; color: #1a1916; }
+
+/* ── Grid layouts ────────────────── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 10px 0; }
+.col-box {
+  border: 1px solid rgba(0,0,0,0.14); border-radius: 8px; padding: 10px 12px;
+}
+.col-box-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #9c9a93; margin-bottom: 8px; }
+
+/* ── Verdict row ─────────────────── */
+.verdict-row { display: flex; gap: 12px; align-items: center; margin: 8px 0; }
+.verdict-btn {
+  border: 1.5px solid rgba(0,0,0,0.16); border-radius: 6px;
+  padding: 4px 12px; font-size: 12px; font-weight: 600; color: #57554e;
+  background: #f7f6f2; white-space: nowrap;
+}
+.verdict-evidence { flex: 1; border-bottom: 1px solid rgba(0,0,0,0.16); height: 22px; }
+
+/* ── Prompt sort zone header ─────── */
+.zone-header {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 8px;
+}
+.zone-label {
+  text-align: center; padding: 6px 8px; border-radius: 6px;
+  font-size: 11px; font-weight: 700; line-height: 1.4;
+}
+.zone-safe { background: #d1fae5; color: #065f46; }
+.zone-maybe { background: #fef3c7; color: #92400e; }
+.zone-avoid { background: #fee2e2; color: #991b1b; }
+
+/* ── Prompt sort cards ───────────── */
+.prompt-sort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+.sort-card {
+  border: 1px solid rgba(0,0,0,0.14); border-radius: 8px; padding: 10px 12px;
+  break-inside: avoid;
+}
+.sort-card p { font-size: 13px; color: #1a1916; line-height: 1.5; font-style: italic; margin-bottom: 4px; }
+.sort-card-cat { font-size: 10.5px; color: #9c9a93; font-style: normal; }
+.sort-verdict { margin-top: 8px; display: flex; gap: 6px; }
+.sort-verdict span {
+  font-size: 10px; padding: 2px 8px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.14);
+  color: #57554e; cursor: default;
+}
+
+/* ── Exit strip ──────────────────── */
+.exit-strip {
+  border: 1.5px solid rgba(0,0,0,0.16); border-radius: 10px;
+  padding: 14px 18px; margin-top: 18px; background: #f7f6f2;
+  break-inside: avoid;
+}
+.exit-strip p { font-size: 14px; color: #1a1916; margin-bottom: 4px; }
+.exit-strip .fill-blank {
+  display: inline-block; min-width: 140px;
+  border-bottom: 1.5px solid #1a1916; height: 18px; vertical-align: bottom; margin: 0 4px;
+}
+
+/* ── Reading passage ─────────────── */
+.reading-passage {
+  background: #f7f6f2; border-radius: 10px; padding: 16px 18px;
+  margin-bottom: 18px; border: 0.5px solid rgba(0,0,0,0.14);
+  font-size: 14px; line-height: 1.7; color: #1a1916;
+}
+.reading-passage p { margin-bottom: 10px; }
+.reading-passage p:last-child { margin-bottom: 0; }
+.reading-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+
+/* ── Work samples ────────────────── */
+.sample { border: 1px solid rgba(0,0,0,0.14); border-radius: 10px; margin-bottom: 14px; overflow: hidden; break-inside: avoid; }
+.sample-head { padding: 8px 14px; background: #f7f6f2; border-bottom: 0.5px solid rgba(0,0,0,0.10); display: flex; justify-content: space-between; align-items: center; }
+.sample-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #9c9a93; }
+.sample-rank { font-size: 11px; color: #9c9a93; }
+.sample-body { padding: 13px 16px; font-size: 13.5px; line-height: 1.65; color: #1a1916; }
+.rank-row { display: flex; gap: 8px; margin-top: 8px; }
+.rank-box { border: 1px solid rgba(0,0,0,0.16); border-radius: 6px; padding: 4px 10px; font-size: 12px; color: #57554e; }
+
+/* ── Human advantage poster columns ─ */
+.advantage-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+.advantage-table th { font-size: 12px; font-weight: 700; text-align: left; padding: 8px 12px; border-bottom: 1.5px solid rgba(0,0,0,0.16); }
+.advantage-table td { vertical-align: top; padding: 8px 12px; border-bottom: 0.5px solid rgba(0,0,0,0.08); font-size: 13px; line-height: 1.5; }
+.advantage-table tr:last-child td { border-bottom: none; }
+
+/* ── Print ───────────────────────── */
+@media print {
+  @page { size: A4; margin: 14mm 16mm; }
+  body { max-width: 100%; padding: 0; font-size: 11pt; }
+  .card, .role-card, .sample, .sort-card, .exit-strip, .reading-passage {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .role-card { page-break-inside: avoid; }
+  .sort-card { break-inside: avoid; }
+  .section-label { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+<header class="sr-header">
+  <div class="sr-meta">Year 8 · Lesson 1 · Student resource</div>
+  <div class="sr-title">The machine that acts alone</div>
+  <p class="sr-instruction">Part 1: spectrum activity. Part 2: group scenario. Part 3: class discussion.</p>
+</header>
+
+<div class="section-label">Part 1 — Classroom spectrum</div>
+<p style="font-size:13.5px;color:#57554e;margin-bottom:10px;">Here are five more scenarios to consider. For each one, mark where you stand on the scale, then write a sentence explaining why.</p>
+<div class="card">
+  <div class="card-head"><span class="card-num">1</span><span class="card-label" style="font-weight:500;font-size:13.5px;">An AI recommends a playlist based on what you've listened to before.</span></div>
+  <div class="card-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <span style="font-size:11px;color:#047857;font-weight:700;">AI can handle it alone</span>
+      <div style="flex:1;height:2px;background:rgba(0,0,0,0.12);border-radius:1px;"></div>
+      <span style="font-size:11px;color:#991b1b;font-weight:700;">Needs human oversight</span>
+    </div>
+    <div style="font-size:11px;color:#9c9a93;">Mark your position on the line above. Write a sentence explaining why.</div>
+    <div class="write-line"></div><div class="write-line"></div><div class="write-line"></div>
+  </div>
+</div><div class="card">
+  <div class="card-head"><span class="card-num">2</span><span class="card-label" style="font-weight:500;font-size:13.5px;">An AI books a restaurant for your birthday based on your preferences.</span></div>
+  <div class="card-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <span style="font-size:11px;color:#047857;font-weight:700;">AI can handle it alone</span>
+      <div style="flex:1;height:2px;background:rgba(0,0,0,0.12);border-radius:1px;"></div>
+      <span style="font-size:11px;color:#991b1b;font-weight:700;">Needs human oversight</span>
+    </div>
+    <div style="font-size:11px;color:#9c9a93;">Mark your position on the line above. Write a sentence explaining why.</div>
+    <div class="write-line"></div><div class="write-line"></div><div class="write-line"></div>
+  </div>
+</div><div class="card">
+  <div class="card-head"><span class="card-num">3</span><span class="card-label" style="font-weight:500;font-size:13.5px;">An AI decides which job applicants get an interview.</span></div>
+  <div class="card-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <span style="font-size:11px;color:#047857;font-weight:700;">AI can handle it alone</span>
+      <div style="flex:1;height:2px;background:rgba(0,0,0,0.12);border-radius:1px;"></div>
+      <span style="font-size:11px;color:#991b1b;font-weight:700;">Needs human oversight</span>
+    </div>
+    <div style="font-size:11px;color:#9c9a93;">Mark your position on the line above. Write a sentence explaining why.</div>
+    <div class="write-line"></div><div class="write-line"></div><div class="write-line"></div>
+  </div>
+</div><div class="card">
+  <div class="card-head"><span class="card-num">4</span><span class="card-label" style="font-weight:500;font-size:13.5px;">An AI recommends which patient in a hospital gets the next available bed.</span></div>
+  <div class="card-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <span style="font-size:11px;color:#047857;font-weight:700;">AI can handle it alone</span>
+      <div style="flex:1;height:2px;background:rgba(0,0,0,0.12);border-radius:1px;"></div>
+      <span style="font-size:11px;color:#991b1b;font-weight:700;">Needs human oversight</span>
+    </div>
+    <div style="font-size:11px;color:#9c9a93;">Mark your position on the line above. Write a sentence explaining why.</div>
+    <div class="write-line"></div><div class="write-line"></div><div class="write-line"></div>
+  </div>
+</div><div class="card">
+  <div class="card-head"><span class="card-num">5</span><span class="card-label" style="font-weight:500;font-size:13.5px;">An AI decides, based on behavioural data, which students get extra support in school.</span></div>
+  <div class="card-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <span style="font-size:11px;color:#047857;font-weight:700;">AI can handle it alone</span>
+      <div style="flex:1;height:2px;background:rgba(0,0,0,0.12);border-radius:1px;"></div>
+      <span style="font-size:11px;color:#991b1b;font-weight:700;">Needs human oversight</span>
+    </div>
+    <div style="font-size:11px;color:#9c9a93;">Mark your position on the line above. Write a sentence explaining why.</div>
+    <div class="write-line"></div><div class="write-line"></div><div class="write-line"></div>
+  </div>
+</div>
+
+<div class="section-label" style="margin-top:22px;">Part 2 — Group scenario</div>
+<div style="background:#f7f6f2;border-radius:10px;padding:14px 16px;margin-bottom:14px;border:0.5px solid rgba(0,0,0,0.14);">
+  <div style="font-size:12px;font-weight:700;margin-bottom:6px;">The scenario</div>
+  <p style="font-size:13.5px;line-height:1.6;">A school uses an AI system that has access to every student's essay folder. It flags any student whose writing has declined compared to their previous work — and automatically emails their parents when a student is flagged. Teachers only see the flagged students' work; unflagged work is never reviewed.</p>
+</div>
+<div class="card" style="margin-bottom:10px;">
+  <div class="card-head"><span class="card-num">1</span><span class="card-label" style="font-weight:500;font-size:13.5px;">What could go wrong — even if the AI is technically accurate?</span></div>
+  <div class="card-body"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+</div><div class="card" style="margin-bottom:10px;">
+  <div class="card-head"><span class="card-num">2</span><span class="card-label" style="font-weight:500;font-size:13.5px;">At what point should a human have been involved?</span></div>
+  <div class="card-body"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+</div><div class="card" style="margin-bottom:10px;">
+  <div class="card-head"><span class="card-num">3</span><span class="card-label" style="font-weight:500;font-size:13.5px;">Who is responsible if the AI's assessment is wrong?</span></div>
+  <div class="card-body"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+</div><div class="card" style="margin-bottom:10px;">
+  <div class="card-head"><span class="card-num">4</span><span class="card-label" style="font-weight:500;font-size:13.5px;">Would you want this system operating on your work?</span></div>
+  <div class="card-body"><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+</div>
+
+<div class="section-label" style="margin-top:20px;">Part 3 — What changes the stakes?</div>
+<p style="font-size:13.5px;color:#57554e;margin-bottom:10px;">Your teacher will introduce four factors that make agentic AI higher stakes. For each one, note how it applies to the essay-flagging scenario — or to any of today's other scenarios.</p>
+<div class="two-col">
+  <div class="col-box"><div class="col-box-label">Reversibility — can the action be undone?</div><div class="write-line"></div><div class="write-line"></div></div>
+  <div class="col-box"><div class="col-box-label">Accountability — is a human clearly responsible?</div><div class="write-line"></div><div class="write-line"></div></div>
+  <div class="col-box"><div class="col-box-label">Transparency — does anyone know what the AI decided and why?</div><div class="write-line"></div><div class="write-line"></div></div>
+  <div class="col-box"><div class="col-box-label">Consent — did the people affected agree?</div><div class="write-line"></div><div class="write-line"></div></div>
+</div>
+
+</body>
+</html>

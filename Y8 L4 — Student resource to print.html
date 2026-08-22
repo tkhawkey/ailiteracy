@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Y8 L4 — Student resource to print</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #ffffff;
+  color: #1a1916;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 36px 28px 60px;
+}
+
+/* ── Header ─────────────────────── */
+.sr-header {
+  border-bottom: 1.5px solid #1a1916;
+  padding-bottom: 14px;
+  margin-bottom: 22px;
+}
+.sr-meta {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: #9c9a93; margin-bottom: 5px;
+}
+.sr-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 4px; }
+.sr-instruction { font-size: 13.5px; color: #57554e; margin-top: 6px; line-height: 1.5; }
+
+/* ── Section labels ──────────────── */
+.section-label {
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.09em; color: #9c9a93; margin: 20px 0 8px;
+}
+
+/* ── Write lines ─────────────────── */
+.write-line {
+  border-bottom: 1px solid rgba(0,0,0,0.16);
+  height: 22px; margin-bottom: 8px;
+}
+
+/* ── Generic card ────────────────── */
+.card {
+  border: 1px solid rgba(0,0,0,0.14);
+  border-radius: 10px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  break-inside: avoid;
+}
+.card-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px;
+  background: #f7f6f2;
+  border-bottom: 0.5px solid rgba(0,0,0,0.10);
+}
+.card-num { font-size: 11px; font-weight: 700; color: #9c9a93; min-width: 20px; }
+.card-label { font-size: 13.5px; font-weight: 600; color: #1a1916; }
+.card-sub { font-size: 12px; color: #9c9a93; margin-left: auto; }
+.card-body { padding: 12px 14px; }
+.card-body p { font-size: 13.5px; color: #1a1916; margin-bottom: 6px; line-height: 1.5; }
+.card-body p:last-child { margin-bottom: 0; }
+
+/* ── Role cards ──────────────────── */
+.role-card {
+  border: 1.5px solid rgba(0,0,0,0.18);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.role-card-head {
+  padding: 12px 18px 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.role-tag { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.09em; color: #9c9a93; margin-bottom: 4px; }
+.role-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.role-brief { font-size: 13px; color: #57554e; line-height: 1.5; }
+.role-card-body { padding: 14px 18px; }
+.role-card-body h4 { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #9c9a93; margin: 12px 0 6px; }
+.role-card-body h4:first-child { margin-top: 0; }
+.role-card-body ul { margin-left: 16px; }
+.role-card-body li { font-size: 13px; color: #1a1916; margin-bottom: 4px; line-height: 1.5; }
+.role-oneliner { margin-top: 12px; padding: 10px 14px; background: #f7f6f2; border-radius: 8px; border: 0.5px solid rgba(0,0,0,0.14); font-size: 13.5px; font-style: italic; color: #1a1916; }
+
+/* ── Grid layouts ────────────────── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 10px 0; }
+.col-box {
+  border: 1px solid rgba(0,0,0,0.14); border-radius: 8px; padding: 10px 12px;
+}
+.col-box-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #9c9a93; margin-bottom: 8px; }
+
+/* ── Verdict row ─────────────────── */
+.verdict-row { display: flex; gap: 12px; align-items: center; margin: 8px 0; }
+.verdict-btn {
+  border: 1.5px solid rgba(0,0,0,0.16); border-radius: 6px;
+  padding: 4px 12px; font-size: 12px; font-weight: 600; color: #57554e;
+  background: #f7f6f2; white-space: nowrap;
+}
+.verdict-evidence { flex: 1; border-bottom: 1px solid rgba(0,0,0,0.16); height: 22px; }
+
+/* ── Prompt sort zone header ─────── */
+.zone-header {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 8px;
+}
+.zone-label {
+  text-align: center; padding: 6px 8px; border-radius: 6px;
+  font-size: 11px; font-weight: 700; line-height: 1.4;
+}
+.zone-safe { background: #d1fae5; color: #065f46; }
+.zone-maybe { background: #fef3c7; color: #92400e; }
+.zone-avoid { background: #fee2e2; color: #991b1b; }
+
+/* ── Prompt sort cards ───────────── */
+.prompt-sort-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+.sort-card {
+  border: 1px solid rgba(0,0,0,0.14); border-radius: 8px; padding: 10px 12px;
+  break-inside: avoid;
+}
+.sort-card p { font-size: 13px; color: #1a1916; line-height: 1.5; font-style: italic; margin-bottom: 4px; }
+.sort-card-cat { font-size: 10.5px; color: #9c9a93; font-style: normal; }
+.sort-verdict { margin-top: 8px; display: flex; gap: 6px; }
+.sort-verdict span {
+  font-size: 10px; padding: 2px 8px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.14);
+  color: #57554e; cursor: default;
+}
+
+/* ── Exit strip ──────────────────── */
+.exit-strip {
+  border: 1.5px solid rgba(0,0,0,0.16); border-radius: 10px;
+  padding: 14px 18px; margin-top: 18px; background: #f7f6f2;
+  break-inside: avoid;
+}
+.exit-strip p { font-size: 14px; color: #1a1916; margin-bottom: 4px; }
+.exit-strip .fill-blank {
+  display: inline-block; min-width: 140px;
+  border-bottom: 1.5px solid #1a1916; height: 18px; vertical-align: bottom; margin: 0 4px;
+}
+
+/* ── Reading passage ─────────────── */
+.reading-passage {
+  background: #f7f6f2; border-radius: 10px; padding: 16px 18px;
+  margin-bottom: 18px; border: 0.5px solid rgba(0,0,0,0.14);
+  font-size: 14px; line-height: 1.7; color: #1a1916;
+}
+.reading-passage p { margin-bottom: 10px; }
+.reading-passage p:last-child { margin-bottom: 0; }
+.reading-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+
+/* ── Work samples ────────────────── */
+.sample { border: 1px solid rgba(0,0,0,0.14); border-radius: 10px; margin-bottom: 14px; overflow: hidden; break-inside: avoid; }
+.sample-head { padding: 8px 14px; background: #f7f6f2; border-bottom: 0.5px solid rgba(0,0,0,0.10); display: flex; justify-content: space-between; align-items: center; }
+.sample-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #9c9a93; }
+.sample-rank { font-size: 11px; color: #9c9a93; }
+.sample-body { padding: 13px 16px; font-size: 13.5px; line-height: 1.65; color: #1a1916; }
+.rank-row { display: flex; gap: 8px; margin-top: 8px; }
+.rank-box { border: 1px solid rgba(0,0,0,0.16); border-radius: 6px; padding: 4px 10px; font-size: 12px; color: #57554e; }
+
+/* ── Human advantage poster columns ─ */
+.advantage-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+.advantage-table th { font-size: 12px; font-weight: 700; text-align: left; padding: 8px 12px; border-bottom: 1.5px solid rgba(0,0,0,0.16); }
+.advantage-table td { vertical-align: top; padding: 8px 12px; border-bottom: 0.5px solid rgba(0,0,0,0.08); font-size: 13px; line-height: 1.5; }
+.advantage-table tr:last-child td { border-bottom: none; }
+
+/* ── Print ───────────────────────── */
+@media print {
+  @page { size: A4; margin: 14mm 16mm; }
+  body { max-width: 100%; padding: 0; font-size: 11pt; }
+  .card, .role-card, .sample, .sort-card, .exit-strip, .reading-passage {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .role-card { page-break-inside: avoid; }
+  .sort-card { break-inside: avoid; }
+  .section-label { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+
+<header class="sr-header">
+  <div class="sr-meta">Year 8 · Lesson 4 · Student resource</div>
+  <div class="sr-title">Your name on it</div>
+  <p class="sr-instruction">Read all three work samples. Rank them. Discuss. Then answer: what is left for you?</p>
+</header>
+
+<div style="background:#f7f6f2;border-radius:10px;padding:12px 16px;margin-bottom:14px;border:0.5px solid rgba(0,0,0,0.14);">
+  <p style="font-size:13.5px;"><strong>The question all three students answered:</strong> <em>Discuss the impact of the invention of the printing press on European society.</em></p>
+</div>
+
+<div class="section-label">Part 1 — Read and rank</div>
+<div class="sample">
+  <div class="sample-head">
+    <span class="sample-label">Sample A</span>
+    <span class="sample-rank">Rank: <strong>___</strong> &nbsp;|&nbsp; Most genuine understanding: <strong>___</strong></span>
+  </div>
+  <div class="sample-body">The invention of the printing press by Johannes Gutenberg in the mid-15th century represents a significant turning point in human history. By enabling the mass production of books, it democratized knowledge, breaking the monopoly that elite institutions previously held over information. This shift directly contributed to the rapid spread of ideas during the Renaissance, the Reformation, and the Scientific Revolution. While it could be argued that the sudden influx of information led to social unrest and the spread of propaganda, the overall consensus remains that the printing press was a positive development. It laid the necessary foundation for modern literacy, education, and the democratization of information that continues to shape contemporary society.</div>
+</div><div class="sample">
+  <div class="sample-head">
+    <span class="sample-label">Sample B</span>
+    <span class="sample-rank">Rank: <strong>___</strong> &nbsp;|&nbsp; Most genuine understanding: <strong>___</strong></span>
+  </div>
+  <div class="sample-body">The printing press was one of the most important inventions ever because it changed how people shared ideas. Before this, books were copied by hand, which meant they were rare and expensive. Gutenberg's press allowed information to be printed much faster, which meant more people could learn to read and think for themselves. This helped cause big changes like the Protestant Reformation and the spread of scientific discoveries. It was definitely a huge technological leap that changed how we look at the world today. I also think it was important because it meant more people could start to think for themselves, not just believe what they were told.</div>
+</div><div class="sample">
+  <div class="sample-head">
+    <span class="sample-label">Sample C</span>
+    <span class="sample-rank">Rank: <strong>___</strong> &nbsp;|&nbsp; Most genuine understanding: <strong>___</strong></span>
+  </div>
+  <div class="sample-body">I think the printing press was a mostly positive thing for society because it changed who got to learn stuff. Before the press, you had to be really rich or a monk to own a book, which seems unfair. Even though it probably caused some chaos because people started arguing about the Church and new ideas, I think that is a good thing in the end. Without it, I think scientific progress would have been much slower. It's kind of like the internet today — it made things messy but it also gave people the power to speak up, so it was definitely worth it.</div>
+</div>
+
+<div style="border:1px solid rgba(0,0,0,0.14);border-radius:8px;padding:12px 14px;margin:14px 0;">
+  <div style="font-size:12px;font-weight:700;margin-bottom:6px;">My ranking — most likely AI-generated:</div>
+  <div class="write-line"></div>
+  <div style="font-size:12px;font-weight:700;margin-bottom:6px;margin-top:6px;">Most comfortable putting my name on — and why:</div>
+  <div class="write-line"></div><div class="write-line"></div>
+</div>
+
+<div class="section-label" style="margin-top:20px;">Part 2 — Discussion questions</div>
+<p style="margin-bottom:6px;font-size:13.5px;">&#9679; How did you decide? What were you actually looking for?</p><p style="margin-bottom:6px;font-size:13.5px;">&#9679; Which one could you defend most easily — and why?</p><p style="margin-bottom:6px;font-size:13.5px;">&#9679; Is the best-written one the same as the 'most yours'? What's the difference?</p><p style="margin-bottom:6px;font-size:13.5px;">&#9679; Which passes the test: 'I can explain every decision in this work as my own thinking'?</p>
+
+<div class="section-label" style="margin-top:20px;">Part 3 — What is left for you?</div>
+<p style="font-size:13.5px;color:#57554e;margin-bottom:10px;">AI can generate text, improve writing, answer questions, and plan actions. What is left that only a human can do in academic work? Add your ideas below, then listen to what the class says.</p>
+<div class="two-col">
+  <div class="col-box"><div class="col-box-label">What only I can do</div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+  <div class="col-box"><div class="col-box-label">What I heard from the class</div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div><div class="write-line"></div></div>
+</div>
+
+<div class="exit-strip">
+  <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#9c9a93;margin-bottom:8px;">Closing principle</div>
+  <p style="font-size:13.5px;"><em>"If you can't explain what each part of your work means, the work is not yours."</em></p>
+  <p style="font-size:13px;color:#57554e;margin-top:6px;">One thing I will do differently in my work this year because of today's lesson:</p>
+  <div class="write-line"></div><div class="write-line"></div>
+</div>
+
+</body>
+</html>
