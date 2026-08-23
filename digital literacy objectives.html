@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cambridge Digital Literacy — AI Objectives</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f5f4ef;
+    --color-background-tertiary: #eeede8;
+    --color-text-primary: #1a1a18;
+    --color-text-secondary: #5a5a56;
+    --color-text-tertiary: #8a8a84;
+    --color-border-tertiary: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --font-sans: system-ui, -apple-system, sans-serif;
+    --font-mono: ui-monospace, monospace;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-background-primary: #1a1a18;
+      --color-background-secondary: #242420;
+      --color-background-tertiary: #2c2c28;
+      --color-text-primary: #e8e6dc;
+      --color-text-secondary: #9c9a90;
+      --color-text-tertiary: #6a6a64;
+      --color-border-tertiary: rgba(255,255,255,0.1);
+      --color-border-secondary: rgba(255,255,255,0.18);
+    }
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    padding: 32px 24px;
+    max-width: 860px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .page-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+  }
+  .page-sub {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-bottom: 28px;
+  }
+
+  .intro-card {
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+  .intro-card h2 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+  }
+  .intro-card .subtitle {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: 14px;
+  }
+  .intro-card p {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+
+  .theme-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 600px) { .theme-grid { grid-template-columns: 1fr; } }
+
+  .theme-pill {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .dot-tools  { background: #534AB7; }
+  .dot-safety { background: #0F6E56; }
+  .dot-world  { background: #854F0B; }
+
+  .phase-header {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+    margin: 28px 0 12px;
+  }
+
+  .stage-card {
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .stage-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--color-background-secondary);
+    cursor: pointer;
+    user-select: none;
+  }
+  .stage-header:hover { background: var(--color-background-tertiary); }
+
+  .stage-badge {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+  .badge-primary   { background: #EEEDFE; color: #3C3489; }
+  .badge-secondary { background: #E1F5EE; color: #085041; }
+
+  @media (prefers-color-scheme: dark) {
+    .badge-primary   { background: #3C3489; color: #CECBF6; }
+    .badge-secondary { background: #085041; color: #9FE1CB; }
+  }
+
+  .stage-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); flex: 1; }
+  .stage-age   { font-size: 12px; color: var(--color-text-tertiary); flex-shrink: 0; }
+  .chevron     { font-size: 12px; color: var(--color-text-tertiary); transition: transform 0.2s; flex-shrink: 0; }
+  .chevron.open { transform: rotate(90deg); }
+
+  .stage-body { display: none; padding: 0 16px 16px; }
+  .stage-body.open { display: block; }
+
+  .strand-section { margin-top: 14px; }
+  .strand-label {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 8px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  .strand-tc { background: #EEEDFE; color: #534AB7; }
+  .strand-sw { background: #E1F5EE; color: #0F6E56; }
+  .strand-dw { background: #FAEEDA; color: #854F0B; }
+
+  @media (prefers-color-scheme: dark) {
+    .strand-tc { background: #26215C; color: #AFA9EC; }
+    .strand-sw { background: #04342C; color: #5DCAA5; }
+    .strand-dw { background: #412402; color: #FAC775; }
+  }
+
+  .obj-list { list-style: none; }
+  .obj-item {
+    display: flex;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--color-text-primary);
+  }
+  .obj-item:last-child { border-bottom: none; }
+  .obj-code {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    flex-shrink: 0;
+    margin-top: 2px;
+    width: 52px;
+  }
+
+  .footer {
+    margin-top: 32px;
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    border-top: 0.5px solid var(--color-border-tertiary);
+    padding-top: 16px;
+  }
+</style>
+</head>
+<body>
+
+<h1 class="page-title">Cambridge Digital Literacy — AI-Specific Objectives</h1>
+<p class="page-sub">Extracted from 0072 Primary (Stages 1–6) and 0082 Lower Secondary (Stages 7–9) · 2026</p>
+
+<div class="intro-card">
+  <h2>AI in the Cambridge Digital Literacy Curriculum</h2>
+  <div class="subtitle">Extracted from 0072 Primary (Stages 1–6) and 0082 Lower Secondary (Stages 7–9)</div>
+  <p>
+    AI is woven throughout both frameworks rather than siloed into discrete units. Six consistent themes run from Stage 1 through Stage 9, building in complexity and critical demand at each level. Across all stages, the curriculum insists that AI is a tool that supports learning — not a replacement for human thought, relationships, or original understanding.
+  </p>
+  <div class="theme-grid">
+    <div class="theme-pill"><span class="dot dot-tools"></span><span><strong>Prompting &amp; creation</strong> — from simple text inputs in Stage 1 to full prompt engineering and framework comparison in Stage 9</span></div>
+    <div class="theme-pill"><span class="dot dot-safety"></span><span><strong>Critical evaluation</strong> — checking AI output for accuracy, bias, validity, and source trustworthiness at every stage</span></div>
+    <div class="theme-pill"><span class="dot dot-world"></span><span><strong>Learning integrity</strong> — strong, recurring thread: AI must not shortcut genuine understanding or owned output</span></div>
+    <div class="theme-pill"><span class="dot dot-tools"></span><span><strong>Safety &amp; wellbeing</strong> — digital footprints, parasocial AI relationships, toxic AI behaviour, emotional risks</span></div>
+    <div class="theme-pill"><span class="dot dot-safety"></span><span><strong>AI and society</strong> — jobs, industry disruption, regulation, climate impact, data ownership, digital divides</span></div>
+    <div class="theme-pill"><span class="dot dot-world"></span><span><strong>Human vs AI intelligence</strong> — comparing capabilities, limitations, emotional understanding, and co-intelligence</span></div>
+  </div>
+</div>
+
+<div class="phase-header">Cambridge Primary Digital Literacy · 0072</div>
+<div id="stages-primary"></div>
+
+<div class="phase-header">Cambridge Lower Secondary Digital Literacy · 0082</div>
+<div id="stages-secondary"></div>
+
+<div class="footer">Cambridge International · Digital Literacy Curriculum Frameworks 0072 &amp; 0082 · AI objectives extracted for curriculum planning purposes</div>
+
+<script>
+const stagesData = [
+  {
+    id:"s1", phase:"primary", label:"Stage 1", age:"Age 5–6",
+    tc:[
+      {code:"1TC.04",text:"Access, explore and interact with AI platforms, commenting on experiences and outcomes."},
+      {code:"1TC.06",text:"Understand the purpose of prompting and explore how prompts can be given to digital and AI tools."},
+      {code:"1TC.07",text:"Input common words to create prompts for AI to generate simple text outputs, including coherent sentences, and outputs in other modes, such as images."},
+      {code:"1TC.08",text:"Know that AI gets information from large amounts of data, including from the web, internet and many other digital and non-digital sources."},
+    ],
+    sw:[
+      {code:"1SW.07",text:"Identify potential positive and negative influences of using digital and AI-powered tools."},
+    ],
+    dw:[
+      {code:"1DW.02",text:"Know that 'AI' is a common term for Artificial Intelligence, that AI systems can think and learn, and that this is sometimes similar to how humans think and learn."},
+      {code:"1DW.03",text:"Identify AI tools in familiar contexts, including their purpose."},
+      {code:"1DW.06",text:"Explore what chatbots are and what they do, and identify that they only respond if they are prompted to do so."},
+      {code:"1DW.07",text:"Explore how AI learns by being given, and processing, lots of data types, including words, pictures and numbers."},
+      {code:"1DW.12",text:"Compare and contrast the emotional influence of AI outputs with interaction with other humans."},
+    ]
+  },
+  {
+    id:"s2", phase:"primary", label:"Stage 2", age:"Age 6–7",
+    tc:[
+      {code:"2TC.03",text:"Explore using voice and typing to enter words and simple sentences into different platforms, including AI."},
+      {code:"2TC.05",text:"Explore the differences between using a search engine and using an AI tool to find information."},
+      {code:"2TC.06",text:"Recognise the importance of giving clear prompts to search engines and AI tools."},
+      {code:"2TC.07",text:"Explore how AI tools can help us to find information in different formats."},
+      {code:"2TC.08",text:"Explore how AI tools can help us to find information in response to specific intentions."},
+      {code:"2TC.09",text:"Explore adding specificity to prompts."},
+    ],
+    sw:[],
+    dw:[
+      {code:"2DW.02",text:"Understand that AI can adapt to new situations but may not be as adaptable as humans."},
+      {code:"2DW.03",text:"Compare AI responses with human outputs, including text, voice, and image outputs."},
+      {code:"2DW.05",text:"Know that chatbots work in different ways across AI platforms and systems, and for different purposes."},
+      {code:"2DW.06",text:"Know that AI processes large amounts of existing data, including from the web, internet and many other digital sources, for information about the required topics."},
+      {code:"2DW.09",text:"Identify examples of similarities and differences between AI and human intelligence."},
+    ]
+  },
+  {
+    id:"s3", phase:"primary", label:"Stage 3", age:"Age 7–8",
+    tc:[
+      {code:"3TC.05",text:"Edit images by changing colour and size, and by cropping, exploring both digital software and AI."},
+      {code:"3TC.06",text:"Explore how entering text and verbal information requests into GenAI tools can form a progressive dialogue, rather than being a series of refined individual searches."},
+      {code:"3TC.07",text:"Analyse the quality, relevance and accuracy of AI-generated text and media, identifying areas for improvement through further prompting."},
+      {code:"3TC.08",text:"Explore creating prompts to produce detailed outputs, such as longer pieces of text."},
+    ],
+    sw:[
+      {code:"3SW.03",text:"Identify the risks of sharing personal information with AI platforms."},
+      {code:"3SW.07",text:"Understand the risk that some dialogue, video and images encountered online might be generated or altered using digital or AI tools and might not show real people or events."},
+      {code:"3SW.08",text:"Analyse the personification of AI tools, recognising factors by which they can be identified as being machines."},
+    ],
+    dw:[
+      {code:"3DW.02",text:"Identify roles that AI is taking in tasks that have traditionally been completed by humans."},
+      {code:"3DW.03",text:"Identify differences between AI tools across contexts, understanding that different platforms use different algorithms and inputs, to produce different outputs."},
+      {code:"3DW.06",text:"Know that AI can repeat the data that it is given, can mix up that data in new ways, but that it does not understand the outputs that it produces."},
+      {code:"3DW.10",text:"Determine tasks that are suitable for AI and tasks that should not be delegated to AI."},
+    ]
+  },
+  {
+    id:"s4", phase:"primary", label:"Stage 4", age:"Age 8–9",
+    tc:[
+      {code:"4TC.05",text:"Apply critical literacy skills to compare and contrast AI-generated text with trusted sources, to identify evidence of credibility and unreliability."},
+      {code:"4TC.06",text:"Explore ways of refining AI prompts, for example by adding constraints."},
+      {code:"4TC.07",text:"Explore creating specific prompts to produce outputs that have clear parameters."},
+      {code:"4TC.08",text:"Understand the importance of critically comparing AI outputs with the intention, and with the prompt."},
+    ],
+    sw:[],
+    dw:[
+      {code:"4DW.01",text:"Explore how AI has contributed substantially to the speed and impact of digital development."},
+      {code:"4DW.02",text:"Identify roles that AI is taking in tasks that have traditionally been completed by other machines, including in automated processes and in digital games."},
+      {code:"4DW.03",text:"Discuss how the speed of AI integration reduces the availability of facts when analysing its benefits and drawbacks."},
+      {code:"4DW.06",text:"Understand that AI tools are all machine-based systems and do not have emotions and self-regulation skills in the same way as humans."},
+      {code:"4DW.08",text:"Evaluate applications of AI, including time saving, removing the need for repetitive human activity, working in hazardous environments, and reducing the risk of human error."},
+      {code:"4DW.10",text:"Compare and contrast AI with human intelligence to differentiate machine and human forms of intelligence."},
+    ]
+  },
+  {
+    id:"s5", phase:"primary", label:"Stage 5", age:"Age 9–10",
+    tc:[
+      {code:"5TC.04",text:"Explore using AI tools to redesign text documents for a purpose, including adding other media."},
+      {code:"5TC.06",text:"Explore how prompting frameworks can be used when interacting with AI tools."},
+      {code:"5TC.07",text:"Explore GenAI outputs by checking their sources for validity and trustworthiness."},
+      {code:"5TC.08",text:"Explore how refining initial text and verbal prompts can impact the accuracy and relevance of GenAI results."},
+    ],
+    sw:[
+      {code:"5SW.02",text:"Understand that cyberbullying takes place online and can take many forms, including using AI to create and share fake and harmful content."},
+      {code:"5SW.08",text:"Identify benefits and risks of AI chatbots, including companion chatbots and the parasocial nature of these relationships."},
+    ],
+    dw:[
+      {code:"5DW.02",text:"Explore multimodal AI capabilities, including recognising and producing speech, text and images, and when identifying trends."},
+      {code:"5DW.03",text:"Explore a range of perspectives related to the transformation of jobs that result from AI developments."},
+      {code:"5DW.04",text:"Understand that when AI generates new content, it is based on training data and this data use has ethical impacts on creative professionals, such as authors and scientists."},
+      {code:"5DW.05",text:"Recognise that online content may provide false information with the intent to deceive, and that this can then influence AI outputs."},
+      {code:"5DW.06",text:"Understand that GenAI models are trained on large datasets and that the quality and origin of this data can influence the output, accuracy, and potential for bias and error."},
+      {code:"5DW.10",text:"Evaluate the contrasting depth of emotion generated by AI outputs when compared to human outputs, for example photographs and texts."},
+    ]
+  },
+  {
+    id:"s6", phase:"primary", label:"Stage 6", age:"Age 10–11",
+    tc:[
+      {code:"6TC.01",text:"Identify and use help sources, including AI-powered tools, and evaluate their accuracy."},
+      {code:"6TC.02",text:"Explore editing and organising the layout of a document in text processing software and in AI."},
+      {code:"6TC.05",text:"Explore using AI tools to create summaries of detailed artefacts, including checking for accuracy."},
+      {code:"6TC.06",text:"Compare and contrast different chatbots, for information retrieval, response clarity and relevance, and for their prompting processes."},
+      {code:"6TC.07",text:"Understand the importance of checking the sources used in AI-generated responses for validity, trustworthiness, accuracy and relevance."},
+    ],
+    sw:[
+      {code:"6SW.06",text:"Understand that AI-generated content can be misinterpreted."},
+      {code:"6SW.07",text:"Understand that all learners have a personal responsibility for fully understanding the academic outputs that they produce."},
+      {code:"6SW.08",text:"Understand that digital and AI tools do not provide a shortcut to sustained learning."},
+    ],
+    dw:[
+      {code:"6DW.01",text:"Understand how digital technology, including AI, can be disruptive and that there are benefits and risks associated with this disruption."},
+      {code:"6DW.03",text:"Describe how AI-driven streaming personalises media and changes access to entertainment."},
+      {code:"6DW.04",text:"Describe how AI personalisation and online platforms have changed shopping habits."},
+      {code:"6DW.05",text:"Evaluate the environmental impacts of AI, and other digital tools, from different perspectives."},
+      {code:"6DW.06",text:"Know that AI-generated content may breach copyright or integrity rules."},
+      {code:"6DW.07",text:"Understand that both AI and human intelligence have limitations."},
+      {code:"6DW.10",text:"Explore how AI algorithms can influence human thinking, including the risk that humans offload thinking and decision-making skills to AI."},
+      {code:"6DW.11",text:"Understand that co-intelligence involves combining human and artificial intelligence, often by using AI to augment human thought and creativity."},
+    ]
+  },
+  {
+    id:"s7", phase:"secondary", label:"Stage 7", age:"Age 11–12",
+    tc:[
+      {code:"7TC.02",text:"Understand the importance of checking all transcriptions, including those produced using AI, for accuracy."},
+      {code:"7TC.03",text:"Explore the benefits and limitations of using AI-supported media tools in a range of contexts."},
+      {code:"7TC.05",text:"Apply AI tools to enhance and refine digital outputs, including multimedia, while retaining the role of main creator."},
+      {code:"7TC.06",text:"Understand the importance of thinking through tasks, and the desired outcomes, before engaging the support of digital and AI tools."},
+      {code:"7TC.07",text:"Create and refine AI prompts with prompt engineering, triangulating outputs with other trusted sources."},
+      {code:"7TC.08",text:"Understand plagiarism, and the need for citation and fair use, including when using AI-generated and web-sourced content."},
+      {code:"7TC.09",text:"Explore general purpose prompting frameworks, including selecting specific frameworks for specific purposes."},
+    ],
+    sw:[
+      {code:"7SW.04",text:"Understand that AI use contributes to a digital footprint that may be stored and used to train AI systems."},
+      {code:"7SW.05",text:"Understand that as users, they have personal responsibility for safe, respectful and considered use of AI and its outputs."},
+      {code:"7SW.06",text:"Understand how using AI tools to create education-related outputs can be a barrier to sustained learning."},
+      {code:"7SW.07",text:"Develop and apply strategies to critically assess the authenticity of online content, including AI-generated media."},
+      {code:"7SW.09",text:"Know that AI or virtual characters may simulate toxic behaviour, and understand the risks of engaging with these behaviours and characters."},
+    ],
+    dw:[
+      {code:"7DW.01",text:"Make predictions about future technologies, including Artificial General Intelligence and Artificial Super Intelligence, and how these might impact individuals and society."},
+      {code:"7DW.02",text:"Know that AI tools use cloud servers to process data and that data centres use large amounts of energy."},
+      {code:"7DW.03",text:"Explore how AI algorithms can influence human thinking and decision making, including that rules and quantifiable outcomes might gain prominence over qualitative thinking."},
+      {code:"7DW.04",text:"Identify positives and negatives of online news, including misinformation and disinformation, and the role that AI can play in these."},
+      {code:"7DW.05",text:"Evaluate the use by AI tools and digital service providers of other people's content and metadata."},
+      {code:"7DW.06",text:"Identify risks and efficiencies that could result from AI tools being trained on data that has been previously generated by AI."},
+      {code:"7DW.10",text:"Compare and contrast the capabilities of AI with human intelligence in various contexts such as problem solving, creativity and emotional understanding, recognising strengths and limitations in each of those contexts."},
+      {code:"7DW.11",text:"Explore the capabilities of Affective AI, including its inputs and outputs."},
+    ]
+  },
+  {
+    id:"s8", phase:"secondary", label:"Stage 8", age:"Age 12–13",
+    tc:[
+      {code:"8TC.01",text:"Develop fluency in selecting and using text creation tools, including typing and voice to text, and in checking all AI transcriptions for accuracy."},
+      {code:"8TC.02",text:"Create templates and master documents, including using AI to suggest layouts or structures, and evaluate their benefits."},
+      {code:"8TC.03",text:"Explore the benefits and limitations of using AI-supported media tools in a range of contexts."},
+      {code:"8TC.04",text:"Use AI and other digital tools to create complex digital artefacts, while retaining the role of main creator."},
+      {code:"8TC.05",text:"Explore how AI tools can be used to suggest edits to work and combine this with their own critical judgement when reviewing digital artefacts."},
+      {code:"8TC.06",text:"Use advanced search techniques to refine search results, checking AI answers against trusted sources."},
+      {code:"8TC.07",text:"Explore the validity of online and AI-generated information, considering the trustworthiness of sources and the potential for bias."},
+      {code:"8TC.08",text:"Explore using general purpose prompting frameworks iteratively, including deciding which parts of each framework structure to adapt."},
+      {code:"8TC.09",text:"Explore different forms of digital collaboration, including using AI tools as participatory platforms."},
+    ],
+    sw:[
+      {code:"8SW.02",text:"Evaluate the need to protect their personal identity online, including when interacting with AI."},
+      {code:"8SW.04",text:"Understand that metadata builds a detailed user profile, and that AI can analyse this and use it to predict behaviour."},
+      {code:"8SW.06",text:"Understand how using AI tools to create education-related outputs can be a barrier to deep learning."},
+      {code:"8SW.07",text:"Understand that, as users, they have responsibility for independent thinking along with balanced, thoughtful AI use to protect their wellbeing."},
+    ],
+    dw:[
+      {code:"8DW.01",text:"Describe how Industry 4.0, including AI, is transforming and disrupting workplaces, including in industries such as healthcare and education."},
+      {code:"8DW.02",text:"Evaluate the need for regulation of AI industries from a number of perspectives, including climate, inclusion, human contribution and innovation."},
+      {code:"8DW.03",text:"Explore how AI algorithms can influence human thinking and decision making, including how decisions might be improved through AI-supported data analysis."},
+      {code:"8DW.04",text:"Explore how overproduction of AI-generated content can contribute to information overload and 'AI Slop'."},
+      {code:"8DW.05",text:"Understand that GenAI outputs include other people's work and that the original creator usually has legal and moral rights over their material."},
+      {code:"8DW.06",text:"Explore ways in which human and machine interactions with data will inform future AI outputs."},
+      {code:"8DW.09",text:"Explore the concept of Agentic AI, and its implications for interactions between humans and machines."},
+      {code:"8DW.10",text:"Describe the benefits and risks of the Internet of Things (IoT), including how AI collects, analyses and acts on data from connected devices."},
+    ]
+  },
+  {
+    id:"s9", phase:"secondary", label:"Stage 9", age:"Age 13–14",
+    tc:[
+      {code:"9TC.02",text:"Explore how AI and other digital tools can be used to support workload reduction, such as by creating summaries and reminders, and through scheduling."},
+      {code:"9TC.03",text:"Explore the benefits and limitations of using AI-supported media tools in a range of contexts."},
+      {code:"9TC.04",text:"Use AI and other digital tools to create complex digital artefacts, comparing the AI experience and output with digital artefacts that are created without AI support."},
+      {code:"9TC.05",text:"Use AI tools to support starting points, editing, refinement and enhancement when creating digital artefacts, while retaining the role of main creator."},
+      {code:"9TC.07",text:"Use natural language searches within AI, including prompt engineering, source triangulation and critical literacy."},
+      {code:"9TC.08",text:"Make critical evaluations of online and AI-generated information for reliability, validity, bias, the trustworthiness of the original source, and accuracy."},
+      {code:"9TC.09",text:"Compare and contrast the use of printed resources and search engines with the use of AI from a learning perspective."},
+      {code:"9TC.10",text:"Compare prompting processes, and their outputs, when using a prompt framework and when not using a prompt framework."},
+    ],
+    sw:[
+      {code:"9SW.06",text:"Understand that they have responsibility for self-regulation and independent thinking when using AI as a learning tool, avoiding overreliance, lost learning opportunities and impacts on motivation to learn."},
+      {code:"9SW.08",text:"Understand the payment models for gaming and apps, and how AI recommendations increase the risks associated with these, including financial and behavioural risks such as addiction."},
+      {code:"9SW.09",text:"Understand that there are risks associated with anthropomorphic relationships with AI tools, including emotional, social and security risks."},
+    ],
+    dw:[
+      {code:"9DW.01",text:"Contrast how digital technology, including AI, is disrupting two or more diverse industries."},
+      {code:"9DW.02",text:"Predict long-term societal and economic implications of AI, including the reimagining of job roles and the related skill requirements."},
+      {code:"9DW.03",text:"Explore how AI algorithms can influence human thinking and decision making, including how choices might be restricted by data bias and echo chamber effects."},
+      {code:"9DW.04",text:"Understand the importance of human choice in deciding when and how to use AI outputs."},
+      {code:"9DW.05",text:"Understand that new digital and AI tools are constantly becoming available, and develop strategies for choosing which of these to explore."},
+      {code:"9DW.07",text:"Explore how AI can support, but also undermine, collective intelligence, for example by combining similar expertise or by creating an overreliance on AI for thinking and learning."},
+      {code:"9DW.08",text:"Describe how AI influences online communication and community building, including benefits and risks."},
+      {code:"9DW.09",text:"Explore the ethical implications of agentic AI, and the human responsibilities for autonomous AI systems."},
+      {code:"9DW.10",text:"Identify potential applications, benefits and risks of Affective AI."},
+    ]
+  }
+];
+
+function renderStrand(objs, code, label) {
+  if (!objs || !objs.length) return '';
+  const cls = {TC:'strand-tc',SW:'strand-sw',DW:'strand-dw'}[code];
+  return `<div class="strand-section">
+    <span class="strand-label ${cls}">${label}</span>
+    <ul class="obj-list">${objs.map(o=>`<li class="obj-item"><span class="obj-code">${o.code}</span><span>${o.text}</span></li>`).join('')}</ul>
+  </div>`;
+}
+
+function renderStage(s) {
+  const total = s.tc.length + s.sw.length + s.dw.length;
+  if (!total) return '';
+  const bc = s.phase === 'primary' ? 'badge-primary' : 'badge-secondary';
+  return `<div class="stage-card">
+    <div class="stage-header" onclick="toggle('${s.id}')">
+      <span class="stage-badge ${bc}">${s.label}</span>
+      <span class="stage-title">${s.label} — AI objectives</span>
+      <span class="stage-age">${s.age}</span>
+      <span class="chevron" id="chev-${s.id}">▶</span>
+    </div>
+    <div class="stage-body" id="body-${s.id}">
+      ${renderStrand(s.tc,'TC','Tools &amp; Content Creation')}
+      ${renderStrand(s.sw,'SW','Safety, Wellbeing &amp; Responsibility')}
+      ${renderStrand(s.dw,'DW','The Digital World')}
+    </div>
+  </div>`;
+}
+
+document.getElementById('stages-primary').innerHTML =
+  stagesData.filter(s=>s.phase==='primary').map(renderStage).join('');
+document.getElementById('stages-secondary').innerHTML =
+  stagesData.filter(s=>s.phase==='secondary').map(renderStage).join('');
+
+function toggle(id) {
+  document.getElementById('body-'+id).classList.toggle('open');
+  document.getElementById('chev-'+id).classList.toggle('open');
+}
+</script>
+</body>
+</html>
