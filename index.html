@@ -3,576 +3,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Literacy — Curriculum Overview</title>
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --bg:         #ffffff;
-  --bg-subtle:  #f7f6f2;
-  --text:       #1a1916;
-  --text-2:     #57554e;
-  --text-3:     #9c9a93;
-  --border:     rgba(0,0,0,0.08);
-  --border-med: rgba(0,0,0,0.15);
-
-  --tools:  #534AB7;
-  --crit:   #0F6E56;
-  --world:  #854F0B;
-  --safe:   #993C1D;
-  --integ:  #993556;
-}
-
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 15px;
-  line-height: 1.6;
-  max-width: 1040px;
-  margin: 0 auto;
-  padding: 48px 32px 80px;
-}
-
-/* ── Header ─────────────────────────────── */
-.hub-header {
-  margin-bottom: 16px;
-}
-
-.hub-link {
-  font-size: 13.5px;
-  margin-bottom: 32px;
-}
-
-.hub-link a {
-  color: var(--text-2);
-  text-decoration: underline;
-}
-
-.hub-link a:hover {
-  color: var(--text);
-}
-
-.hub-school {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin-bottom: 10px;
-}
-
-.hub-title {
-  font-size: 38px;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  color: var(--text);
-  margin-bottom: 6px;
-}
-
-.hub-sub {
-  font-size: 16px;
-  color: var(--text-2);
-}
-
-/* ── Legend ─────────────────────────────── */
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 44px;
-  padding: 16px 20px;
-  background: var(--bg-subtle);
-  border-radius: 12px;
-  border: 0.5px solid var(--border-med);
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 12.5px;
-  color: var(--text-2);
-}
-
-.legend-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-/* ── Section labels ─────────────────────── */
-.section-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin: 0 0 16px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border-med);
-}
-
-/* ── Year rows ──────────────────────────── */
-.year-block {
-  margin-bottom: 12px;
-}
-
-.year-row {
-  display: grid;
-  gap: 10px;
-  align-items: stretch;
-  margin-bottom: 10px;
-}
-
-/* Y4 — 1 lesson, placed in Term 3 slot to match Y5/Y6 layout */
-.year-row.y4 { grid-template-columns: 72px 1fr 1fr 1fr; }
-/* Y5/Y6 — 3 lessons */
-.year-row.y5, .year-row.y6 { grid-template-columns: 72px 1fr 1fr 1fr; }
-/* Y7 — 3 lessons */
-.year-row.y7 { grid-template-columns: 72px 1fr 1fr 1fr; }
-/* Y8 — 4 lessons */
-.year-row.y8 { grid-template-columns: 72px 1fr 1fr 1fr 1fr; }
-
-.year-label {
-  display: flex;
-  align-items: flex-start;
-  padding-top: 14px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-3);
-}
-
-/* ── Lesson cards ───────────────────────── */
-.lesson-card {
-  border: 1px solid var(--border-med);
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: inherit;
-  transition: box-shadow 0.15s, transform 0.15s;
-}
-
-.lesson-card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-  transform: translateY(-1px);
-}
-
-.card-top {
-  height: 5px;
-  flex-shrink: 0;
-}
-
-.card-body {
-  padding: 14px 16px 16px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.card-num {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-
-.card-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  line-height: 1.3;
-}
-
-.card-theme {
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  margin-top: 2px;
-}
-
-.card-idea {
-  font-size: 12.5px;
-  color: var(--text-2);
-  line-height: 1.5;
-  margin-top: 4px;
-  flex: 1;
-  font-style: italic;
-}
-
-.card-links {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-  flex-wrap: wrap;
-}
-
-.card-link {
-  font-size: 11px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 20px;
-  text-decoration: none;
-  background: var(--bg-subtle);
-  color: var(--text-2);
-  border: 0.5px solid var(--border-med);
-  transition: background 0.1s;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.card-link:hover {
-  background: var(--border-med);
-}
-
-.card-link.primary {
-  color: #ffffff;
-}
-
-/* Theme colours */
-.t-tools { color: var(--tools); }
-.t-crit  { color: var(--crit); }
-.t-world { color: var(--world); }
-.t-safe  { color: var(--safe); }
-.t-integ { color: var(--integ); }
-
-.top-tools { background: var(--tools); }
-.top-crit  { background: var(--crit); }
-.top-world { background: var(--world); }
-.top-safe  { background: var(--safe); }
-.top-integ { background: var(--integ); }
-
-.primary-tools { background: var(--tools); }
-.primary-crit  { background: var(--crit); }
-.primary-world { background: var(--world); }
-.primary-safe  { background: var(--safe); }
-.primary-integ { background: var(--integ); }
-
-/* ── Column headers (term/lesson) ───────── */
-.col-headers {
-  display: grid;
-  gap: 10px;
-  margin-bottom: 4px;
-}
-
-.col-headers.y5, .col-headers.y6, .col-headers.y7 {
-  grid-template-columns: 72px 1fr 1fr 1fr;
-}
-
-.col-headers.y8 {
-  grid-template-columns: 72px 1fr 1fr 1fr 1fr;
-}
-
-.col-head {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  padding-left: 4px;
-}
-
-/* ── Spacer ─────────────────────────────── */
-.section-gap { margin-bottom: 48px; }
-
-@media print {
-  @page { size: A4 landscape; margin: 12mm; }
-  body { max-width: 100%; padding: 0; font-size: 10pt; }
-  .lesson-card { break-inside: avoid; }
-  .lesson-card:hover { box-shadow: none; transform: none; }
-}
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<title>AI Literacy Programme — CIS Bratislava</title>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{color-scheme:light;
+--blue:#002199;--navy:#00104d;--amber:#EF9F27;--bg:#f4f6fb;--card:#fff;--text:#12172b;--text-2:#4a5172;--line:rgba(0,16,77,.12);
+--tools:#5b3fd9;--tools-d:#3a22a8;--crit:#0a9c7e;--crit-d:#066b57;--world:#e8780a;--world-d:#b04f00;--safe:#e0452b;--safe-d:#a82a14;--integ:#d6317a;--integ-d:#9c1a55;
+--serif:'Sitka Heading','Sitka Text','Source Serif 4',Georgia,serif;
+--sans:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.hero{position:relative;overflow:hidden;color:#fff;background:radial-gradient(900px 420px at 85% -10%,#2f4fe0 0%,rgba(47,79,224,0) 60%),radial-gradient(600px 400px at 0% 110%,#0a3bd0 0%,rgba(10,59,208,0) 60%),linear-gradient(160deg,var(--blue),var(--navy))}
+.hero::before{content:"";position:absolute;right:-90px;top:-90px;width:340px;height:340px;border-radius:50%;border:2px solid rgba(255,255,255,.12)}
+.hero::after{content:"";position:absolute;right:60px;bottom:-150px;width:280px;height:280px;border-radius:50%;background:rgba(239,159,39,.16)}
+.hero-in{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:44px 32px 52px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:14px}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(38px,6vw,62px);line-height:1.02;letter-spacing:-.02em}
+h1 em{font-style:normal;color:#b9c6ff}
+.tagline{font-family:var(--serif);font-size:clamp(17px,2.2vw,22px);margin-top:14px;max-width:560px;color:#e6ebff}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.facts span{font-size:13px;font-weight:600;padding:6px 14px;border-radius:99px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)}
+.hero-link{display:inline-block;margin-top:20px;color:#fff;font-weight:600;font-size:14px;text-decoration:none;border-bottom:2px solid var(--amber);padding-bottom:2px}
+.hero-link:hover{color:var(--amber)}
+.bar{position:sticky;top:0;z-index:20;background:rgba(244,246,251,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1280px;margin:0 auto;padding:10px 32px;display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center;justify-content:space-between}
+.tabs,.chips{display:flex;gap:6px;align-items:center}
+.tabs{overflow-x:auto;scrollbar-width:none;max-width:100%}.tabs::-webkit-scrollbar{display:none}
+.chips{flex-wrap:wrap;gap:8px}
+.jump{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2);margin-right:4px;white-space:nowrap}
+.tab{font:600 14px var(--sans);color:var(--blue);background:#fff;border:1px solid rgba(0,33,153,.2);border-radius:99px;padding:7px 14px;cursor:pointer;white-space:nowrap;display:flex;gap:8px;align-items:center;transition:all .15s}
+.tab span{font-size:11px;background:rgba(0,33,153,.08);border-radius:99px;padding:1px 7px}
+.tab:hover{border-color:var(--blue);background:rgba(0,33,153,.06)}
+.tab.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.tab.on span{background:rgba(255,255,255,.22)}
+.chip{font:600 12px var(--sans);color:var(--text-2);background:#fff;border:1px solid var(--line);border-radius:99px;padding:6px 12px 6px 10px;cursor:pointer;display:flex;gap:7px;align-items:center;transition:all .15s}
+.chip i{width:9px;height:9px;border-radius:50%;background:var(--c)}
+.chip:hover{border-color:var(--c)}
+.chip.on{background:var(--c);border-color:var(--c);color:#fff}.chip.on i{background:#fff}
+.th-tools{--c:var(--tools);--cd:var(--tools-d)}.th-crit{--c:var(--crit);--cd:var(--crit-d)}.th-world{--c:var(--world);--cd:var(--world-d)}.th-safe{--c:var(--safe);--cd:var(--safe-d)}.th-integ{--c:var(--integ);--cd:var(--integ-d)}
+main{max-width:1280px;margin:0 auto;padding:26px 32px 70px}
+.year{margin-bottom:30px}.year[hidden]{display:none}
+.year-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.year-head h2{font-family:var(--serif);font-size:30px;line-height:1.1;color:var(--navy);letter-spacing:-.01em}
+.year-sub{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2)}
+.terms{display:grid;grid-template-columns:repeat(3,1fr);gap:0 18px}
+.term{display:flex;flex-direction:column;gap:12px}
+.term-head{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);padding-bottom:7px;border-bottom:2px solid var(--blue)}
+.term.none .term-head{color:#9aa1bd;border-bottom:2px dashed #cfd4e6}
+.card{position:relative;display:flex;min-height:212px;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 1px 2px rgba(0,16,77,.05);transition:transform .18s,box-shadow .18s,opacity .2s,filter .2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,16,77,.14)}
+.card.dim{opacity:.32;filter:grayscale(.7)}
+.badge{position:relative;flex:0 0 64px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:10px 0 12px;color:#fff;background:linear-gradient(160deg,var(--c),var(--cd))}
+.badge span{font-family:var(--serif);font-weight:700;font-size:34px;line-height:1}
+.badge svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;opacity:.8}
+.cb{flex:1;min-width:0;padding:12px 16px 14px;display:flex;flex-direction:column}
+.meta{font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-2)}
+h3{font-family:var(--serif);font-size:18.5px;line-height:1.2;margin:4px 0 2px;color:var(--navy)}
+h3 a{color:inherit;text-decoration:none}
+h3 a::after{content:"";position:absolute;inset:0;z-index:1}
+h3 a:hover{color:var(--blue)}
+.theme-tag{font-size:12px;font-weight:700;color:var(--c)}
+.idea{font-size:13.5px;line-height:1.45;color:var(--text-2);margin:7px 0 10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.links{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;position:relative;z-index:2}
+.btn{font-size:12px;font-weight:600;text-decoration:none;color:var(--blue);background:#fff;border:1.5px solid rgba(0,33,153,.25);padding:4px 11px;border-radius:99px;transition:all .15s}
+.btn:hover{border-color:var(--blue);background:rgba(0,33,153,.06)}
+.btn-main{background:var(--blue);border-color:var(--blue);color:#fff}.btn-main:hover{background:var(--navy);border-color:var(--navy)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+@media(max-width:1200px){.card{min-height:236px}}
+@media(max-width:1000px){.terms{grid-template-columns:1fr}.term.none{display:none}.term{margin-bottom:6px}.term-head{margin-top:6px}.chips{display:none}}
+@media(max-width:640px){.hero-in{padding:36px 20px 40px}.bar-in,main{padding-left:16px;padding-right:16px}.hero::before{display:none}.jump{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media print{@page{size:A4 landscape;margin:10mm}.bar{display:none}.hero{color:#000;background:none}.hero::before,.hero::after{display:none}.hero-in{padding:0 0 10px}h1 em,.tagline{color:#000}.facts span{border-color:#999;background:none}.hero-link{display:none}.year[hidden]{display:block!important}.card{break-inside:avoid;box-shadow:none}.card:hover{transform:none}.card.dim{opacity:1;filter:none}.idea{-webkit-line-clamp:unset;display:block}.badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
 <body>
+<header class="hero"><div class="hero-in">
+<p class="eyebrow">Cambridge International School Bratislava</p>
+<h1>AI Literacy <em>Programme</em></h1>
+<p class="tagline">The thinking is always yours. AI is how you sharpen it.</p>
+<div class="facts"><span>Years 4–8</span><span>14 lessons</span><span>Cambridge Digital Literacy 0072 &amp; 0082</span></div>
+<a class="hero-link" href="digital literacy objectives.html" target="_blank" rel="noopener">View the Cambridge AI objectives, Years 1–9 <b>→</b></a>
+</div></header>
+<nav class="bar" aria-label="Filter lessons"><div class="bar-in"><div class="tabs" role="group" aria-label="Year group"><span class="jump">Jump to</span><button class="tab on" data-year="all" aria-pressed="true">All years<span>14</span></button><button class="tab" data-year="4" aria-pressed="false">Year 4<span>1</span></button><button class="tab" data-year="5" aria-pressed="false">Year 5<span>3</span></button><button class="tab" data-year="6" aria-pressed="false">Year 6<span>3</span></button><button class="tab" data-year="7" aria-pressed="false">Year 7<span>3</span></button><button class="tab" data-year="8" aria-pressed="false">Year 8<span>4</span></button></div><div class="chips" role="group" aria-label="Highlight a theme"><span class="jump">Highlight</span><button class="chip th-tools" data-theme="tools" aria-pressed="false"><i></i>Prompting &amp; tools</button><button class="chip th-crit" data-theme="crit" aria-pressed="false"><i></i>Critical evaluation</button><button class="chip th-world" data-theme="world" aria-pressed="false"><i></i>AI &amp; the world</button><button class="chip th-safe" data-theme="safe" aria-pressed="false"><i></i>Safety &amp; wellbeing</button><button class="chip th-integ" data-theme="integ" aria-pressed="false"><i></i>Integrity &amp; learning</button></div></div></nav>
+<main>
+<section class="year" data-year="4" id="y4"><div class="year-head"><h2>Year 4</h2><span class="year-sub">Primary · 1 lesson</span></div><div class="terms"><div class="term none"><div class="term-head">Term 1</div></div><div class="term none"><div class="term-head">Term 2</div></div><div class="term"><div class="term-head">Term 3</div><article class="card th-world" data-theme="world">
+<div class="badge"><span>1</span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="24"/><ellipse cx="32" cy="32" rx="10" ry="24"/><path d="M8 32h48M12 20h40M12 44h40"/></svg></div>
+<div class="cb"><div class="meta">Lesson 1 · 50 min</div><h3><a href="Y4 L1 — Is a machine ever as clever as a person.html" target="_blank" rel="noopener">Is a machine ever as clever as a person?</a></h3><div class="theme-tag">AI &amp; the world</div><p class="idea" title="AI has learned from everything ever written — but it has never tasted food, felt embarrassed, or made a real friend, and that gap is exactly what makes you different from it.">AI has learned from everything ever written — but it has never tasted food, felt embarrassed, or made a real friend, and that gap is exactly what makes you different from it.</p><div class="links"><a class="btn btn-main" href="Y4 L1 — Is a machine ever as clever as a person.html" target="_blank" rel="noopener">Teacher plan</a></div></div></article></div></div></section>
+<section class="year" data-year="5" id="y5"><div class="year-head"><h2>Year 5</h2><span class="year-sub">Primary · 3 lessons</span></div><div class="terms"><div class="term"><div class="term-head">Term 1</div><article class="card th-tools" data-theme="tools">
+<div class="badge"><span>1</span><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="12" width="52" height="40" rx="8"/><path d="M18 28l10 8-10 8M34 44h14"/></svg></div>
+<div class="cb"><div class="meta">Lesson 1 · 45 min</div><h3><a href="Y5 L1 — Ask It Better.html" target="_blank" rel="noopener">Ask it better</a></h3><div class="theme-tag">Prompting &amp; tools</div><p class="idea" title="The quality of what you get from AI depends entirely on the quality of what you ask — and asking well is a learnable skill.">The quality of what you get from AI depends entirely on the quality of what you ask — and asking well is a learnable skill.</p><div class="links"><a class="btn btn-main" href="Y5 L1 — Ask It Better.html" target="_blank" rel="noopener">Teacher plan</a><a class="btn" href="Y5 L1 — Student resource to print.html" target="_blank" rel="noopener">Student resource</a></div></div></article></div><div class="term"><div class="term-head">Term 2</div><article class="card th-crit" data-theme="crit">
+<div class="badge"><span>2</span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="28" cy="28" r="16"/><path d="M40 40l16 16"/></svg></div>
+<div class="cb"><div class="meta">Lesson 2 · 45 min</div><h3><a href="Y5 L2 — Don't just believe it.html" target="_blank" rel="noopener">Don’t just believe it</a></h3><div class="theme-tag">Critical evaluation</div><p class="idea" title="Confident isn’t the same as correct — AI can’t always tell the difference, but you can learn to.">Confident isn’t the same as correct — AI can’t always tell the difference, but you can learn to.</p><div class="links"><a class="btn btn-main" href="Y5 L2 — Don't just believe it.html" target="_blank" rel="noopener">Teacher plan</a><a class="btn" href="Y5 L2 — Student hallucination texts.pdf" target="_blank" rel="noopener">Student resource</a><a class="btn" href="Y5 L2 — Teacher hallucination text answers.pdf" target="_blank" rel="noopener">Teacher answers</a></div></div></article></div><div class="term"><div class="term-head">Term 3</div><article class="card th-safe" data-theme="safe">
+<div class="badge"><span>3</span><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6l20 8v16c0 14-9 24-20 28C21 54 12 44 12 30V14z"/><path d="M23 32l7 7 12-14"/></svg></div>
+<div class="cb"><div class="meta">Lesson 3 · 50 min</div><h3><a href="Y5 L3 — Real, fake, or somewhere in between.html" target="_blank" rel="noopener">Real, fake, or somewhere in between</a></h3><div class="theme-tag">Safety &amp; wellbeing</div><p class="idea" title="If it could be AI, check before you believe it.">If it could be AI, check before you believe it.</p><div class="links"><a class="btn btn-main" href="Y5 L3 — Real, fake, or somewhere in between.html" target="_blank" rel="noopener">Teacher plan</a><a class="btn" href="Y5 L3 — Student resource to print.html" target="_blank" rel="noopener">Student resource</a><a class="btn" href="Year 5 AI Literacy lesson 3 — Real or AI presentation.pptx" target="_blank" rel="noopener">Presentation</a><a class="btn" href="Year 5 AI Literacy lesson 3 — Images to print.pdf" target="_blank" rel="noopener">Images to print</a></div></div></article></div></div></section>
+<section class="year" data-year="6" id="y6"><div class="year-head"><h2>Year 6</h2><span class="year-sub">Primary · 3 lessons</span></div><div class="terms"><div class="term"><div class="term-head">Term 1</div><article class="card th-integ" data-theme="integ">
+<div class="badge"><span>1</span><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 54l4-14L42 12l10 10-28 28z"/><path d="M36 18l10 10"/></svg></div>
+<div class="cb"><div class="meta">Lesson 1 · 50 min</div><h3><a href="Y6 L1 — What does AI do to your brain.html" target="_blank" rel="noopener">What does AI do to your brain?</a></h3><div class="theme-tag">Integrity &amp; learning</div><p class="idea" title="Letting AI do your thinking saves time, but you only get smarter by doing the hard part yourself.">Letting AI do your thinking saves time, but you only get smarter by doing the hard part yourself.</p><div class="links"><a class="btn btn-main" href="Y6 L1 — What does AI do to your brain.html" target="_blank" rel="noopener">Teacher plan</a><a class="btn" href="Y6 L1 — Mantis shrimp reading sheet.html" target="_blank" rel="noopener">Mantis shrimp sheet</a><a class="btn" href="Y6 L1 — Pi digit strips.html" target="_blank" rel="noopener">Pi strips</a></div></div></article></div><div class="term"><div class="term-head">Term 2</div><article class="card th-world" data-theme="world">
+<div class="badge"><span>2</span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="24"/><ellipse cx="32" cy="32" rx="10" ry="24"/><path d="M8 32h48M12 20h40M12 44h40"/></svg></div>
+<div class="cb"><div class="meta">Lesson 2 · 50 min</div><h3><a href="Y6 L2 — Who made this — and who owns it.html" target="_blank" rel="noopener">Who made this — and who owns it?</a></h3><div class="theme-tag">AI &amp; the world</div><p class="idea" title="AI art was trained on millions of human artworks, and nobody asked — the world is still deciding if that was fair.">AI art was trained on millions of human artworks, and nobody asked — the world is still deciding if that was fair.</p><div class="links"><a class="btn btn-main" href="Y6 L2 — Who made this — and who owns it.html" target="_blank" rel="noopener">Teacher plan</a><a class="btn" href="Y6 L2 — Role cards.html" target="_blank" rel="noopener">Role cards</a></div></div></article></div><div class="term"><div class="term-head">Term 3</div><article class="card th-tools" data-theme="tools">
+<div class="badge"><span>3</span><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="12" width="52" height="40" rx="8"/><path d="M18 28l10 8-10 8M34 44h14"/></svg></div>
+<div class="cb"><div class="meta">Lesson 3 · 50 min</div><h3><a href="Y6 L3 — Sharpen it.html" target="_blank" rel="noopener">Sharpen it</a></h3><div class="theme-tag">Prompting &amp; tools</div><p class="idea" title="The thinking is always yours — AI is how you sharpen it.">The thinking is always yours — AI is how you sharpen it.</p><div class="links"><a class="btn btn-main" href="Y6 L3 — Sharpen it.html" target="_blank" rel="noopener">Teacher plan</a><a class="btn" href="AI Poster.pdf" target="_blank" rel="noopener">Poster</a></div></div></article></div></div></section>
+<section class="year" data-year="7" id="y7"><div class="year-head"><h2>Year 7</h2><span class="year-sub">Lower Secondary · 3 lessons</span></div><div class="terms"><div class="term"><div class="term-head">Term 1</div><article class="card th-crit" data-theme="crit">
+<div class="badge"><span>1</span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="28" cy="28" r="16"/><path d="M40 40l16 16"/></svg></div>
+<div class="cb"><div class="meta">Lesson 1 · 50 min</div><h3><a href="Y7 L1 — The Algorithm Knows You.html" target="_blank" rel="noopener">The Algorithm Knows You</a></h3><div class="theme-tag">Critical evaluation</div><p class="idea" title="Your feed isn’t the world. It’s a mirror.">Your feed isn’t the world. It’s a mirror.</p><div class="links"><a class="btn btn-main" href="Y7 L1 — The Algorithm Knows You.html" target="_blank" rel="noopener">Teacher plan</a><a class="btn" href="Y7 L1 — Student resource to print.html" target="_blank" rel="noopener">Student resource</a></div></div></article></div><div class="term"><div class="term-head">Term 2</div><article class="card th-safe" data-theme="safe">
+<div class="badge"><span>2</span><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6l20 8v16c0 14-9 24-20 28C21 54 12 44 12 30V14z"/><path d="M23 32l7 7 12-14"/></svg></div>
+<div class="cb"><div class="meta">Lesson 2 · 50 min</div><h3><a href="Y7 L2 — Your data, their model.html" target="_blank" rel="noopener">Your data, their model</a></h3><div class="theme-tag">Safety &amp; wellbeing</div><p class="idea" title="When you type into an AI, those words don’t disappear — they become data, and that data belongs to someone else.">When you type into an AI, those words don’t disappear — they become data, and that data belongs to someone else.</p><div class="links"><a class="btn btn-main" href="Y7 L2 — Your data, their model.html" target="_blank" rel="noopener">Teacher plan</a><a class="btn" href="Y7 L2 — Student resource to print.html" target="_blank" rel="noopener">Student resource</a><a class="btn" href="Where Your Data Goes.png" target="_blank" rel="noopener">Data journey image</a></div></div></article></div><div class="term"><div class="term-head">Term 3</div><article class="card th-world" data-theme="world">
+<div class="badge"><span>3</span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="24"/><ellipse cx="32" cy="32" rx="10" ry="24"/><path d="M8 32h48M12 20h40M12 44h40"/></svg></div>
+<div class="cb"><div class="meta">Lesson 3 · 50 min</div><h3><a href="Y7 L3 — The cost of clever.html" target="_blank" rel="noopener">The cost of clever</a></h3><div class="theme-tag">AI &amp; the world</div><p class="idea" title="Every time you use AI, a server runs hot somewhere — and knowing that is the beginning of using it responsibly.">Every time you use AI, a server runs hot somewhere — and knowing that is the beginning of using it responsibly.</p><div class="links"><a class="btn btn-main" href="Y7 L3 — The cost of clever.html" target="_blank" rel="noopener">Teacher plan</a><a class="btn" href="Y7 L3 — Student resource to print.html" target="_blank" rel="noopener">Student resource</a></div></div></article></div></div></section>
+<section class="year" data-year="8" id="y8"><div class="year-head"><h2>Year 8</h2><span class="year-sub">Lower Secondary · 4 lessons</span></div><div class="terms"><div class="term"><div class="term-head">Term 1</div><article class="card th-world" data-theme="world">
+<div class="badge"><span>1</span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="24"/><ellipse cx="32" cy="32" rx="10" ry="24"/><path d="M8 32h48M12 20h40M12 44h40"/></svg></div>
+<div class="cb"><div class="meta">Lesson 1 · 50 min</div><h3><a href="Y8 L1 — The machine that acts alone.html" target="_blank" rel="noopener">The machine that acts alone</a></h3><div class="theme-tag">AI &amp; the world</div><p class="idea" title="AI can already act by itself, and when it gets things wrong, working out who’s responsible is harder than it looks.">AI can already act by itself, and when it gets things wrong, working out who’s responsible is harder than it looks.</p><div class="links"><a class="btn btn-main" href="Y8 L1 — The machine that acts alone.html" target="_blank" rel="noopener">Teacher plan</a><a class="btn" href="Y8 L1 — Student resource to print.html" target="_blank" rel="noopener">Student resource</a></div></div></article></div><div class="term"><div class="term-head">Term 2</div><article class="card th-world" data-theme="world">
+<div class="badge"><span>2</span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="24"/><ellipse cx="32" cy="32" rx="10" ry="24"/><path d="M8 32h48M12 20h40M12 44h40"/></svg></div>
+<div class="cb"><div class="meta">Lesson 2 · 45 min</div><h3><a href="Y8 L2 — What will you do for work.html" target="_blank" rel="noopener">What will you do for work?</a></h3><div class="theme-tag">AI &amp; the world</div><p class="idea" title="The question isn’t which jobs AI will replace — it’s which human qualities will become more valuable, not less, as AI keeps improving.">The question isn’t which jobs AI will replace — it’s which human qualities will become more valuable, not less, as AI keeps improving.</p><div class="links"><a class="btn btn-main" href="Y8 L2 — What will you do for work.html" target="_blank" rel="noopener">Teacher plan</a><a class="btn" href="Y8 L2 — Student resource to print.html" target="_blank" rel="noopener">Student resource</a><a class="btn" href="Which jobs will still exist in 2045.png" target="_blank" rel="noopener">Jobs image</a></div></div></article></div><div class="term"><div class="term-head">Term 3</div><article class="card th-tools" data-theme="tools">
+<div class="badge"><span>3</span><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="12" width="52" height="40" rx="8"/><path d="M18 28l10 8-10 8M34 44h14"/></svg></div>
+<div class="cb"><div class="meta">Lesson 3 · 50 min</div><h3><a href="Y8 L3 — Engineer the prompt.html" target="_blank" rel="noopener">Engineer the prompt</a></h3><div class="theme-tag">Prompting &amp; tools</div><p class="idea" title="Anyone can use AI. Not everyone can use it well.">Anyone can use AI. Not everyone can use it well.</p><div class="links"><a class="btn btn-main" href="Y8 L3 — Engineer the prompt.html" target="_blank" rel="noopener">Teacher plan</a><a class="btn" href="Y8 L3 — Student resource to print.html" target="_blank" rel="noopener">Student resource</a></div></div></article><article class="card th-integ" data-theme="integ">
+<div class="badge"><span>4</span><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 54l4-14L42 12l10 10-28 28z"/><path d="M36 18l10 10"/></svg></div>
+<div class="cb"><div class="meta">Lesson 4 · 50 min · End of year</div><h3><a href="Y8 L4 — Your name on it.html" target="_blank" rel="noopener">Your name on it</a></h3><div class="theme-tag">Integrity &amp; learning</div><p class="idea" title="If you can’t explain what each part of your work means, the work is not yours.">If you can’t explain what each part of your work means, the work is not yours.</p><div class="links"><a class="btn btn-main" href="Y8 L4 — Your name on it.html" target="_blank" rel="noopener">Teacher plan</a><a class="btn" href="Y8 L4 — Student resource to print.html" target="_blank" rel="noopener">Student resource</a></div></div></article></div></div></section>
 
-<header class="hub-header">
-  <p class="hub-school">Cambridge International School Bratislava</p>
-  <h1 class="hub-title">AI Literacy Programme</h1>
-  <p class="hub-sub">Years 4–8 &nbsp;·&nbsp; 14 lessons &nbsp;·&nbsp; Cambridge Digital Literacy 0072 &amp; 0082</p>
-</header>
-
-<p class="hub-link"><a href="digital literacy objectives.html" target="_blank">Click here to view the full range of Cambridge AI objectives from year 1 to year 9</a></p>
-
-<div class="legend">
-  <div class="legend-item"><span class="legend-dot" style="background:var(--tools)"></span> Prompting &amp; tools</div>
-  <div class="legend-item"><span class="legend-dot" style="background:var(--crit)"></span> Critical evaluation</div>
-  <div class="legend-item"><span class="legend-dot" style="background:var(--world)"></span> AI &amp; the world</div>
-  <div class="legend-item"><span class="legend-dot" style="background:var(--safe)"></span> Safety &amp; wellbeing</div>
-  <div class="legend-item"><span class="legend-dot" style="background:var(--integ)"></span> Integrity &amp; learning</div>
-</div>
-
-<!-- ═══ PRIMARY ═══════════════════════════════════════════════ -->
-<p class="section-label">Primary — Years 4 to 6</p>
-
-<!-- Y4 -->
-<div class="year-row y4">
-  <div class="year-label">Year 4</div>
-  <div></div>
-  <div></div>
-  <a class="lesson-card" href="Y4 L1 — Is a machine ever as clever as a person.html" target="_blank">
-    <div class="card-top top-world"></div>
-    <div class="card-body">
-      <div class="card-num">Lesson 1 &nbsp;&middot;&nbsp; 50 min</div>
-      <div class="card-title">Is a machine ever as clever as a person?</div>
-      <div class="card-theme t-world">AI &amp; the world</div>
-      <div class="card-idea">AI has learned from everything ever written — but it has never tasted food, felt embarrassed, or made a real friend, and that gap is exactly what makes you different from it.</div>
-      <div class="card-links">
-        <span class="card-link primary primary-world" onclick="event.preventDefault();event.stopPropagation();window.open('Y4 L1 — Is a machine ever as clever as a person.html','_blank')">Teacher plan</span>
-      </div>
-    </div>
-  </a>
-</div>
-
-<!-- Y5 column headers -->
-<div class="col-headers y5">
-  <div></div>
-  <div class="col-head">Term 1</div>
-  <div class="col-head">Term 2</div>
-  <div class="col-head">Term 3</div>
-</div>
-
-<!-- Y5 -->
-<div class="year-row y5">
-  <div class="year-label">Year 5</div>
-
-  <div class="lesson-card" style="cursor:default">
-    <div class="card-top top-tools"></div>
-    <div class="card-body">
-      <div class="card-num">Lesson 1 &nbsp;&middot;&nbsp; 45 min</div>
-      <div class="card-title">Ask it better</div>
-      <div class="card-theme t-tools">Prompting &amp; tools</div>
-      <div class="card-idea">The quality of what you get from AI depends entirely on the quality of what you ask — and asking well is a learnable skill.</div>
-      <div class="card-links">
-        <a class="card-link primary primary-tools" href="Y5 L1 — Ask It Better.html" target="_blank">Teacher plan</a>
-        <a class="card-link" href="Y5 L1 — Student resource to print.html" target="_blank">Student resource</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="lesson-card" style="cursor:default">
-    <div class="card-top top-crit"></div>
-    <div class="card-body">
-      <div class="card-num">Lesson 2 &nbsp;&middot;&nbsp; 45 min</div>
-      <div class="card-title">Don’t just believe it</div>
-      <div class="card-theme t-crit">Critical evaluation</div>
-      <div class="card-idea">Confident isn’t the same as correct — AI can’t always tell the difference, but you can learn to.</div>
-      <div class="card-links">
-        <a class="card-link primary primary-crit" href="Y5 L2 — Don't just believe it.html" target="_blank">Teacher plan</a>
-        <a class="card-link" href="Y5 L2 — Student hallucination texts.pdf" target="_blank">Student resource</a>
-        <a class="card-link" href="Y5 L2 — Teacher hallucination text answers.pdf" target="_blank">Teacher answers</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="lesson-card" style="cursor:default">
-    <div class="card-top top-safe"></div>
-    <div class="card-body">
-      <div class="card-num">Lesson 3 &nbsp;&middot;&nbsp; 50 min</div>
-      <div class="card-title">Real, fake, or somewhere in between</div>
-      <div class="card-theme t-safe">Safety &amp; wellbeing</div>
-      <div class="card-idea">If it could be AI, check before you believe it.</div>
-      <div class="card-links">
-        <a class="card-link primary primary-safe" href="Y5 L3 — Real, fake, or somewhere in between.html" target="_blank">Teacher plan</a>
-        <a class="card-link" href="Y5 L3 — Student resource to print.html" target="_blank">Student resource</a>
-        <a class="card-link" href="Year 5 AI Literacy lesson 3 — Real or AI presentation.pptx" target="_blank">Presentation</a>
-        <a class="card-link" href="Year 5 AI Literacy lesson 3 — Images to print.pdf" target="_blank">Images to print</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Y6 column headers -->
-<div class="col-headers y6">
-  <div></div>
-  <div class="col-head">Term 1</div>
-  <div class="col-head">Term 2</div>
-  <div class="col-head">Term 3</div>
-</div>
-
-<!-- Y6 -->
-<div class="year-row y6">
-  <div class="year-label">Year 6</div>
-
-  <div class="lesson-card" style="cursor:default">
-    <div class="card-top top-integ"></div>
-    <div class="card-body">
-      <div class="card-num">Lesson 1 &nbsp;&middot;&nbsp; 50 min</div>
-      <div class="card-title">What does AI do to your brain?</div>
-      <div class="card-theme t-integ">Integrity &amp; learning</div>
-      <div class="card-idea">Letting AI do your thinking saves time, but you only get smarter by doing the hard part yourself.</div>
-      <div class="card-links">
-        <a class="card-link primary primary-integ" href="Y6 L1 — What does AI do to your brain.html" target="_blank">Teacher plan</a>
-        <a class="card-link" href="Y6 L1 — Mantis shrimp reading sheet.html" target="_blank">Mantis shrimp sheet</a>
-        <a class="card-link" href="Y6 L1 — Pi digit strips.html" target="_blank">Pi strips</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="lesson-card" style="cursor:default">
-    <div class="card-top top-world"></div>
-    <div class="card-body">
-      <div class="card-num">Lesson 2 &nbsp;&middot;&nbsp; 50 min</div>
-      <div class="card-title">Who made this — and who owns it?</div>
-      <div class="card-theme t-world">AI &amp; the world</div>
-      <div class="card-idea">AI art was trained on millions of human artworks, and nobody asked — the world is still deciding if that was fair.</div>
-      <div class="card-links">
-        <a class="card-link primary primary-world" href="Y6 L2 — Who made this — and who owns it.html" target="_blank">Teacher plan</a>
-        <a class="card-link" href="Y6 L2 — Role cards.html" target="_blank">Role cards</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="lesson-card" style="cursor:default">
-    <div class="card-top top-tools"></div>
-    <div class="card-body">
-      <div class="card-num">Lesson 3 &nbsp;&middot;&nbsp; 50 min</div>
-      <div class="card-title">Sharpen it</div>
-      <div class="card-theme t-tools">Prompting &amp; tools</div>
-      <div class="card-idea">The thinking is always yours — AI is how you sharpen it.</div>
-      <div class="card-links">
-        <a class="card-link primary primary-tools" href="Y6 L3 — Sharpen it.html" target="_blank">Teacher plan</a>
-        <a class="card-link" href="AI Poster.pdf" target="_blank">Poster</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="section-gap"></div>
-
-<!-- ═══ LOWER SECONDARY ════════════════════════════════════════ -->
-<p class="section-label">Lower Secondary — Years 7 &amp; 8</p>
-
-<!-- Y7 column headers -->
-<div class="col-headers y7">
-  <div></div>
-  <div class="col-head">Lesson 1</div>
-  <div class="col-head">Lesson 2</div>
-  <div class="col-head">Lesson 3</div>
-</div>
-
-<!-- Y7 -->
-<div class="year-row y7">
-  <div class="year-label">Year 7</div>
-
-  <div class="lesson-card" style="cursor:default">
-    <div class="card-top top-crit"></div>
-    <div class="card-body">
-      <div class="card-num">Lesson 1 &nbsp;&middot;&nbsp; 50 min</div>
-      <div class="card-title">The Algorithm Knows You</div>
-      <div class="card-theme t-crit">Critical evaluation</div>
-      <div class="card-idea">Your feed isn’t the world. It’s a mirror.</div>
-      <div class="card-links">
-        <a class="card-link primary primary-crit" href="Y7 L1 — The Algorithm Knows You.html" target="_blank">Teacher plan</a>
-        <a class="card-link" href="Y7 L1 — Student resource to print.html" target="_blank">Student resource</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="lesson-card" style="cursor:default">
-    <div class="card-top top-safe"></div>
-    <div class="card-body">
-      <div class="card-num">Lesson 2 &nbsp;&middot;&nbsp; 50 min</div>
-      <div class="card-title">Your data, their model</div>
-      <div class="card-theme t-safe">Safety &amp; wellbeing</div>
-      <div class="card-idea">When you type into an AI, those words don’t disappear — they become data, and that data belongs to someone else.</div>
-      <div class="card-links">
-        <a class="card-link primary primary-safe" href="Y7 L2 — Your data, their model.html" target="_blank">Teacher plan</a>
-        <a class="card-link" href="Y7 L2 — Student resource to print.html" target="_blank">Student resource</a>
-        <a class="card-link" href="Where Your Data Goes.png" target="_blank">Data journey image</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="lesson-card" style="cursor:default">
-    <div class="card-top top-world"></div>
-    <div class="card-body">
-      <div class="card-num">Lesson 3 &nbsp;&middot;&nbsp; 50 min</div>
-      <div class="card-title">The cost of clever</div>
-      <div class="card-theme t-world">AI &amp; the world</div>
-      <div class="card-idea">Every time you use AI, a server runs hot somewhere — and knowing that is the beginning of using it responsibly.</div>
-      <div class="card-links">
-        <a class="card-link primary primary-world" href="Y7 L3 — The cost of clever.html" target="_blank">Teacher plan</a>
-        <a class="card-link" href="Y7 L3 — Student resource to print.html" target="_blank">Student resource</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Y8 column headers -->
-<div class="col-headers y8">
-  <div></div>
-  <div class="col-head">Lesson 1</div>
-  <div class="col-head">Lesson 2</div>
-  <div class="col-head">Lesson 3</div>
-  <div class="col-head">Lesson 4</div>
-</div>
-
-<!-- Y8 -->
-<div class="year-row y8">
-  <div class="year-label">Year 8</div>
-
-  <div class="lesson-card" style="cursor:default">
-    <div class="card-top top-world"></div>
-    <div class="card-body">
-      <div class="card-num">Lesson 1 &nbsp;&middot;&nbsp; 50 min</div>
-      <div class="card-title">The machine that acts alone</div>
-      <div class="card-theme t-world">AI &amp; the world</div>
-      <div class="card-idea">AI can already act by itself, and when it gets things wrong, working out who’s responsible is harder than it looks.</div>
-      <div class="card-links">
-        <a class="card-link primary primary-world" href="Y8 L1 — The machine that acts alone.html" target="_blank">Teacher plan</a>
-        <a class="card-link" href="Y8 L1 — Student resource to print.html" target="_blank">Student resource</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="lesson-card" style="cursor:default">
-    <div class="card-top top-world"></div>
-    <div class="card-body">
-      <div class="card-num">Lesson 2 &nbsp;&middot;&nbsp; 45 min</div>
-      <div class="card-title">What will you do for work?</div>
-      <div class="card-theme t-world">AI &amp; the world</div>
-      <div class="card-idea">The question isn’t which jobs AI will replace — it’s which human qualities will become more valuable, not less, as AI keeps improving.</div>
-      <div class="card-links">
-        <a class="card-link primary primary-world" href="Y8 L2 — What will you do for work.html" target="_blank">Teacher plan</a>
-        <a class="card-link" href="Y8 L2 — Student resource to print.html" target="_blank">Student resource</a>
-        <a class="card-link" href="Which jobs will still exist in 2045.png" target="_blank">Jobs image</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="lesson-card" style="cursor:default">
-    <div class="card-top top-tools"></div>
-    <div class="card-body">
-      <div class="card-num">Lesson 3 &nbsp;&middot;&nbsp; 50 min</div>
-      <div class="card-title">Engineer the prompt</div>
-      <div class="card-theme t-tools">Prompting &amp; tools</div>
-      <div class="card-idea">Anyone can use AI. Not everyone can use it well.</div>
-      <div class="card-links">
-        <a class="card-link primary primary-tools" href="Y8 L3 — Engineer the prompt.html" target="_blank">Teacher plan</a>
-        <a class="card-link" href="Y8 L3 — Student resource to print.html" target="_blank">Student resource</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="lesson-card" style="cursor:default">
-    <div class="card-top top-integ"></div>
-    <div class="card-body">
-      <div class="card-num">Lesson 4 &nbsp;&middot;&nbsp; 50 min</div>
-      <div class="card-title">Your name on it</div>
-      <div class="card-theme t-integ">Integrity &amp; learning</div>
-      <div class="card-idea">If you can’t explain what each part of your work means, the work is not yours.</div>
-      <div class="card-links">
-        <a class="card-link primary primary-integ" href="Y8 L4 — Your name on it.html" target="_blank">Teacher plan</a>
-        <a class="card-link" href="Y8 L4 — Student resource to print.html" target="_blank">Student resource</a>
-      </div>
-    </div>
-  </div>
-</div>
+</main>
+<script>(function(){
+var tabs=[].slice.call(document.querySelectorAll('.tab')),chips=[].slice.call(document.querySelectorAll('.chip')),years=[].slice.call(document.querySelectorAll('.year'));
+var year='all',theme=null;
+function apply(){
+  years.forEach(function(y){y.hidden=!(year==='all'||y.getAttribute('data-year')===year)});
+  [].forEach.call(document.querySelectorAll('.card'),function(c){c.classList.toggle('dim',!!theme&&c.getAttribute('data-theme')!==theme)});
+  tabs.forEach(function(t){var on=t.getAttribute('data-year')===year;t.classList.toggle('on',on);t.setAttribute('aria-pressed',on)});
+  chips.forEach(function(c){var on=c.getAttribute('data-theme')===theme;c.classList.toggle('on',on);c.setAttribute('aria-pressed',on)});
+}
+tabs.forEach(function(t){t.addEventListener('click',function(){year=t.getAttribute('data-year');apply();try{history.replaceState(null,'',year==='all'?location.pathname:'#y'+year)}catch(e){}})});
+chips.forEach(function(c){c.addEventListener('click',function(){var v=c.getAttribute('data-theme');theme=(theme===v)?null:v;apply()})});
+var m=/^#y([4-8])$/.exec(location.hash);if(m){year=m[1]}
+apply();
+})();
+</script>
 
 </body>
 </html>
