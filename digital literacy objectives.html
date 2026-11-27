@@ -3,227 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cambridge Digital Literacy — AI Objectives</title>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --color-background-primary: #ffffff;
-    --color-background-secondary: #f5f4ef;
-    --color-background-tertiary: #eeede8;
-    --color-text-primary: #1a1a18;
-    --color-text-secondary: #5a5a56;
-    --color-text-tertiary: #8a8a84;
-    --color-border-tertiary: rgba(0,0,0,0.12);
-    --color-border-secondary: rgba(0,0,0,0.22);
-    --font-sans: system-ui, -apple-system, sans-serif;
-    --font-mono: ui-monospace, monospace;
-    --border-radius-md: 8px;
-    --border-radius-lg: 12px;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-background-primary: #1a1a18;
-      --color-background-secondary: #242420;
-      --color-background-tertiary: #2c2c28;
-      --color-text-primary: #e8e6dc;
-      --color-text-secondary: #9c9a90;
-      --color-text-tertiary: #6a6a64;
-      --color-border-tertiary: rgba(255,255,255,0.1);
-      --color-border-secondary: rgba(255,255,255,0.18);
-    }
-  }
-
-  body {
-    font-family: var(--font-sans);
-    background: var(--color-background-primary);
-    color: var(--color-text-primary);
-    padding: 32px 24px;
-    max-width: 860px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-
-  .page-title {
-    font-size: 22px;
-    font-weight: 500;
-    color: var(--color-text-primary);
-    margin-bottom: 4px;
-  }
-  .page-sub {
-    font-size: 14px;
-    color: var(--color-text-secondary);
-    margin-bottom: 28px;
-  }
-
-  .intro-card {
-    background: var(--color-background-secondary);
-    border: 0.5px solid var(--color-border-tertiary);
-    border-radius: var(--border-radius-lg);
-    padding: 20px 24px;
-    margin-bottom: 28px;
-  }
-  .intro-card h2 {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--color-text-primary);
-    margin-bottom: 4px;
-  }
-  .intro-card .subtitle {
-    font-size: 13px;
-    color: var(--color-text-secondary);
-    margin-bottom: 14px;
-  }
-  .intro-card p {
-    font-size: 13px;
-    color: var(--color-text-secondary);
-    line-height: 1.6;
-    margin-bottom: 14px;
-  }
-
-  .theme-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  @media (max-width: 600px) { .theme-grid { grid-template-columns: 1fr; } }
-
-  .theme-pill {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    font-size: 13px;
-    color: var(--color-text-secondary);
-    line-height: 1.5;
-  }
-  .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 4px;
-  }
-  .dot-tools  { background: #534AB7; }
-  .dot-safety { background: #0F6E56; }
-  .dot-world  { background: #854F0B; }
-
-  .phase-header {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-text-tertiary);
-    margin: 28px 0 12px;
-  }
-
-  .stage-card {
-    border: 0.5px solid var(--color-border-tertiary);
-    border-radius: var(--border-radius-lg);
-    margin-bottom: 10px;
-    overflow: hidden;
-  }
-  .stage-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    background: var(--color-background-secondary);
-    cursor: pointer;
-    user-select: none;
-  }
-  .stage-header:hover { background: var(--color-background-tertiary); }
-
-  .stage-badge {
-    font-size: 12px;
-    font-weight: 500;
-    padding: 2px 10px;
-    border-radius: 20px;
-    flex-shrink: 0;
-  }
-  .badge-primary   { background: #EEEDFE; color: #3C3489; }
-  .badge-secondary { background: #E1F5EE; color: #085041; }
-
-  @media (prefers-color-scheme: dark) {
-    .badge-primary   { background: #3C3489; color: #CECBF6; }
-    .badge-secondary { background: #085041; color: #9FE1CB; }
-  }
-
-  .stage-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); flex: 1; }
-  .stage-age   { font-size: 12px; color: var(--color-text-tertiary); flex-shrink: 0; }
-  .chevron     { font-size: 12px; color: var(--color-text-tertiary); transition: transform 0.2s; flex-shrink: 0; }
-  .chevron.open { transform: rotate(90deg); }
-
-  .stage-body { display: none; padding: 0 16px 16px; }
-  .stage-body.open { display: block; }
-
-  .strand-section { margin-top: 14px; }
-  .strand-label {
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    margin-bottom: 8px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    display: inline-block;
-  }
-  .strand-tc { background: #EEEDFE; color: #534AB7; }
-  .strand-sw { background: #E1F5EE; color: #0F6E56; }
-  .strand-dw { background: #FAEEDA; color: #854F0B; }
-
-  @media (prefers-color-scheme: dark) {
-    .strand-tc { background: #26215C; color: #AFA9EC; }
-    .strand-sw { background: #04342C; color: #5DCAA5; }
-    .strand-dw { background: #412402; color: #FAC775; }
-  }
-
-  .obj-list { list-style: none; }
-  .obj-item {
-    display: flex;
-    gap: 10px;
-    padding: 7px 0;
-    border-bottom: 0.5px solid var(--color-border-tertiary);
-    font-size: 13px;
-    line-height: 1.55;
-    color: var(--color-text-primary);
-  }
-  .obj-item:last-child { border-bottom: none; }
-  .obj-code {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--color-text-tertiary);
-    flex-shrink: 0;
-    margin-top: 2px;
-    width: 52px;
-  }
-
-  .footer {
-    margin-top: 32px;
-    font-size: 12px;
-    color: var(--color-text-tertiary);
-    border-top: 0.5px solid var(--color-border-tertiary);
-    padding-top: 16px;
-  }
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<title>Cambridge AI Objectives — CIS Bratislava</title>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{color-scheme:light;
+--blue:#002199;--navy:#00104d;--amber:#EF9F27;--bg:#f4f6fb;--card:#fff;--text:#12172b;--text-2:#4a5172;--text-3:#8a91ad;--line:rgba(0,16,77,.12);
+--tools:#5b3fd9;--tools-d:#3a22a8;--crit:#0a9c7e;--crit-d:#066b57;--world:#e8780a;--world-d:#b04f00;--safe:#e0452b;--safe-d:#a82a14;--integ:#d6317a;--integ-d:#9c1a55;
+--serif:'Sitka Heading','Sitka Text','Source Serif 4',Georgia,serif;
+--sans:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--mono:ui-monospace,'SF Mono',Consolas,monospace}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.hero{position:relative;overflow:hidden;color:#fff;background:radial-gradient(900px 420px at 85% -10%,#2f4fe0 0%,rgba(47,79,224,0) 60%),radial-gradient(600px 400px at 0% 110%,#0a3bd0 0%,rgba(10,59,208,0) 60%),linear-gradient(160deg,var(--blue),var(--navy))}
+.hero::before{content:"";position:absolute;right:-90px;top:-90px;width:340px;height:340px;border-radius:50%;border:2px solid rgba(255,255,255,.12)}
+.hero::after{content:"";position:absolute;right:60px;bottom:-150px;width:280px;height:280px;border-radius:50%;background:rgba(239,159,39,.16)}
+.hero-in{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:30px 32px 46px}
+.back{display:inline-flex;align-items:center;gap:8px;color:#fff;font-weight:600;font-size:14px;text-decoration:none;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);padding:7px 16px;border-radius:99px;margin-bottom:26px;transition:all .15s}
+.back:hover{background:#fff;color:var(--blue)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:14px}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(34px,5.4vw,56px);line-height:1.04;letter-spacing:-.02em}
+h1 em{font-style:normal;color:#b9c6ff}
+.tagline{font-family:var(--serif);font-size:clamp(16px,2.1vw,21px);margin-top:14px;max-width:640px;color:#e6ebff}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.facts span{font-size:13px;font-weight:600;padding:6px 14px;border-radius:99px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22)}
+.bar{position:sticky;top:0;z-index:20;background:rgba(244,246,251,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1000px;margin:0 auto;padding:10px 32px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between}
+.jumps{display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none;max-width:100%}.jumps::-webkit-scrollbar{display:none}
+.jump{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2);margin-right:4px;white-space:nowrap}
+.jumpchip{font:600 13px var(--sans);color:var(--blue);background:#fff;border:1px solid rgba(0,33,153,.2);border-radius:99px;padding:5px 12px;text-decoration:none;white-space:nowrap;transition:all .15s}
+.jumpchip:hover{border-color:var(--blue);background:rgba(0,33,153,.06)}
+.jumpchip.sec{color:var(--navy)}
+.ctl{display:flex;gap:6px}
+.ctl button,.barback{font:600 12px var(--sans);color:var(--blue);background:#fff;border:1.5px solid rgba(0,33,153,.25);border-radius:99px;padding:5px 12px;cursor:pointer;text-decoration:none;transition:all .15s}
+.ctl button:hover,.barback:hover{border-color:var(--blue);background:rgba(0,33,153,.06)}
+.barback{background:var(--blue);border-color:var(--blue);color:#fff}.barback:hover{background:var(--navy);border-color:var(--navy)}
+main{max-width:1000px;margin:0 auto;padding:28px 32px 70px}
+.intro-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 26px;margin-bottom:8px;box-shadow:0 1px 2px rgba(0,16,77,.05)}
+.intro-card h2{font-family:var(--serif);font-size:24px;line-height:1.15;color:var(--navy);letter-spacing:-.01em;margin-bottom:8px}
+.intro-card p{font-size:14.5px;color:var(--text-2);line-height:1.6;margin-bottom:16px}
+.theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px}
+@media(max-width:700px){.theme-grid{grid-template-columns:1fr}}
+.theme-pill{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;color:var(--text-2);line-height:1.5}
+.dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.dot-tools{background:var(--tools)}.dot-crit{background:var(--crit)}.dot-integ{background:var(--integ)}.dot-safe{background:var(--safe)}.dot-world{background:var(--world)}.dot-blue{background:var(--blue)}
+.phase-header{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);padding-bottom:7px;border-bottom:2px solid var(--blue);margin:30px 0 14px}
+.stage-card{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 2px rgba(0,16,77,.05)}
+.stage-header{display:flex;align-items:center;gap:12px;padding:13px 18px;cursor:pointer;user-select:none;transition:background .15s}
+.stage-header:hover{background:rgba(0,33,153,.04)}
+.stage-badge{font-family:var(--serif);font-size:15px;font-weight:700;padding:4px 14px;border-radius:99px;flex-shrink:0;color:#fff}
+.badge-primary{background:linear-gradient(160deg,var(--blue),#1537c7)}
+.badge-secondary{background:linear-gradient(160deg,var(--navy),#0a2a8f)}
+.stage-title{font-family:var(--serif);font-size:17px;font-weight:600;color:var(--navy);flex:1}
+.stage-age{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-2);flex-shrink:0}
+.chevron{font-size:12px;color:var(--blue);transition:transform .2s;flex-shrink:0}
+.chevron.open{transform:rotate(90deg)}
+.stage-body{display:none;padding:0 18px 18px;border-top:1px solid var(--line)}
+.stage-body.open{display:block}
+.strand-section{margin-top:16px}
+.strand-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;padding:4px 10px;border-radius:99px;display:inline-block;color:#fff}
+.strand-tc{background:var(--tools)}.strand-sw{background:var(--safe)}.strand-dw{background:var(--world)}
+.obj-list{list-style:none}
+.obj-item{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.55;color:var(--text)}
+.obj-item:last-child{border-bottom:none}
+.obj-code{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--text-2);flex-shrink:0;margin-top:2px;width:58px}
+.footer{margin-top:34px;font-size:12px;color:var(--text-2);border-top:1px solid var(--line);padding-top:16px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.footer a{color:var(--blue);font-weight:600;text-decoration:none}.footer a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+@media(max-width:640px){.hero-in{padding:24px 20px 36px}.bar-in,main{padding-left:16px;padding-right:16px}.hero::before{display:none}.jump{display:none}.stage-age{display:none}}
+@media print{@page{size:A4;margin:12mm}.bar,.back{display:none}.hero{color:#000;background:none}.hero::before,.hero::after{display:none}.hero-in{padding:0 0 10px}h1 em,.tagline{color:#000}.facts span{border-color:#999;background:none}.stage-body{display:block!important}.chevron{display:none}.stage-card{break-inside:avoid;box-shadow:none}.strand-label,.stage-badge{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
 <body>
-
-<h1 class="page-title">Cambridge Digital Literacy — AI-Specific Objectives</h1>
-<p class="page-sub">Extracted from 0072 Primary (Stages 1–6) and 0082 Lower Secondary (Stages 7–9) · 2026</p>
-
+<header class="hero"><div class="hero-in">
+<a class="back" href="index.html">← All lessons</a>
+<p class="eyebrow">Cambridge International School Bratislava</p>
+<h1>Cambridge AI <em>Objectives</em></h1>
+<p class="tagline">Every AI-specific objective in the Cambridge Digital Literacy frameworks, Stages 1–9.</p>
+<div class="facts"><span>Primary 0072 · Stages 1–6</span><span>Lower Secondary 0082 · Stages 7–9</span><span>2026</span></div>
+</div></header>
+<nav class="bar" aria-label="Jump to a stage"><div class="bar-in"><div class="jumps"><span class="jump">Jump to</span><a class="jumpchip" href="#stage-s1" data-stage="s1">Stage 1</a><a class="jumpchip" href="#stage-s2" data-stage="s2">Stage 2</a><a class="jumpchip" href="#stage-s3" data-stage="s3">Stage 3</a><a class="jumpchip" href="#stage-s4" data-stage="s4">Stage 4</a><a class="jumpchip" href="#stage-s5" data-stage="s5">Stage 5</a><a class="jumpchip" href="#stage-s6" data-stage="s6">Stage 6</a><a class="jumpchip sec" href="#stage-s7" data-stage="s7">Stage 7</a><a class="jumpchip sec" href="#stage-s8" data-stage="s8">Stage 8</a><a class="jumpchip sec" href="#stage-s9" data-stage="s9">Stage 9</a></div><div class="ctl"><button type="button" onclick="setAll(true)">Expand all</button><button type="button" onclick="setAll(false)">Collapse all</button><a class="barback" href="index.html">← All lessons</a></div></div></nav>
+<main>
 <div class="intro-card">
-  <h2>AI in the Cambridge Digital Literacy Curriculum</h2>
-  <div class="subtitle">Extracted from 0072 Primary (Stages 1–6) and 0082 Lower Secondary (Stages 7–9)</div>
-  <p>
-    AI is woven throughout both frameworks rather than siloed into discrete units. Six consistent themes run from Stage 1 through Stage 9, building in complexity and critical demand at each level. Across all stages, the curriculum insists that AI is a tool that supports learning — not a replacement for human thought, relationships, or original understanding.
-  </p>
+  <h2>AI in the Cambridge Digital Literacy curriculum</h2>
+  <p>AI is woven throughout both frameworks rather than siloed into discrete units. Six consistent themes run from Stage 1 through Stage 9, building in complexity and critical demand at each level. Across all stages, the curriculum insists that AI is a tool that supports learning, not a replacement for human thought, relationships, or original understanding.</p>
   <div class="theme-grid">
     <div class="theme-pill"><span class="dot dot-tools"></span><span><strong>Prompting &amp; creation</strong> — from simple text inputs in Stage 1 to full prompt engineering and framework comparison in Stage 9</span></div>
-    <div class="theme-pill"><span class="dot dot-safety"></span><span><strong>Critical evaluation</strong> — checking AI output for accuracy, bias, validity, and source trustworthiness at every stage</span></div>
-    <div class="theme-pill"><span class="dot dot-world"></span><span><strong>Learning integrity</strong> — strong, recurring thread: AI must not shortcut genuine understanding or owned output</span></div>
-    <div class="theme-pill"><span class="dot dot-tools"></span><span><strong>Safety &amp; wellbeing</strong> — digital footprints, parasocial AI relationships, toxic AI behaviour, emotional risks</span></div>
-    <div class="theme-pill"><span class="dot dot-safety"></span><span><strong>AI and society</strong> — jobs, industry disruption, regulation, climate impact, data ownership, digital divides</span></div>
-    <div class="theme-pill"><span class="dot dot-world"></span><span><strong>Human vs AI intelligence</strong> — comparing capabilities, limitations, emotional understanding, and co-intelligence</span></div>
+    <div class="theme-pill"><span class="dot dot-crit"></span><span><strong>Critical evaluation</strong> — checking AI output for accuracy, bias, validity, and source trustworthiness at every stage</span></div>
+    <div class="theme-pill"><span class="dot dot-integ"></span><span><strong>Learning integrity</strong> — a strong, recurring thread: AI must not shortcut genuine understanding or owned output</span></div>
+    <div class="theme-pill"><span class="dot dot-safe"></span><span><strong>Safety &amp; wellbeing</strong> — digital footprints, parasocial AI relationships, toxic AI behaviour, emotional risks</span></div>
+    <div class="theme-pill"><span class="dot dot-world"></span><span><strong>AI and society</strong> — jobs, industry disruption, regulation, climate impact, data ownership, digital divides</span></div>
+    <div class="theme-pill"><span class="dot dot-blue"></span><span><strong>Human vs AI intelligence</strong> — comparing capabilities, limitations, emotional understanding, and co-intelligence</span></div>
   </div>
 </div>
 
@@ -233,7 +101,8 @@
 <div class="phase-header">Cambridge Lower Secondary Digital Literacy · 0082</div>
 <div id="stages-secondary"></div>
 
-<div class="footer">Cambridge International · Digital Literacy Curriculum Frameworks 0072 &amp; 0082 · AI objectives extracted for curriculum planning purposes</div>
+<div class="footer"><span>Cambridge International · Digital Literacy Curriculum Frameworks 0072 &amp; 0082 · AI objectives extracted for curriculum planning</span><a href="index.html">← Back to all lessons</a></div>
+</main>
 
 <script>
 const stagesData = [
@@ -462,7 +331,7 @@ function renderStage(s) {
   const total = s.tc.length + s.sw.length + s.dw.length;
   if (!total) return '';
   const bc = s.phase === 'primary' ? 'badge-primary' : 'badge-secondary';
-  return `<div class="stage-card">
+  return `<div class="stage-card" id="stage-${s.id}">
     <div class="stage-header" onclick="toggle('${s.id}')">
       <span class="stage-badge ${bc}">${s.label}</span>
       <span class="stage-title">${s.label} — AI objectives</span>
@@ -486,6 +355,17 @@ function toggle(id) {
   document.getElementById('body-'+id).classList.toggle('open');
   document.getElementById('chev-'+id).classList.toggle('open');
 }
+function setAll(open) {
+  document.querySelectorAll('.stage-body').forEach(function(b){b.classList.toggle('open',open)});
+  document.querySelectorAll('.chevron').forEach(function(c){c.classList.toggle('open',open)});
+}
+document.querySelectorAll('.jumpchip').forEach(function(a){
+  a.addEventListener('click',function(){
+    var id=a.getAttribute('data-stage');
+    var b=document.getElementById('body-'+id);
+    if(b&&!b.classList.contains('open')){toggle(id)}
+  });
+});
 </script>
 </body>
 </html>
